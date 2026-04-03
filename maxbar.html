@@ -131,54 +131,14 @@
 <body>
 <div class="container">
     <h1>🔗 MaxBar VPN</h1>
-    <div class="sub">Для подключения скопируйте ссылку ниже и добавьте её в HAPP или другой прокси-клиент</div>
+    <div class="sub">Для подключения скопируйте ссылку и добавьте в HAPP</div>
     <div class="url-box">
         <div class="url" id="subUrl">Загрузка...</div>
     </div>
     <button onclick="copyUrl()">📋 Скопировать ссылку</button>
 
     <div class="badges">
-        <span class="badge">🔥 HAPP</span>
-        <span class="badge">🍎 Shadowrocket</span>
-        <span class="badge">🤖 v2rayNG</span>
-        <span class="badge">⚡ Clash Meta</span>
-        <span class="badge">📦 Sing-Box</span>
-        <span class="badge">📱 NekoBox</span>
-        <span class="badge">🌊 Surge</span>
-        <span class="badge">🌀 Quantumult X</span>
-        <span class="badge">🎨 Stash</span>
-        <span class="badge">🐱 Karing</span>
-        <span class="badge">🔥 Flclash</span>
-        <span class="badge">🦊 V2Box</span>
-        <span class="badge">🐉 Pharos</span>
-        <span class="badge">🔷 Chisel</span>
-        <span class="badge">⚙️ Clash Verge</span>
-        <span class="badge">📡 Clash Nyanpasu</span>
-        <span class="badge">🎮 Clash X</span>
-        <span class="badge">🍃 Clash for Windows</span>
-        <span class="badge">💻 ClashX Pro</span>
-        <span class="badge">📱 Clash for Android</span>
-        <span class="badge">🐚 ShellClash</span>
-        <span class="badge">🔧 OpenClash</span>
-        <span class="badge">🎯 PassWall</span>
-        <span class="badge">🔰 Hello World</span>
-        <span class="badge">🐉 SSR Plus</span>
-        <span class="badge">📡 BifrostV</span>
-        <span class="badge">🌐 V2RayP</span>
-        <span class="badge">🔷 SagerNet</span>
-        <span class="badge">🌀 Matsuri</span>
-        <span class="badge">🎨 AnXray</span>
-        <span class="badge">⚡ Hiddify</span>
-        <span class="badge">📦 Streisand</span>
-        <span class="badge">🔮 NapsternetV</span>
-        <span class="badge">🌙 v2rayNG</span>
-        <span class="badge">🔗 WireGuard</span>
-        <span class="badge">📡 Outline</span>
-        <span class="badge">🎯 Intra</span>
-        <span class="badge">🛡️ V2Ray</span>
-        <span class="badge">🔷 Xray</span>
-        <span class="badge">⚡ Clash.R</span>
-        <span class="badge">📱 CFW</span>
+        <!-- Здесь будут бейджи, заполним скриптом -->
     </div>
 
     <div class="steps">
@@ -199,31 +159,103 @@
     </div>
 
     <div class="footer">
-        🔒 Подписка обновляется автоматически (сервера берутся из Gist)<br>
+        🔒 Подписка обновляется автоматически<br>
         📡 При проблемах пиши в поддержку Telegram: @MaxBarVPN
     </div>
 </div>
 <div id="toast" class="toast">✅ Ссылка скопирована!</div>
 
 <script>
-    // ========= НАСТРОЙКИ (укажите свой Gist) =========
-    const GIST_OWNER = 'maxids456';
-    const GIST_ID = 'e37c04e7d7896aeffdf6355cb87c7f61';
-    // =================================================
+    // ========= ТЕКСТ ПОДПИСКИ (то, что будет добавляться в HAPP) =========
+    const SUBSCRIPTION_TEXT = `#profile-title: MaxBar VPN 🌐
+#profile-web-page: https://t.me/MaxBarVPN
+#profile-update-interval: 1
+#subscription-userinfo: upload=0; download=0; total=0; 
+vless://ad49050a-549f-41b8-bfb5-faf53b47c1bd@95.85.250.229:443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=max.ru&fp=chrome&pbk=CC2mv8NzGByvRWIu7I7bB82qvjHrvlidn4lppb0lBlM&sid=4ab683fa&spx=%2F&type=tcp#🇫🇮 WiFi
+vless://ad49050a-549f-41b8-bfb5-faf53b47c1bd@77.239.123.17:443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=github.com&fp=chrome&pbk=jodgA_qDZEDR__0vH7nhW7_wBTJHlIJmuOYG-3s6tyY&sid=4de6e50317&spx=/&type=tcp#🇫🇮 LTE
+vless://ad49050a-549f-41b8-bfb5-faf53b47c1bd@217.16.29.109:443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=api.vk.com&fp=chrome&pbk=71vuXqOxHNXZpQjqsvhcywaeRFBlTGgxBqr5roo1zjA&sid=fe299c06&spx=%2F&type=tcp#🇷🇺 Белые списки`;
+    // ====================================================================
 
-    // Прямая raw-ссылка на содержимое Gist (то, что нужно вставлять в HAPP)
-    const RAW_URL = `https://raw.githubusercontent.com/${GIST_OWNER}/${GIST_ID}`;
+    // Список клиентов для бейджей (большой набор)
+    const CLIENTS = [
+        "🔥 HAPP", "🍎 Shadowrocket", "🤖 v2rayNG", "⚡ Clash Meta",
+        "📦 Sing-Box", "📱 NekoBox", "🌊 Surge", "🌀 Quantumult X",
+        "🎨 Stash", "🐱 Karing", "🔥 Flclash", "🦊 V2Box",
+        "🐉 Pharos", "🔷 Chisel", "⚙️ Clash Verge", "📡 Clash Nyanpasu",
+        "🎮 Clash X", "🍃 Clash for Windows", "💻 ClashX Pro", "📱 Clash for Android",
+        "🐚 ShellClash", "🔧 OpenClash", "🎯 PassWall", "🔰 Hello World",
+        "🐉 SSR Plus", "📡 BifrostV", "🌐 V2RayP", "🔷 SagerNet",
+        "🌀 Matsuri", "🎨 AnXray", "⚡ Hiddify", "📦 Streisand",
+        "🔮 NapsternetV", "🌙 v2rayNG", "🔗 WireGuard", "📡 Outline",
+        "🎯 Intra", "🛡️ V2Ray", "🔷 Xray", "⚡ Clash.R", "📱 CFW"
+    ];
 
-    // Показываем эту ссылку на странице
-    document.getElementById('subUrl').innerText = RAW_URL;
+    // Заполняем бейджи
+    const badgesContainer = document.querySelector('.badges');
+    if (badgesContainer) {
+        CLIENTS.forEach(client => {
+            const span = document.createElement('span');
+            span.className = 'badge';
+            span.textContent = client;
+            badgesContainer.appendChild(span);
+        });
+    }
 
-    // Функция копирования
+    // Определяем, является ли запрос от прокси-клиента
+    const ua = navigator.userAgent.toLowerCase();
+    const isVpnClient = (
+        ua.includes('happ') ||
+        ua.includes('clash') ||
+        ua.includes('v2ray') ||
+        ua.includes('shadowrocket') ||
+        ua.includes('surge') ||
+        ua.includes('quantumult') ||
+        ua.includes('stash') ||
+        ua.includes('karing') ||
+        ua.includes('nekobox') ||
+        ua.includes('xray') ||
+        ua.includes('sing-box') ||
+        ua.includes('hiddify') ||
+        ua.includes('napsternetv') ||
+        ua.includes('streisand') ||
+        ua.includes('matsuri') ||
+        ua.includes('sagernet') ||
+        ua.includes('anxray') ||
+        ua.includes('v2box') ||
+        ua.includes('pharos') ||
+        ua.includes('chisel') ||
+        ua.includes('cfw') ||
+        ua.includes('openclash') ||
+        ua.includes('passwall') ||
+        ua.includes('helloworld') ||
+        ua.includes('ssrplus')
+    );
+
+    // Если это прокси-клиент — заменяем всю страницу на текст подписки
+    if (isVpnClient) {
+        // Полностью очищаем body и вставляем plain text
+        document.body.innerHTML = '';
+        const pre = document.createElement('pre');
+        pre.style.whiteSpace = 'pre-wrap';
+        pre.style.wordWrap = 'break-word';
+        pre.style.margin = '0';
+        pre.style.fontFamily = 'monospace';
+        pre.textContent = SUBSCRIPTION_TEXT;
+        document.body.appendChild(pre);
+        // Останавливаем дальнейшее выполнение скрипта
+        throw new Error('Redirect to subscription text');
+    }
+
+    // Иначе (браузер) — показываем красивую страницу, подставляем текущий URL для копирования
+    const currentUrl = window.location.href;
+    document.getElementById('subUrl').innerText = currentUrl;
+
     window.copyUrl = function() {
-        navigator.clipboard.writeText(RAW_URL).then(() => {
+        navigator.clipboard.writeText(currentUrl).then(() => {
             const toast = document.getElementById('toast');
             toast.style.opacity = '1';
             setTimeout(() => toast.style.opacity = '0', 2000);
-        }).catch(() => alert('Скопируйте вручную: ' + RAW_URL));
+        }).catch(() => alert('Скопируйте вручную: ' + currentUrl));
     };
 </script>
 </body>

@@ -1,40 +1,319 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MaxBar VPN</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
         body {
-            background: linear-gradient(135deg, #8B0000 0%, #4B0082 100%);
-            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #8B0000 0%, #4B0082 50%, #2D004F 100%);
+            font-family: 'Segoe UI', system-ui, -apple-system, 'Roboto', sans-serif;
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            margin: 0;
             padding: 20px;
         }
+        
         .container {
-            max-width: 800px;
-            background: rgba(0,0,0,0.7);
-            backdrop-filter: blur(10px);
-            border-radius: 24px;
-            padding: 30px;
+            max-width: 900px;
+            width: 100%;
             text-align: center;
-            border: 1px solid rgba(255,68,68,0.5);
         }
-        h1 { color: #FF6B6B; font-size: 2em; }
+        
+        .main-text {
+            font-size: clamp(28px, 7vw, 64px);
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            background: linear-gradient(135deg, #FF6B6B 0%, #FF4444 25%, #DDA0DD 75%, #BA55D3 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 20px;
+            animation: glow 2s ease-in-out infinite;
+        }
+        
+        @keyframes glow {
+            0%, 100% { opacity: 1; text-shadow: 0 0 10px rgba(255,68,68,0.3); }
+            50% { opacity: 0.95; text-shadow: 0 0 25px rgba(255,68,68,0.6), 0 0 10px rgba(186,85,211,0.4); }
+        }
+        
+        .subtitle {
+            font-size: clamp(16px, 3.5vw, 22px);
+            color: #FFD700;
+            margin-bottom: 30px;
+            opacity: 0.95;
+            text-shadow: 0 0 5px rgba(0,0,0,0.5);
+        }
+        
         .url-box {
-            background: #00000055;
-            padding: 15px;
-            border-radius: 16px;
-            margin: 20px 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255,68,68,0.5);
+            border-radius: 20px;
+            padding: 20px 30px;
+            margin: 25px 0;
             word-break: break-all;
-            font-family: monospace;
+            box-shadow: 0 0 20px rgba(255,68,68,0.2);
+        }
+        
+        .url-text {
+            font-size: clamp(12px, 2.5vw, 16px);
+            color: #FF6B6B;
+            font-family: 'Monaco', 'Courier New', monospace;
+            letter-spacing: 0.5px;
+        }
+        
+        .copy-btn {
+            background: linear-gradient(135deg, #FF4444 0%, #8B008B 100%);
+            border: none;
+            padding: 14px 35px;
+            font-size: 18px;
+            font-weight: bold;
+            color: white;
+            border-radius: 50px;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .copy-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(255,68,68,0.6);
+        }
+        
+        .copy-btn:active {
+            transform: scale(0.95);
+        }
+        
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #FF4444, #8B008B);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-weight: bold;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+            z-index: 1000;
+        }
+        
+        .toast.show {
+            opacity: 1;
+        }
+        
+        .steps {
+            text-align: left;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(5px);
+            border-radius: 20px;
+            padding: 25px;
+            margin-top: 30px;
+            border: 1px solid rgba(255,68,68,0.3);
+        }
+        
+        .steps h3 {
+            color: #FF6B6B;
+            margin-bottom: 15px;
+            font-size: 22px;
+            text-align: center;
+        }
+        
+        .steps p {
+            color: #FFD700;
+            margin: 15px 0 10px 0;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        
+        .steps ul, .steps ol {
+            color: #ddd;
+            line-height: 1.8;
+            padding-left: 25px;
+        }
+        
+        .steps li {
+            margin: 8px 0;
+        }
+        
+        .client-icons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            margin: 20px 0;
+        }
+        
+        .client-badge {
+            background: rgba(255,68,68,0.2);
+            border: 1px solid rgba(255,68,68,0.4);
+            border-radius: 20px;
+            padding: 5px 12px;
+            font-size: 12px;
             color: #FFB6C1;
         }
-        button {
-            background: linear-gradient(135deg, #FF4444, #8B008B);
+        
+        .footer {
+            margin-top: 35px;
+            color: #999;
+            font-size: 11px;
+        }
+        
+        .warning {
+            color: #FFB6C1;
+            font-size: 12px;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="main-text" id="profileTitle">🔗 MaxBar VPN</div>
+        <div class="subtitle" id="profileDescription">Для подключения к VPN необходимо добавить подписку в прокси клиент!</div>
+        
+        <div class="url-box">
+            <div class="url-text" id="subscriptionUrl">https://maxids456.github.io/maxbar.html</div>
+        </div>
+        
+        <button class="copy-btn" onclick="copyToClipboard()">📋 СКОПИРОВАТЬ ССЫЛКУ</button>
+        
+        <div class="steps">
+            <h3>📱 Поддерживаемые прокси клиенты:</h3>
+            <div class="client-icons" id="clientIcons">
+                <!-- Бейджики будут добавлены через JS -->
+            </div>
+            
+            <p>🔧 УНИВЕРСАЛЬНЫЙ СПОСОБ (для любого прокси клиента):</p>
+            <ol>
+                <li>📥 Открой свой прокси-клиент (HAPP, Hiddify, V2RayTun и т.д.)</li>
+                <li>➕ Найди кнопку <strong>"Добавить подписку"</strong> или <strong>"Import from URL"</strong></li>
+                <li>📝 Вставь скопированную выше ссылку в поле URL</li>
+                <li>✅ Нажми <strong>"Добавить"</strong> / <strong>"Импортировать"</strong> / <strong>"Save"</strong></li>
+                <li>🚀 Подключайся и открой доступ ко всему интернету!</li>
+            </ol>
+            
+            <p>⚡ ДЛЯ HAPP (подробно):</p>
+            <ul><li>Откройте HAPP → нажмите <strong>"➕ Добавить подписку"</strong> → вставьте ссылку → <strong>"ОК"</strong> → сервера появятся в списке</li></ul>
+            
+            <p>🍎 ДЛЯ SHADOWROCKET (iOS):</p>
+            <ul><li>Нажмите <strong>"+"</strong> в правом верхнем углу → выберите <strong>"Subscribe"</strong> → вставьте ссылку → <strong>"Save"</strong></li></ul>
+            
+            <p>🤖 ДЛЯ V2RAYNG (Android):</p>
+            <ul><li>Нажмите <strong>"➕"</strong> → <strong>"Import Subscription"</strong> → вставьте ссылку → <strong>"OK"</strong></li></ul>
+        </div>
+        
+        <div class="footer" id="footerText">🔒 Подписка обновляется автоматически | 📡 При недоступности свяжись с поддержкой</div>
+        <div class="warning" id="warningText">😘 VPN сервис создан компанией MaxKrashAO</div>
+    </div>
+    
+    <div id="toast" class="toast">✅ Скопировано!</div>
+
+    <script>
+        // =====================================================
+        // 🔧 НАСТРОЙКИ (ЗДЕСЬ ВЫ ВСЁ МЕНЯЕТЕ)
+        // =====================================================
+        
+        // 1. НАЗВАНИЕ ПОДПИСКИ (будет отображаться в HAPP и на сайте)
+        const PROFILE_TITLE = "🔗 MaxBar VPN";
+        
+        // 2. ОПИСАНИЕ ПОДПИСКИ (будет отображаться в HAPP как описание)
+        const PROFILE_DESCRIPTION = "Для подключения к VPN необходимо добавить подписку в прокси клиент!";
+        
+        // 3. ТЕКСТ В ФУТЕРЕ (нижняя строка)
+        const FOOTER_TEXT = "🔒 Подписка обновляется автоматически | 📡 При недоступности свяжись с поддержкой";
+        
+        // 4. ТЕКСТ В ВАРНИНГЕ (жёлтое предупреждение)
+        const WARNING_TEXT = "😘 VPN сервис создан компанией MaxKrashAO";
+        
+        // 5. СПИСОК СЕРВЕРОВ (ДОБАВЛЯЙТЕ ИЛИ УБИРАЙТЕ СТРОЧКИ)
+        //    Каждый сервер должен быть на новой строке.
+        const SERVERS_LIST = `
+vless://ad49050a-549f-41b8-bfb5-faf53b47c1bd@77.83.246.56:443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=ads.x5.ru&fp=chrome&pbk=3NdeikCxDY8b7vMWlkvaH3iEKx5edXQUHuJMePIYDWI&sid=ae692cbe19&spx=%2F&type=tcp#WiFi
+vless://ad49050a-549f-41b8-bfb5-faf53b47c1bd@77.239.123.17:443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=github.com&fp=chrome&pbk=jodgA_qDZEDR__0vH7nhW7_wBTJHlIJmuOYG-3s6tyY&sid=4de6e50317&spx=/&type=tcp#LTE
+vless://ad49050a-549f-41b8-bfb5-faf53b47c1bd@109.120.191.6:443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=api.vk.ru&fp=chrome&pbk=5Ljhw5kvURXXcEVlLzjICvf5QPAd1aW27xrpV6c88hk&sid=46&spx=/&type=tcp#Белые
+vless://ad49050a-549f-41b8-bfb5-faf53b47c1bd@217.16.29.109:443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=api.vk.com&fp=chrome&pbk=71vuXqOxHNXZpQjqsvhcywaeRFBlTGgxBqr5roo1zjA&sid=fe299c06&spx=%2F&type=tcp#Белые списки
+        `.trim();
+        
+        // 6. СПИСОК КЛИЕНТОВ (бейджики). Добавляйте/убирайте названия.
+        const CLIENTS_LIST = [
+            "🔥 HAPP", "🍎 Shadowrocket", "🤖 V2RayTun", "⚡ Clash Meta",
+            "📦 Sing-Box", "📱 NekoBox", "🌊 Surge", "🌀 Quantumult X",
+            "🎨 Stash", "🐱 Karing", "🔥 Flclash", "🦊 V2Box",
+            "🐉 Pharos", "🔷 Chisel", "⚙️ Clash Verge", "📡 Clash Nyanpasu",
+            "🎮 Clash X", "🍃 Clash for Windows", "💻 ClashX Pro", "📱 Clash for Android",
+            "🐚 ShellClash", "🔧 OpenClash", "🎯 PassWall", "🔰 Hello World",
+            "🐉 SSR Plus", "📡 BifrostV", "🌐 V2RayP", "🔷 SagerNet",
+            "🌀 Matsuri", "🎨 AnXray", "⚡ Hiddify", "📦 Streisand",
+            "🔮 NapsternetV", "🌙 v2rayNG", "🔗 WireGuard", "📡 Outline",
+            "🎯 Intra", "🛡️ V2Ray", "🔷 Xray", "⚡ Clash.R", "📱 CFW"
+        ];
+        
+        // =====================================================
+        // НЕ МЕНЯЙТЕ НИЧЕГО НИЖЕ ЭТОЙ СТРОКИ, ЕСЛИ НЕ УВЕРЕНЫ
+        // =====================================================
+        
+        // Применяем настройки к странице
+        document.getElementById('profileTitle').innerText = PROFILE_TITLE;
+        document.getElementById('profileDescription').innerText = PROFILE_DESCRIPTION;
+        document.getElementById('footerText').innerHTML = FOOTER_TEXT;
+        document.getElementById('warningText').innerHTML = WARNING_TEXT;
+        
+        // Генерируем бейджики клиентов
+        const clientIconsContainer = document.getElementById('clientIcons');
+        CLIENTS_LIST.forEach(client => {
+            const badge = document.createElement('span');
+            badge.className = 'client-badge';
+            badge.innerText = client;
+            clientIconsContainer.appendChild(badge);
+        });
+        
+        // Формируем текст подписки для HAPP (название + описание + сервера)
+        const subscriptionContent = `#profile-title: ${PROFILE_TITLE}\n#profile-web-page: https://maxids456.github.io/maxbar.html\n#profile-update-interval: 24\n#subscription-userinfo: upload=0; download=0; total=0;\n${SERVERS_LIST}`;
+        
+        // Функция копирования ссылки
+        window.copyToClipboard = function() {
+            const url = document.getElementById('subscriptionUrl').innerText;
+            navigator.clipboard.writeText(url).then(() => {
+                const toast = document.getElementById('toast');
+                toast.classList.add('show');
+                setTimeout(() => toast.classList.remove('show'), 2000);
+            }).catch(() => alert('Нажмите Ctrl+C чтобы скопировать ссылку: ' + url));
+        };
+        
+        // Определяем, открыто ли в HAPP (по User-Agent)
+        const ua = navigator.userAgent.toLowerCase();
+        const isVpnClient = (
+            ua.includes('happ') || 
+            ua.includes('clash') || 
+            ua.includes('v2ray') || 
+            ua.includes('shadowrocket') || 
+            ua.includes('surge') ||
+            ua.includes('quantumult') ||
+            ua.includes('stash') ||
+            ua.includes('karing') ||
+            ua.includes('nekobox')
+        );
+        
+        // Если это VPN-клиент — показываем только текст подписки (с названием и серверами)
+        if (isVpnClient) {
+            document.body.innerHTML = `<pre style="white-space: pre-wrap; word-wrap: break-word; margin: 0; font-family: monospace;">${subscriptionContent}</pre>`;
+        }
+    </script>
+</body>
+    </html>            background: linear-gradient(135deg, #FF4444, #8B008B);
             border: none;
             padding: 12px 24px;
             border-radius: 40px;

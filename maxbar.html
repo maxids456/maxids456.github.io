@@ -2,138 +2,168 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>🐍 Змейка | MaxBar VPN</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>MaxBar VPN</title>
     <style>
         * {
-            user-select: none;
-            -webkit-tap-highlight-color: transparent;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-
         body {
-            background: linear-gradient(145deg, #1a472a 0%, #0e2a1a 100%);
+            background: linear-gradient(135deg, #8B0000 0%, #4B0082 50%, #2D004F 100%);
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-family: 'Segoe UI', 'Courier New', monospace;
-            margin: 0;
             padding: 20px;
         }
-
-        .game-container {
-            background: #0a1f12;
-            border-radius: 48px;
-            padding: 20px;
-            box-shadow: 0 20px 35px rgba(0,0,0,0.4), inset 0 1px 2px rgba(255,255,255,0.1);
-        }
-
-        canvas {
-            display: block;
-            margin: 0 auto;
-            border-radius: 24px;
-            box-shadow: 0 0 0 3px #2b5e3b, 0 0 0 6px #1e3a2a;
-            background-color: #1e3a2a;
-            cursor: pointer;
-        }
-
-        .info-panel {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            margin-top: 18px;
-            margin-bottom: 8px;
-            background: #071a0e;
-            padding: 12px 24px;
-            border-radius: 60px;
-            backdrop-filter: blur(4px);
-        }
-
-        .score-box {
-            background: #00000066;
-            padding: 6px 18px;
+        .container {
+            max-width: 900px;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
             border-radius: 32px;
-            color: #d4ffb0;
-            font-weight: bold;
-            font-size: 1.6rem;
-            letter-spacing: 2px;
-            font-family: monospace;
-        }
-
-        .score-box span {
-            color: #ffd966;
-            font-size: 1rem;
-            margin-right: 8px;
-        }
-
-        .restart-btn {
-            background: #2e7d5e;
-            border: none;
-            font-size: 1.3rem;
-            font-weight: bold;
-            padding: 6px 24px;
-            border-radius: 40px;
-            color: white;
-            font-family: monospace;
-            cursor: pointer;
-            transition: 0.2s;
-            box-shadow: 0 2px 6px black;
-        }
-
-        .restart-btn:hover {
-            background: #3e9f7a;
-            transform: scale(0.97);
-            box-shadow: 0 1px 3px black;
-        }
-
-        .status {
-            background: #071a0ecc;
-            padding: 6px 18px;
-            border-radius: 32px;
-            font-weight: bold;
-            font-size: 1rem;
-            color: #ffcf9a;
-            font-family: monospace;
-        }
-
-        .controls-hint {
+            padding: 30px 24px;
             text-align: center;
-            margin-top: 18px;
-            color: #b9fbc0;
-            font-size: 0.75rem;
-            background: #071a0e80;
-            width: fit-content;
-            margin-left: auto;
-            margin-right: auto;
-            padding: 6px 16px;
-            border-radius: 28px;
-            font-weight: bold;
+            border: 1px solid rgba(255, 68, 68, 0.3);
         }
-
-        @media (max-width: 550px) {
-            .score-box { font-size: 1.2rem; padding: 4px 12px; }
-            .restart-btn { font-size: 1rem; padding: 4px 18px; }
-            .info-panel { padding: 8px 16px; }
+        h1 {
+            font-size: clamp(28px, 7vw, 56px);
+            font-weight: 900;
+            background: linear-gradient(135deg, #FF6B6B, #FF4444, #DDA0DD, #BA55D3);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 16px;
+            animation: glow 2s ease-in-out infinite;
+        }
+        @keyframes glow {
+            0%, 100% { text-shadow: 0 0 5px rgba(255, 68, 68, 0.3); }
+            50% { text-shadow: 0 0 20px rgba(255, 68, 68, 0.6); }
+        }
+        .sub {
+            font-size: clamp(16px, 4vw, 20px);
+            color: #FFD700;
+            margin-bottom: 30px;
+        }
+        .url-box {
+            background: #00000066;
+            border: 1px solid #FF4444;
+            border-radius: 24px;
+            padding: 16px;
+            word-break: break-all;
+            margin: 20px 0;
+        }
+        .url {
+            font-family: monospace;
+            font-size: 14px;
+            color: #FFB6C1;
+        }
+        button {
+            background: linear-gradient(135deg, #FF4444, #8B008B);
+            border: none;
+            padding: 12px 28px;
+            border-radius: 40px;
+            font-weight: bold;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        button:hover {
+            transform: scale(1.02);
+        }
+        .badges {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin: 30px 0 20px;
+        }
+        .badge {
+            background: rgba(255, 68, 68, 0.2);
+            border: 1px solid rgba(255, 68, 68, 0.5);
+            border-radius: 30px;
+            padding: 6px 14px;
+            font-size: 13px;
+            color: #FFB6C1;
+        }
+        .steps {
+            text-align: left;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 24px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .steps p {
+            color: #FFD700;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        .steps ol, .steps ul {
+            color: #ddd;
+            padding-left: 20px;
+            line-height: 1.6;
+        }
+        .footer {
+            margin-top: 25px;
+            font-size: 11px;
+            color: #aaa;
+        }
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #FF4444;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 40px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+            z-index: 1000;
         }
     </style>
 </head>
 <body>
-<div>
-    <div class="game-container">
-        <canvas id="snakeCanvas" width="400" height="400"></canvas>
-        
-        <div class="info-panel">
-            <div class="score-box"><span>🍎</span> <span id="scoreValue">0</span></div>
-            <div class="status" id="gameStatusText">▶ ИГРА</div>
-            <button class="restart-btn" id="restartButton">🔄 НОВАЯ</button>
-        </div>
-        <div class="controls-hint">
-            🎮 стрелки ↑ ↓ ← →  |  проведи пальцем (на телефоне)
-        </div>
+<div class="container">
+    <h1>🔗 MaxBar VPN</h1>
+    <div class="sub">Для подключения скопируйте ссылку и добавьте в HAPP</div>
+    <div class="url-box">
+        <div class="url" id="subUrl">Загрузка...</div>
+    </div>
+    <button onclick="copyUrl()">📋 Скопировать ссылку</button>
+
+    <div class="badges"></div>
+
+    <div class="steps">
+        <p>🔧 Универсальный способ (для любого прокси-клиента):</p>
+        <ol>
+            <li>Открой свой прокси-клиент (HAPP, Shadowrocket, v2rayNG и др.)</li>
+            <li>Найди кнопку <strong>«Добавить подписку»</strong> или <strong>«Import from URL»</strong></li>
+            <li>Вставь скопированную выше ссылку в поле URL</li>
+            <li>Нажми <strong>«Добавить»</strong> → сервера появятся в списке</li>
+            <li>Подключайся и наслаждайся!</li>
+        </ol>
+        <p>⚡ Для HAPP:</p>
+        <ul><li>Открой HAPP → нажми <strong>«➕ Добавить подписку»</strong> → вставь ссылку → <strong>«ОК»</strong></li></ul>
+        <p>🍎 Для Shadowrocket:</p>
+        <ul><li>Нажми <strong>«+»</strong> → выбери <strong>«Subscribe»</strong> → вставь ссылку → <strong>«Save»</strong></li></ul>
+        <p>🤖 Для v2rayNG:</p>
+        <ul><li>Нажми <strong>«➕»</strong> → <strong>«Import Subscription»</strong> → вставь ссылку → <strong>«OK»</strong></li></ul>
+    </div>
+
+    <div class="footer">
+        🔒 Подписка обновляется автоматически (из файла maxbar.txt)<br>
+        📡 При проблемах пиши в поддержку Telegram: @MaxBarVPN
     </div>
 </div>
+<div id="toast" class="toast">✅ Ссылка скопирована!</div>
 
-<!-- ========== ТЕКСТ ПОДПИСКИ (спрятан от браузера, но виден прокси-клиентам) ========== -->
+<!-- ========== ТЕКСТ ПОДПИСКИ (скрыт от браузера, но виден прокси-клиентам) ========== -->
 <div id="subscriptionData" style="display: none;">
 #profile-title: MaxBar VPN 🌐
 #profile-web-page: https://t.me/MaxBarVPN
@@ -145,41 +175,67 @@ vless://ad49050a-549f-41b8-bfb5-faf53b47c1bd@217.16.29.109:443?encryption=none&f
 </div>
 
 <script>
-    (function(){
-        // ---------- ОПРЕДЕЛЯЕМ, ПРОКСИ-КЛИЕНТ ИЛИ БРАУЗЕР ----------
-        const ua = navigator.userAgent.toLowerCase();
-        const isVpnClient = (
-            ua.includes('happ') ||
-            ua.includes('clash') ||
-            ua.includes('v2ray') ||
-            ua.includes('shadowrocket') ||
-            ua.includes('surge') ||
-            ua.includes('quantumult') ||
-            ua.includes('stash') ||
-            ua.includes('karing') ||
-            ua.includes('nekobox') ||
-            ua.includes('xray') ||
-            ua.includes('sing-box') ||
-            ua.includes('hiddify') ||
-            ua.includes('napsternetv') ||
-            ua.includes('streisand') ||
-            ua.includes('matsuri') ||
-            ua.includes('sagernet') ||
-            ua.includes('anxray') ||
-            ua.includes('v2box') ||
-            ua.includes('pharos') ||
-            ua.includes('chisel') ||
-            ua.includes('cfw') ||
-            ua.includes('openclash') ||
-            ua.includes('passwall') ||
-            ua.includes('helloworld') ||
-            ua.includes('ssrplus')
-        );
+    // ========= СПИСОК КЛИЕНТОВ ДЛЯ БЕЙДЖЕЙ =========
+    const CLIENTS = [
+        "🔥 HAPP", "🍎 Shadowrocket", "🤖 v2rayNG", "⚡ Clash Meta",
+        "📦 Sing-Box", "📱 NekoBox", "🌊 Surge", "🌀 Quantumult X",
+        "🎨 Stash", "🐱 Karing", "🔥 Flclash", "🦊 V2Box",
+        "🐉 Pharos", "🔷 Chisel", "⚙️ Clash Verge", "📡 Clash Nyanpasu",
+        "🎮 Clash X", "🍃 Clash for Windows", "💻 ClashX Pro", "📱 Clash for Android",
+        "🐚 ShellClash", "🔧 OpenClash", "🎯 PassWall", "🔰 Hello World",
+        "🐉 SSR Plus", "📡 BifrostV", "🌐 V2RayP", "🔷 SagerNet",
+        "🌀 Matsuri", "🎨 AnXray", "⚡ Hiddify", "📦 Streisand",
+        "🔮 NapsternetV", "🌙 v2rayNG", "🔗 WireGuard", "📡 Outline",
+        "🎯 Intra", "🛡️ V2Ray", "🔷 Xray", "⚡ Clash.R", "📱 CFW"
+    ];
 
-        if (isVpnClient) {
-            // Для прокси-клиента: берём текст подписки из скрытого div и отдаём как plain text
-            const subscriptionText = document.getElementById('subscriptionData').innerText.trim();
-            document.body.innerHTML = '';  // очищаем страницу
+    // Заполняем бейджи
+    const badgesContainer = document.querySelector('.badges');
+    if (badgesContainer) {
+        CLIENTS.forEach(client => {
+            const span = document.createElement('span');
+            span.className = 'badge';
+            span.textContent = client;
+            badgesContainer.appendChild(span);
+        });
+    }
+
+    // Определяем прокси-клиента по User-Agent
+    const ua = navigator.userAgent.toLowerCase();
+    const isVpnClient = (
+        ua.includes('happ') ||
+        ua.includes('clash') ||
+        ua.includes('v2ray') ||
+        ua.includes('shadowrocket') ||
+        ua.includes('surge') ||
+        ua.includes('quantumult') ||
+        ua.includes('stash') ||
+        ua.includes('karing') ||
+        ua.includes('nekobox') ||
+        ua.includes('xray') ||
+        ua.includes('sing-box') ||
+        ua.includes('hiddify') ||
+        ua.includes('napsternetv') ||
+        ua.includes('streisand') ||
+        ua.includes('matsuri') ||
+        ua.includes('sagernet') ||
+        ua.includes('anxray') ||
+        ua.includes('v2box') ||
+        ua.includes('pharos') ||
+        ua.includes('chisel') ||
+        ua.includes('cfw') ||
+        ua.includes('openclash') ||
+        ua.includes('passwall') ||
+        ua.includes('helloworld') ||
+        ua.includes('ssrplus')
+    );
+
+    if (isVpnClient) {
+        // Для прокси-клиента: берём текст подписки из скрытого div и отдаём как plain text
+        const subDiv = document.getElementById('subscriptionData');
+        if (subDiv) {
+            const subscriptionText = subDiv.innerText.trim();
+            document.body.innerHTML = '';
             const pre = document.createElement('pre');
             pre.style.whiteSpace = 'pre-wrap';
             pre.style.wordWrap = 'break-word';
@@ -187,284 +243,27 @@ vless://ad49050a-549f-41b8-bfb5-faf53b47c1bd@217.16.29.109:443?encryption=none&f
             pre.style.fontFamily = 'monospace';
             pre.textContent = subscriptionText;
             document.body.appendChild(pre);
-            // Останавливаем всё, чтобы игра не запустилась
-            return;
+        } else {
+            document.body.innerText = '# Ошибка: не найден текст подписки';
         }
+        // Останавливаем всё, чтобы не отображать страницу
+        throw new Error('Redirect to subscription');
+    }
 
-        // ---------- ИНИЦИАЛИЗАЦИЯ ИГРЫ (ТОЛЬКО ДЛЯ БРАУЗЕРА) ----------
-        const BOARD_SIZE = 20;
-        const CELL_SIZE = 20;
-        const canvas = document.getElementById('snakeCanvas');
-        const ctx = canvas.getContext('2d');
-        const scoreSpan = document.getElementById('scoreValue');
-        const statusDiv = document.getElementById('gameStatusText');
-        
-        let snake = [];
-        let food = { x: 12, y: 10 };
-        let direction = 'RIGHT';
-        let nextDirection = 'RIGHT';
-        let score = 0;
-        let gameLoop = null;
-        let gameActive = true;
-        const gameSpeed = 130;
-        
-        function initGame() {
-            const centerX = Math.floor(BOARD_SIZE/2);
-            const centerY = Math.floor(BOARD_SIZE/2);
-            snake = [
-                { x: centerX, y: centerY },
-                { x: centerX-1, y: centerY },
-                { x: centerX-2, y: centerY }
-            ];
-            direction = 'RIGHT';
-            nextDirection = 'RIGHT';
-            score = 0;
-            gameActive = true;
-            statusDiv.innerHTML = '▶ ИГРА';
-            statusDiv.style.color = '#ffcf9a';
-            updateScoreDisplay();
-            generateRandomFood();
-            drawGame();
-            clearGameInterval();
-            startGameLoop();
-        }
-        
-        function startGameLoop() {
-            if(gameLoop) clearInterval(gameLoop);
-            gameLoop = setInterval(gameTick, gameSpeed);
-        }
-        
-        function clearGameInterval() {
-            if(gameLoop) {
-                clearInterval(gameLoop);
-                gameLoop = null;
+    // Для браузера: показываем текущий URL для копирования
+    const currentUrl = window.location.href;
+    const subUrlSpan = document.getElementById('subUrl');
+    if (subUrlSpan) subUrlSpan.innerText = currentUrl;
+
+    window.copyUrl = function() {
+        navigator.clipboard.writeText(currentUrl).then(() => {
+            const toast = document.getElementById('toast');
+            if (toast) {
+                toast.style.opacity = '1';
+                setTimeout(() => toast.style.opacity = '0', 2000);
             }
-        }
-        
-        function updateScoreDisplay() {
-            scoreSpan.innerText = score;
-        }
-        
-        function generateRandomFood() {
-            const totalCells = BOARD_SIZE * BOARD_SIZE;
-            if(snake.length >= totalCells) {
-                gameActive = false;
-                statusDiv.innerHTML = '🏆 ПОБЕДА!';
-                statusDiv.style.color = '#ffd966';
-                clearGameInterval();
-                drawGame();
-                return;
-            }
-            let freeCells = [];
-            for(let i = 0; i < BOARD_SIZE; i++) {
-                for(let j = 0; j < BOARD_SIZE; j++) {
-                    if(!snake.some(segment => segment.x === i && segment.y === j)) {
-                        freeCells.push({x: i, y: j});
-                    }
-                }
-            }
-            if(freeCells.length === 0) {
-                gameActive = false;
-                statusDiv.innerHTML = '🏆 ПОБЕДА!';
-                statusDiv.style.color = '#ffd966';
-                clearGameInterval();
-                return;
-            }
-            const rand = Math.floor(Math.random() * freeCells.length);
-            food = freeCells[rand];
-        }
-        
-        function gameTick() {
-            if(!gameActive) return;
-            const newDir = nextDirection;
-            const canChange = 
-                (newDir === 'RIGHT' && direction !== 'LEFT') ||
-                (newDir === 'LEFT' && direction !== 'RIGHT') ||
-                (newDir === 'UP' && direction !== 'DOWN') ||
-                (newDir === 'DOWN' && direction !== 'UP');
-            if(canChange) direction = newDir;
-            
-            let newHead = { ...snake[0] };
-            switch(direction) {
-                case 'RIGHT': newHead.x += 1; break;
-                case 'LEFT':  newHead.x -= 1; break;
-                case 'UP':    newHead.y -= 1; break;
-                case 'DOWN':  newHead.y += 1; break;
-            }
-            
-            const willEat = (newHead.x === food.x && newHead.y === food.y);
-            
-            if(willEat) {
-                snake.unshift(newHead);
-                score++;
-                updateScoreDisplay();
-                generateRandomFood();
-                if(!gameActive) {
-                    drawGame();
-                    return;
-                }
-            } else {
-                snake.unshift(newHead);
-                snake.pop();
-            }
-            
-            const head = snake[0];
-            if(head.x < 0 || head.x >= BOARD_SIZE || head.y < 0 || head.y >= BOARD_SIZE) {
-                gameOver();
-                return;
-            }
-            for(let i = 1; i < snake.length; i++) {
-                if(snake[i].x === head.x && snake[i].y === head.y) {
-                    gameOver();
-                    return;
-                }
-            }
-            drawGame();
-        }
-        
-        function gameOver() {
-            if(!gameActive) return;
-            gameActive = false;
-            statusDiv.innerHTML = '💀 GAME OVER';
-            statusDiv.style.color = '#ffaaaa';
-            clearGameInterval();
-            drawGame();
-        }
-        
-        function drawGame() {
-            if(!canvas || !ctx) return;
-            ctx.fillStyle = '#1e3a2a';
-            ctx.fillRect(0, 0, 400, 400);
-            ctx.strokeStyle = '#2b5e3b';
-            ctx.lineWidth = 0.5;
-            for(let i = 0; i <= BOARD_SIZE; i++) {
-                ctx.beginPath();
-                ctx.moveTo(i*CELL_SIZE, 0);
-                ctx.lineTo(i*CELL_SIZE, 400);
-                ctx.stroke();
-                ctx.moveTo(0, i*CELL_SIZE);
-                ctx.lineTo(400, i*CELL_SIZE);
-                ctx.stroke();
-            }
-            // еда
-            ctx.fillStyle = '#e74c3c';
-            ctx.beginPath();
-            ctx.arc(food.x*CELL_SIZE + CELL_SIZE/2, food.y*CELL_SIZE + CELL_SIZE/2, CELL_SIZE/2 - 2, 0, Math.PI*2);
-            ctx.fill();
-            ctx.fillStyle = '#f1c40f';
-            ctx.beginPath();
-            ctx.arc(food.x*CELL_SIZE + CELL_SIZE/2 - 2, food.y*CELL_SIZE + CELL_SIZE/2 - 2, 2, 0, Math.PI*2);
-            ctx.fill();
-            // змейка
-            for(let i=0; i<snake.length; i++) {
-                const seg = snake[i];
-                const x = seg.x * CELL_SIZE;
-                const y = seg.y * CELL_SIZE;
-                const grad = ctx.createLinearGradient(x, y, x+CELL_SIZE, y+CELL_SIZE);
-                if(i === 0) {
-                    grad.addColorStop(0, '#7cb518');
-                    grad.addColorStop(1, '#5b8c2f');
-                } else {
-                    grad.addColorStop(0, '#3c9e3c');
-                    grad.addColorStop(1, '#2d6a2d');
-                }
-                ctx.fillStyle = grad;
-                ctx.fillRect(x+1, y+1, CELL_SIZE-2, CELL_SIZE-2);
-                if(i === 0) {
-                    ctx.fillStyle = '#ffffff';
-                    ctx.beginPath();
-                    ctx.arc(x+CELL_SIZE-6, y+6, 3, 0, Math.PI*2);
-                    ctx.arc(x+6, y+6, 3, 0, Math.PI*2);
-                    ctx.fill();
-                    ctx.fillStyle = '#000000';
-                    ctx.beginPath();
-                    ctx.arc(x+CELL_SIZE-5, y+5, 1.2, 0, Math.PI*2);
-                    ctx.arc(x+7, y+5, 1.2, 0, Math.PI*2);
-                    ctx.fill();
-                }
-            }
-            if(!gameActive) {
-                ctx.fillStyle = 'rgba(0,0,0,0.6)';
-                ctx.fillRect(0, 0, 400, 400);
-                ctx.font = 'bold 24px monospace';
-                ctx.fillStyle = '#ffd966';
-                ctx.textAlign = 'center';
-                if(statusDiv.innerHTML.includes('ПОБЕДА')) {
-                    ctx.fillText('✨ ПОБЕДА ✨', 200, 210);
-                } else {
-                    ctx.fillText('☠️ GAME OVER ☠️', 200, 210);
-                }
-                ctx.font = '14px monospace';
-                ctx.fillStyle = '#dddddd';
-                ctx.fillText('нажми "НОВАЯ"', 200, 270);
-            }
-        }
-        
-        function changeDirection(newDir) {
-            if(!gameActive) return;
-            if((newDir === 'RIGHT' && direction === 'LEFT') ||
-               (newDir === 'LEFT' && direction === 'RIGHT') ||
-               (newDir === 'UP' && direction === 'DOWN') ||
-               (newDir === 'DOWN' && direction === 'UP')) {
-                return;
-            }
-            nextDirection = newDir;
-        }
-        
-        function handleKey(e) {
-            const key = e.key;
-            e.preventDefault();
-            if(key === 'ArrowUp') changeDirection('UP');
-            else if(key === 'ArrowDown') changeDirection('DOWN');
-            else if(key === 'ArrowLeft') changeDirection('LEFT');
-            else if(key === 'ArrowRight') changeDirection('RIGHT');
-            else if(key === ' ' || key === 'Space') {
-                if(!gameActive) restartGame();
-            }
-        }
-        
-        let touchStart = null;
-        function handleTouchStart(e) {
-            e.preventDefault();
-            const rect = canvas.getBoundingClientRect();
-            const touch = e.touches[0];
-            touchStart = { x: touch.clientX - rect.left, y: touch.clientY - rect.top };
-        }
-        
-        function handleTouchEnd(e) {
-            if(!touchStart) return;
-            e.preventDefault();
-            const rect = canvas.getBoundingClientRect();
-            const endX = e.changedTouches[0].clientX - rect.left;
-            const endY = e.changedTouches[0].clientY - rect.top;
-            const dx = endX - touchStart.x;
-            const dy = endY - touchStart.y;
-            if(Math.abs(dx) < 15 && Math.abs(dy) < 15) return;
-            if(Math.abs(dx) > Math.abs(dy)) {
-                if(dx > 0) changeDirection('RIGHT');
-                else changeDirection('LEFT');
-            } else {
-                if(dy > 0) changeDirection('DOWN');
-                else changeDirection('UP');
-            }
-            touchStart = null;
-        }
-        
-        function restartGame() {
-            clearGameInterval();
-            initGame();
-        }
-        
-        window.addEventListener('load', () => {
-            initGame();
-            window.addEventListener('keydown', handleKey);
-            canvas.addEventListener('touchstart', handleTouchStart, {passive: false});
-            canvas.addEventListener('touchend', handleTouchEnd);
-            canvas.addEventListener('touchcancel', () => { touchStart = null; });
-            document.getElementById('restartButton').addEventListener('click', () => restartGame());
-            canvas.addEventListener('contextmenu', (e) => e.preventDefault());
-        });
-    })();
+        }).catch(() => alert('Скопируйте вручную: ' + currentUrl));
+    };
 </script>
 </body>
 </html>

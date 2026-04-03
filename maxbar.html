@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>MaxBar VPN</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #8B0000 0%, #4B0082 100%);
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            padding: 30px;
+            text-align: center;
+            border: 1px solid rgba(255,68,68,0.5);
+        }
+        h1 { color: #FF6B6B; font-size: 2em; }
+        .url-box {
+            background: #00000055;
+            padding: 15px;
+            border-radius: 16px;
+            margin: 20px 0;
+            word-break: break-all;
+            font-family: monospace;
+            color: #FFB6C1;
+        }
+        button {
+            background: linear-gradient(135deg, #FF4444, #8B008B);
+            border: none;
+            padding: 12px 24px;
+            border-radius: 40px;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            transform: scale(1.02);
+            opacity: 0.9;
+        }
+        .badge {
+            display: inline-block;
+            background: rgba(255,68,68,0.3);
+            border: 1px solid rgba(255,68,68,0.5);
+            border-radius: 20px;
+            padding: 4px 12px;
+            font-size: 12px;
+            margin: 4px;
+            color: #FFB6C1;
+        }
+        .footer {
+            margin-top: 30px;
+            font-size: 11px;
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔗 MaxBar VPN</h1>
+        <p>Скопируйте ссылку и добавьте в HAPP или другой прокси-клиент</p>
+        <div class="url-box" id="subUrl">https://maxids456.github.io/maxbar.html</div>
+        <button onclick="copyToClipboard()">📋 Скопировать ссылку</button>
+        
+        <h3 style="margin-top: 30px;">📱 Поддерживаемые клиенты:</h3>
+        <div>
+            <span class="badge">🔥 HAPP</span>
+            <span class="badge">🍎 Shadowrocket</span>
+            <span class="badge">🤖 v2rayNG</span>
+            <span class="badge">⚡ Clash Meta</span>
+            <span class="badge">📦 Sing-Box</span>
+            <span class="badge">📱 NekoBox</span>
+            <span class="badge">🌊 Surge</span>
+            <span class="badge">🌀 Quantumult X</span>
+        </div>
+        <div class="footer">🔒 Сервера обновляются автоматически</div>
+    </div>
+
+    <script>
+        // ==========================================
+        // 🔧 ЗДЕСЬ ВЫ МЕНЯЕТЕ СЕРВЕРА (ДОБАВЛЯЙТЕ/УБИРАЙТЕ СТРОЧКИ)
+        // ==========================================
+        const SERVERS = `
+vless://ad49050a-549f-41b8-bfb5-faf53b47c1bd@77.83.246.56:443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=ads.x5.ru&fp=chrome&pbk=3NdeikCxDY8b7vMWlkvaH3iEKx5edXQUHuJMePIYDWI&sid=ae692cbe19&spx=%2F&type=tcp#WiFi
+vless://ad49050a-549f-41b8-bfb5-faf53b47c1bd@77.239.123.17:443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=github.com&fp=chrome&pbk=jodgA_qDZEDR__0vH7nhW7_wBTJHlIJmuOYG-3s6tyY&sid=4de6e50317&spx=/&type=tcp#LTE
+vless://ad49050a-549f-41b8-bfb5-faf53b47c1bd@109.120.191.6:443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=api.vk.ru&fp=chrome&pbk=5Ljhw5kvURXXcEVlLzjICvf5QPAd1aW27xrpV6c88hk&sid=46&spx=/&type=tcp#Белые
+vless://ad49050a-549f-41b8-bfb5-faf53b47c1bd@217.16.29.109:443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=api.vk.com&fp=chrome&pbk=71vuXqOxHNXZpQjqsvhcywaeRFBlTGgxBqr5roo1zjA&sid=fe299c06&spx=%2F&type=tcp#Белые списки
+        `.trim();
+        // ==========================================
+
+        // Функция копирования ссылки
+        window.copyToClipboard = function() {
+            const url = document.getElementById('subUrl').innerText;
+            navigator.clipboard.writeText(url).then(() => {
+                alert('✅ Ссылка скопирована!');
+            }).catch(() => {
+                alert('Нажмите Ctrl+C чтобы скопировать');
+            });
+        };
+
+        // Определяем, открыто ли в HAPP (по User-Agent)
+        const ua = navigator.userAgent.toLowerCase();
+        const isVpnClient = (
+            ua.includes('happ') || 
+            ua.includes('clash') || 
+            ua.includes('v2ray') || 
+            ua.includes('shadowrocket') || 
+            ua.includes('surge') ||
+            ua.includes('quantumult') ||
+            ua.includes('stash') ||
+            ua.includes('karing') ||
+            ua.includes('nekobox')
+        );
+        
+        // Если это VPN-клиент — показываем только список серверов (чистый текст)
+        if (isVpnClient) {
+            document.body.innerHTML = `<pre style="white-space: pre-wrap; word-wrap: break-word; margin: 0; font-family: monospace;">${SERVERS}</pre>`;
+        }
+    </script>
+</body>
+</html>

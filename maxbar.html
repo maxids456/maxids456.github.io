@@ -131,7 +131,7 @@
 <body>
 <div class="container">
     <h1>🔗 MaxBar VPN</h1>
-    <div class="sub">Для подключения скопируйте ссылку и добавьте в HAPP</div>
+    <div class="sub">Для подключения скопируйте ссылку ниже и добавьте её в HAPP или другой прокси-клиент</div>
     <div class="url-box">
         <div class="url" id="subUrl">Загрузка...</div>
     </div>
@@ -146,25 +146,61 @@
         <span class="badge">📱 NekoBox</span>
         <span class="badge">🌊 Surge</span>
         <span class="badge">🌀 Quantumult X</span>
+        <span class="badge">🎨 Stash</span>
+        <span class="badge">🐱 Karing</span>
+        <span class="badge">🔥 Flclash</span>
+        <span class="badge">🦊 V2Box</span>
+        <span class="badge">🐉 Pharos</span>
+        <span class="badge">🔷 Chisel</span>
+        <span class="badge">⚙️ Clash Verge</span>
+        <span class="badge">📡 Clash Nyanpasu</span>
+        <span class="badge">🎮 Clash X</span>
+        <span class="badge">🍃 Clash for Windows</span>
+        <span class="badge">💻 ClashX Pro</span>
+        <span class="badge">📱 Clash for Android</span>
+        <span class="badge">🐚 ShellClash</span>
+        <span class="badge">🔧 OpenClash</span>
+        <span class="badge">🎯 PassWall</span>
+        <span class="badge">🔰 Hello World</span>
+        <span class="badge">🐉 SSR Plus</span>
+        <span class="badge">📡 BifrostV</span>
+        <span class="badge">🌐 V2RayP</span>
+        <span class="badge">🔷 SagerNet</span>
+        <span class="badge">🌀 Matsuri</span>
+        <span class="badge">🎨 AnXray</span>
+        <span class="badge">⚡ Hiddify</span>
+        <span class="badge">📦 Streisand</span>
+        <span class="badge">🔮 NapsternetV</span>
+        <span class="badge">🌙 v2rayNG</span>
+        <span class="badge">🔗 WireGuard</span>
+        <span class="badge">📡 Outline</span>
+        <span class="badge">🎯 Intra</span>
+        <span class="badge">🛡️ V2Ray</span>
+        <span class="badge">🔷 Xray</span>
+        <span class="badge">⚡ Clash.R</span>
+        <span class="badge">📱 CFW</span>
     </div>
 
     <div class="steps">
-        <p>🔧 Универсальный способ:</p>
+        <p>🔧 Универсальный способ (для любого прокси-клиента):</p>
         <ol>
-            <li>Открой прокси-клиент (HAPP, Shadowrocket, v2rayNG и др.)</li>
-            <li>Найди <strong>«Добавить подписку»</strong> или <strong>«Import from URL»</strong></li>
-            <li>Вставь скопированную ссылку</li>
-            <li>Нажми <strong>«Добавить»</strong> → сервера появятся</li>
+            <li>Открой свой прокси-клиент (HAPP, Shadowrocket, v2rayNG и др.)</li>
+            <li>Найди кнопку <strong>«Добавить подписку»</strong> или <strong>«Import from URL»</strong></li>
+            <li>Вставь скопированную выше ссылку в поле URL</li>
+            <li>Нажми <strong>«Добавить»</strong> → сервера появятся в списке</li>
+            <li>Подключайся и наслаждайся!</li>
         </ol>
         <p>⚡ Для HAPP:</p>
-        <ul><li>Открой HAPP → «➕ Добавить подписку» → вставь ссылку → «ОК»</li></ul>
+        <ul><li>Открой HAPP → нажми <strong>«➕ Добавить подписку»</strong> → вставь ссылку → <strong>«ОК»</strong></li></ul>
         <p>🍎 Для Shadowrocket:</p>
-        <ul><li>Нажми «+» → «Subscribe» → вставь ссылку → «Save»</li></ul>
+        <ul><li>Нажми <strong>«+»</strong> → выбери <strong>«Subscribe»</strong> → вставь ссылку → <strong>«Save»</strong></li></ul>
+        <p>🤖 Для v2rayNG:</p>
+        <ul><li>Нажми <strong>«➕»</strong> → <strong>«Import Subscription»</strong> → вставь ссылку → <strong>«OK»</strong></li></ul>
     </div>
 
     <div class="footer">
-        🔒 Подписка обновляется автоматически из Gist<br>
-        📡 При проблемах пиши поддержке
+        🔒 Подписка обновляется автоматически (сервера берутся из Gist)<br>
+        📡 При проблемах пиши в поддержку Telegram: @MaxBarVPN
     </div>
 </div>
 <div id="toast" class="toast">✅ Ссылка скопирована!</div>
@@ -175,54 +211,20 @@
     const GIST_ID = 'e37c04e7d7896aeffdf6355cb87c7f61';
     // =================================================
 
-    const SUBSCRIPTION_URL = `https://raw.githubusercontent.com/${GIST_OWNER}/${GIST_ID}/raw`;
-    const CURRENT_PAGE_URL = window.location.href;
+    // Прямая raw-ссылка на содержимое Gist (то, что нужно вставлять в HAPP)
+    const RAW_URL = `https://raw.githubusercontent.com/${GIST_OWNER}/${GIST_ID}/raw`;
 
-    // Отображаем ссылку для копирования (этот же URL)
-    document.getElementById('subUrl').innerText = CURRENT_PAGE_URL;
+    // Показываем эту ссылку на странице
+    document.getElementById('subUrl').innerText = RAW_URL;
 
-    // Копирование
+    // Функция копирования
     window.copyUrl = function() {
-        const url = CURRENT_PAGE_URL;
-        navigator.clipboard.writeText(url).then(() => {
+        navigator.clipboard.writeText(RAW_URL).then(() => {
             const toast = document.getElementById('toast');
             toast.style.opacity = '1';
             setTimeout(() => toast.style.opacity = '0', 2000);
-        }).catch(() => alert('Скопируйте вручную: ' + url));
+        }).catch(() => alert('Скопируйте вручную: ' + RAW_URL));
     };
-
-    // Определяем, открыто ли в HAPP / прокси-клиенте
-    const ua = navigator.userAgent.toLowerCase();
-    const isVpnClient = (
-        ua.includes('happ') ||
-        ua.includes('clash') ||
-        ua.includes('v2ray') ||
-        ua.includes('shadowrocket') ||
-        ua.includes('surge') ||
-        ua.includes('quantumult') ||
-        ua.includes('stash') ||
-        ua.includes('karing') ||
-        ua.includes('nekobox')
-    );
-
-    if (isVpnClient) {
-        // Загружаем свежие сервера из Gist и показываем как plain text
-        fetch(SUBSCRIPTION_URL)
-            .then(res => {
-                if (!res.ok) throw new Error('Gist недоступен');
-                return res.text();
-            })
-            .then(data => {
-                // Если данные пустые или нет vless — покажем ошибку
-                if (!data || (!data.includes('vless://') && !data.includes('ss://'))) {
-                    throw new Error('Нет серверов');
-                }
-                document.body.innerHTML = `<pre style="white-space: pre-wrap; word-wrap: break-word; margin: 0; font-family: monospace;">${data}</pre>`;
-            })
-            .catch(() => {
-                document.body.innerText = 'Ошибка загрузки подписки. Проверьте Gist.';
-            });
-    }
 </script>
 </body>
 </html>

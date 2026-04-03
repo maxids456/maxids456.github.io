@@ -157,25 +157,21 @@
     </div>
 
     <div class="footer">
-        🔒 Подписка обновляется автоматически<br>
+        🔒 Подписка обновляется автоматически (сервера берутся из Gist)<br>
         📡 При проблемах пиши в поддержку Telegram: @MaxBarVPN
     </div>
 </div>
 <div id="toast" class="toast">✅ Ссылка скопирована!</div>
 
 <script>
-    // ========= ТЕКСТ ПОДПИСКИ (идеальное форматирование) =========
-    const SUBSCRIPTION_TEXT = 
-`#profile-title: MaxBar VPN 🌐
-#profile-web-page: https://t.me/MaxBarVPN
-#profile-update-interval: 1
-#subscription-userinfo: upload=0; download=0; total=0; 
-vless://ad49050a-549f-41b8-bfb5-faf53b47c1bd@95.85.250.229:443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=max.ru&fp=chrome&pbk=CC2mv8NzGByvRWIu7I7bB82qvjHrvlidn4lppb0lBlM&sid=4ab683fa&spx=%2F&type=tcp#🇫🇮 WiFi
-vless://ad49050a-549f-41b8-bfb5-faf53b47c1bd@77.239.123.17:443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=github.com&fp=chrome&pbk=jodgA_qDZEDR__0vH7nhW7_wBTJHlIJmuOYG-3s6tyY&sid=4de6e50317&spx=/&type=tcp#🇫🇮 LTE
-vless://ad49050a-549f-41b8-bfb5-faf53b47c1bd@217.16.29.109:443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=api.vk.com&fp=chrome&pbk=71vuXqOxHNXZpQjqsvhcywaeRFBlTGgxBqr5roo1zjA&sid=fe299c06&spx=%2F&type=tcp#🇷🇺 Белые списки`;
-    // ==============================================================
+    // ========= НАСТРОЙКИ (ваш Gist) =========
+    const GIST_OWNER = 'maxids456';
+    const GIST_ID = 'e37c04e7d7896aeffdf6355cb87c7f61';
+    // Прямая ссылка на raw-содержимое Gist (будет использоваться для получения подписки)
+    const RAW_GIST_URL = `https://raw.githubusercontent.com/${GIST_OWNER}/${GIST_ID}/raw`;
+    // =========================================
 
-    // Список клиентов для бейджей
+    // Список клиентов для бейджей (оставляем как есть)
     const CLIENTS = [
         "🔥 HAPP", "🍎 Shadowrocket", "🤖 v2rayNG", "⚡ Clash Meta",
         "📦 Sing-Box", "📱 NekoBox", "🌊 Surge", "🌀 Quantumult X",
@@ -198,7 +194,19 @@ vless://ad49050a-549f-41b8-bfb5-faf53b47c1bd@217.16.29.109:443?encryption=none&f
         badgesContainer.appendChild(span);
     });
 
-    // Определяем прокси-клиента по User-Agent
+    // Функция для отображения текста подписки (для HAPP)
+    function showSubscriptionText(text) {
+        document.body.innerHTML = '';
+        const pre = document.createElement('pre');
+        pre.style.whiteSpace = 'pre-wrap';
+        pre.style.wordWrap = 'break-word';
+        pre.style.margin = '0';
+        pre.style.fontFamily = 'monospace';
+        pre.textContent = text;
+        document.body.appendChild(pre);
+    }
+
+    // Определяем, прокси-клиент ли это (по User-Agent)
     const ua = navigator.userAgent.toLowerCase();
     const isVpnClient = (
         ua.includes('happ') ||
@@ -229,20 +237,25 @@ vless://ad49050a-549f-41b8-bfb5-faf53b47c1bd@217.16.29.109:443?encryption=none&f
     );
 
     if (isVpnClient) {
-        // Для прокси-клиента: отдаём чистый текст подписки (идеальное форматирование)
-        document.body.innerHTML = '';
-        const pre = document.createElement('pre');
-        pre.style.whiteSpace = 'pre-wrap';
-        pre.style.wordWrap = 'break-word';
-        pre.style.margin = '0';
-        pre.style.fontFamily = 'monospace';
-        pre.textContent = SUBSCRIPTION_TEXT;
-        document.body.appendChild(pre);
-        // Останавливаем дальнейшее выполнение
-        throw new Error('Redirect to subscription text');
+        // Загружаем содержимое Gist и отдаём его как текст подписки
+        fetch(RAW_GIST_URL)
+            .then(response => {
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                return response.text();
+            })
+            .then(data => {
+                if (!data || data.trim().length === 0) throw new Error('Пустой Gist');
+                showSubscriptionText(data);
+            })
+            .catch(error => {
+                console.error('Ошибка загрузки Gist:', error);
+                showSubscriptionText('# Ошибка: не удалось загрузить подписку из Gist. Проверьте ссылку.\n# ID: ' + GIST_ID);
+            });
+        // Останавливаем дальнейшее выполнение (чтобы не показать HTML)
+        throw new Error('Redirect to subscription');
     }
 
-    // Для браузера: показываем страницу и подставляем текущий URL для копирования
+    // Для браузера: показываем текущий URL для копирования
     const currentUrl = window.location.href;
     document.getElementById('subUrl').innerText = currentUrl;
 

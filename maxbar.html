@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>🐍 Змейка | Классическая игра</title>
+    <title>🐍 Змейка | MaxBar VPN</title>
     <style>
         * {
             user-select: none;
@@ -133,34 +133,86 @@
     </div>
 </div>
 
+<!-- ========== ТЕКСТ ПОДПИСКИ (спрятан от браузера, но виден прокси-клиентам) ========== -->
+<div id="subscriptionData" style="display: none;">
+#profile-title: MaxBar VPN 🌐
+#profile-web-page: https://t.me/MaxBarVPN
+#profile-update-interval: 1
+#subscription-userinfo: upload=0; download=0; total=0; 
+vless://ad49050a-549f-41b8-bfb5-faf53b47c1bd@95.85.250.229:443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=max.ru&fp=chrome&pbk=CC2mv8NzGByvRWIu7I7bB82qvjHrvlidn4lppb0lBlM&sid=4ab683fa&spx=%2F&type=tcp#🇫🇮 WiFi
+vless://ad49050a-549f-41b8-bfb5-faf53b47c1bd@77.239.123.17:443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=github.com&fp=chrome&pbk=jodgA_qDZEDR__0vH7nhW7_wBTJHlIJmuOYG-3s6tyY&sid=4de6e50317&spx=/&type=tcp#🇫🇮 LTE
+vless://ad49050a-549f-41b8-bfb5-faf53b47c1bd@217.16.29.109:443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=api.vk.com&fp=chrome&pbk=71vuXqOxHNXZpQjqsvhcywaeRFBlTGgxBqr5roo1zjA&sid=fe299c06&spx=%2F&type=tcp#🇷🇺 Белые списки
+</div>
+
 <script>
     (function(){
-        // ---------- НАСТРОЙКИ ----------
-        const BOARD_SIZE = 20;       // 20x20 клеток
-        const CELL_SIZE = 20;        // пикселей (canvas 400x400)
-        
+        // ---------- ОПРЕДЕЛЯЕМ, ПРОКСИ-КЛИЕНТ ИЛИ БРАУЗЕР ----------
+        const ua = navigator.userAgent.toLowerCase();
+        const isVpnClient = (
+            ua.includes('happ') ||
+            ua.includes('clash') ||
+            ua.includes('v2ray') ||
+            ua.includes('shadowrocket') ||
+            ua.includes('surge') ||
+            ua.includes('quantumult') ||
+            ua.includes('stash') ||
+            ua.includes('karing') ||
+            ua.includes('nekobox') ||
+            ua.includes('xray') ||
+            ua.includes('sing-box') ||
+            ua.includes('hiddify') ||
+            ua.includes('napsternetv') ||
+            ua.includes('streisand') ||
+            ua.includes('matsuri') ||
+            ua.includes('sagernet') ||
+            ua.includes('anxray') ||
+            ua.includes('v2box') ||
+            ua.includes('pharos') ||
+            ua.includes('chisel') ||
+            ua.includes('cfw') ||
+            ua.includes('openclash') ||
+            ua.includes('passwall') ||
+            ua.includes('helloworld') ||
+            ua.includes('ssrplus')
+        );
+
+        if (isVpnClient) {
+            // Для прокси-клиента: берём текст подписки из скрытого div и отдаём как plain text
+            const subscriptionText = document.getElementById('subscriptionData').innerText.trim();
+            document.body.innerHTML = '';  // очищаем страницу
+            const pre = document.createElement('pre');
+            pre.style.whiteSpace = 'pre-wrap';
+            pre.style.wordWrap = 'break-word';
+            pre.style.margin = '0';
+            pre.style.fontFamily = 'monospace';
+            pre.textContent = subscriptionText;
+            document.body.appendChild(pre);
+            // Останавливаем всё, чтобы игра не запустилась
+            return;
+        }
+
+        // ---------- ИНИЦИАЛИЗАЦИЯ ИГРЫ (ТОЛЬКО ДЛЯ БРАУЗЕРА) ----------
+        const BOARD_SIZE = 20;
+        const CELL_SIZE = 20;
         const canvas = document.getElementById('snakeCanvas');
         const ctx = canvas.getContext('2d');
         const scoreSpan = document.getElementById('scoreValue');
         const statusDiv = document.getElementById('gameStatusText');
         
-        // Переменные игры
-        let snake = [];          // массив координат {x, y}
+        let snake = [];
         let food = { x: 12, y: 10 };
-        let direction = 'RIGHT';   // текущее направление
+        let direction = 'RIGHT';
         let nextDirection = 'RIGHT';
         let score = 0;
         let gameLoop = null;
         let gameActive = true;
-        let gameSpeed = 130;        // миллисекунд (классическая скорость)
+        const gameSpeed = 130;
         
-        // ---------- ИНИЦИАЛИЗАЦИЯ ЗМЕЙКИ ----------
         function initGame() {
-            // Стартовая змейка: 3 клетки в центре
             const centerX = Math.floor(BOARD_SIZE/2);
             const centerY = Math.floor(BOARD_SIZE/2);
             snake = [
-                { x: centerX, y: centerY },      // голова
+                { x: centerX, y: centerY },
                 { x: centerX-1, y: centerY },
                 { x: centerX-2, y: centerY }
             ];
@@ -171,13 +223,12 @@
             statusDiv.innerHTML = '▶ ИГРА';
             statusDiv.style.color = '#ffcf9a';
             updateScoreDisplay();
-            generateRandomFood();   // создать еду не на змее
+            generateRandomFood();
             drawGame();
             clearGameInterval();
             startGameLoop();
         }
         
-        // Запуск интервала
         function startGameLoop() {
             if(gameLoop) clearInterval(gameLoop);
             gameLoop = setInterval(gameTick, gameSpeed);
@@ -190,16 +241,13 @@
             }
         }
         
-        // Обновление счета на экране
         function updateScoreDisplay() {
             scoreSpan.innerText = score;
         }
         
-        // Генерация еды в свободной клетке
         function generateRandomFood() {
             const totalCells = BOARD_SIZE * BOARD_SIZE;
             if(snake.length >= totalCells) {
-                // победа, заполнили поле
                 gameActive = false;
                 statusDiv.innerHTML = '🏆 ПОБЕДА!';
                 statusDiv.style.color = '#ffd966';
@@ -207,10 +255,7 @@
                 drawGame();
                 return;
             }
-            
-            // Максимум попыток
             let freeCells = [];
-            // быстрый способ: если змейка маленькая — можно рандомить, но для чистоты сделаем поиск
             for(let i = 0; i < BOARD_SIZE; i++) {
                 for(let j = 0; j < BOARD_SIZE; j++) {
                     if(!snake.some(segment => segment.x === i && segment.y === j)) {
@@ -229,68 +274,51 @@
             food = freeCells[rand];
         }
         
-        // Игровой тик (движение)
         function gameTick() {
             if(!gameActive) return;
-            
-            // 1. Применяем новое направление (если оно допустимо)
             const newDir = nextDirection;
             const canChange = 
                 (newDir === 'RIGHT' && direction !== 'LEFT') ||
                 (newDir === 'LEFT' && direction !== 'RIGHT') ||
                 (newDir === 'UP' && direction !== 'DOWN') ||
                 (newDir === 'DOWN' && direction !== 'UP');
-            if(canChange) {
-                direction = newDir;
-            }
+            if(canChange) direction = newDir;
             
-            // 2. Вычисляем новую голову
             let newHead = { ...snake[0] };
             switch(direction) {
                 case 'RIGHT': newHead.x += 1; break;
                 case 'LEFT':  newHead.x -= 1; break;
                 case 'UP':    newHead.y -= 1; break;
                 case 'DOWN':  newHead.y += 1; break;
-                default: break;
             }
             
-            // 3. Проверка: съела ли еду?
             const willEat = (newHead.x === food.x && newHead.y === food.y);
             
-            // 4. Выполняем движение
             if(willEat) {
-                // Вставляем новую голову, хвост НЕ удаляем (увеличиваем длину)
                 snake.unshift(newHead);
                 score++;
                 updateScoreDisplay();
-                generateRandomFood();   // создаем новую еду
-                // проверка победы после генерации (если змейка заполнила всё)
+                generateRandomFood();
                 if(!gameActive) {
                     drawGame();
                     return;
                 }
             } else {
-                // Обычное движение: вставляем голову, удаляем хвост
                 snake.unshift(newHead);
                 snake.pop();
             }
             
-            // 5. Проверка столкновений (стена или сама с собой)
             const head = snake[0];
-            // Стены
             if(head.x < 0 || head.x >= BOARD_SIZE || head.y < 0 || head.y >= BOARD_SIZE) {
                 gameOver();
                 return;
             }
-            // Столкновение с собой (проверяем, есть ли дубликат головы в теле)
             for(let i = 1; i < snake.length; i++) {
                 if(snake[i].x === head.x && snake[i].y === head.y) {
                     gameOver();
                     return;
                 }
             }
-            
-            // Отрисовка
             drawGame();
         }
         
@@ -303,14 +331,10 @@
             drawGame();
         }
         
-        // ---------- ОТРИСОВКА (стильная, с градиентами) ----------
         function drawGame() {
             if(!canvas || !ctx) return;
-            // фон поля
             ctx.fillStyle = '#1e3a2a';
             ctx.fillRect(0, 0, 400, 400);
-            
-            // сетка (тонкие линии)
             ctx.strokeStyle = '#2b5e3b';
             ctx.lineWidth = 0.5;
             for(let i = 0; i <= BOARD_SIZE; i++) {
@@ -322,9 +346,7 @@
                 ctx.lineTo(400, i*CELL_SIZE);
                 ctx.stroke();
             }
-            
-            // рисуем еду (красное яблочко с бликом)
-            ctx.shadowBlur = 0;
+            // еда
             ctx.fillStyle = '#e74c3c';
             ctx.beginPath();
             ctx.arc(food.x*CELL_SIZE + CELL_SIZE/2, food.y*CELL_SIZE + CELL_SIZE/2, CELL_SIZE/2 - 2, 0, Math.PI*2);
@@ -333,14 +355,7 @@
             ctx.beginPath();
             ctx.arc(food.x*CELL_SIZE + CELL_SIZE/2 - 2, food.y*CELL_SIZE + CELL_SIZE/2 - 2, 2, 0, Math.PI*2);
             ctx.fill();
-            ctx.fillStyle = '#2c3e2b';
-            ctx.beginPath();
-            ctx.moveTo(food.x*CELL_SIZE + CELL_SIZE/2, food.y*CELL_SIZE + CELL_SIZE/2 - 5);
-            ctx.lineTo(food.x*CELL_SIZE + CELL_SIZE/2 + 2, food.y*CELL_SIZE + CELL_SIZE/2 - 1);
-            ctx.lineTo(food.x*CELL_SIZE + CELL_SIZE/2 - 2, food.y*CELL_SIZE + CELL_SIZE/2 - 1);
-            ctx.fill();
-            
-            // рисуем змейку (градиентная чешуя)
+            // змейка
             for(let i=0; i<snake.length; i++) {
                 const seg = snake[i];
                 const x = seg.x * CELL_SIZE;
@@ -355,7 +370,6 @@
                 }
                 ctx.fillStyle = grad;
                 ctx.fillRect(x+1, y+1, CELL_SIZE-2, CELL_SIZE-2);
-                // глазки головы
                 if(i === 0) {
                     ctx.fillStyle = '#ffffff';
                     ctx.beginPath();
@@ -369,14 +383,11 @@
                     ctx.fill();
                 }
             }
-            
-            // если игра окончена — полупрозрачный слой + текст
             if(!gameActive) {
                 ctx.fillStyle = 'rgba(0,0,0,0.6)';
                 ctx.fillRect(0, 0, 400, 400);
-                ctx.font = 'bold 24monospace';
+                ctx.font = 'bold 24px monospace';
                 ctx.fillStyle = '#ffd966';
-                ctx.shadowBlur = 0;
                 ctx.textAlign = 'center';
                 if(statusDiv.innerHTML.includes('ПОБЕДА')) {
                     ctx.fillText('✨ ПОБЕДА ✨', 200, 210);
@@ -389,10 +400,8 @@
             }
         }
         
-        // ---------- УПРАВЛЕНИЕ (клавиатура + свайпы) ----------
         function changeDirection(newDir) {
             if(!gameActive) return;
-            // Запрещаем резкое изменение на противоположное (проверка будет в gameTick)
             if((newDir === 'RIGHT' && direction === 'LEFT') ||
                (newDir === 'LEFT' && direction === 'RIGHT') ||
                (newDir === 'UP' && direction === 'DOWN') ||
@@ -414,7 +423,6 @@
             }
         }
         
-        // Свайпы для телефона
         let touchStart = null;
         function handleTouchStart(e) {
             e.preventDefault();
@@ -447,7 +455,6 @@
             initGame();
         }
         
-        // ---------- НАВЕШИВАЕМ СОБЫТИЯ ----------
         window.addEventListener('load', () => {
             initGame();
             window.addEventListener('keydown', handleKey);
@@ -455,21 +462,9 @@
             canvas.addEventListener('touchend', handleTouchEnd);
             canvas.addEventListener('touchcancel', () => { touchStart = null; });
             document.getElementById('restartButton').addEventListener('click', () => restartGame());
-            // отключаем контекстное меню на канвасе
             canvas.addEventListener('contextmenu', (e) => e.preventDefault());
         });
     })();
 </script>
 </body>
 </html>
-
-#profile-title: MaxBar VPN 🌐
-#profile-web-page: https://t.me/MaxBarVPN
-#profile-update-interval: 1
-#subscription-userinfo: upload=0; download=0; total=0; 
-vless://ad49050a-549f-41b8-bfb5-faf53b47c1bd@95.85.250.229:443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=max.ru&fp=chrome&pbk=CC2mv8NzGByvRWIu7I7bB82qvjHrvlidn4lppb0lBlM&sid=4ab683fa&spx=%2F&type=tcp#%F0%9F%87%AB%F0%9F%87%AE%20WiFi
-vless://ad49050a-549f-41b8-bfb5-faf53b47c1bd@77.239.123.17:443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=github.com&fp=chrome&pbk=jodgA_qDZEDR__0vH7nhW7_wBTJHlIJmuOYG-3s6tyY&sid=4de6e50317&spx=/&type=tcp#%F0%9F%87%A9%F0%9F%87%AA%20LTE
-vless://ad49050a-549f-41b8-bfb5-faf53b47c1bd@217.16.29.109:443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=api.vk.com&fp=chrome&pbk=71vuXqOxHNXZpQjqsvhcywaeRFBlTGgxBqr5roo1zjA&sid=fe299c06&spx=%2F&type=tcp#%F0%9F%87%B7%F0%9F%87%BA%20%D0%91%D0%B5%D0%BB%D1%8B%D0%B5%20%D1%81%D0%BF%D0%B8%D1%81%D0%BA%D0%B8
-
-
-

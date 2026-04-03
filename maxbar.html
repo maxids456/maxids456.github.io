@@ -137,9 +137,7 @@
     </div>
     <button onclick="copyUrl()">📋 Скопировать ссылку</button>
 
-    <div class="badges">
-        <!-- Здесь будут бейджи, заполним скриптом -->
-    </div>
+    <div class="badges"></div>
 
     <div class="steps">
         <p>🔧 Универсальный способ (для любого прокси-клиента):</p>
@@ -166,17 +164,18 @@
 <div id="toast" class="toast">✅ Ссылка скопирована!</div>
 
 <script>
-    // ========= ТЕКСТ ПОДПИСКИ (то, что будет добавляться в HAPP) =========
-    const SUBSCRIPTION_TEXT = `#profile-title: MaxBar VPN 🌐
+    // ========= ТЕКСТ ПОДПИСКИ (идеальное форматирование) =========
+    const SUBSCRIPTION_TEXT = 
+`#profile-title: MaxBar VPN 🌐
 #profile-web-page: https://t.me/MaxBarVPN
 #profile-update-interval: 1
 #subscription-userinfo: upload=0; download=0; total=0; 
 vless://ad49050a-549f-41b8-bfb5-faf53b47c1bd@95.85.250.229:443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=max.ru&fp=chrome&pbk=CC2mv8NzGByvRWIu7I7bB82qvjHrvlidn4lppb0lBlM&sid=4ab683fa&spx=%2F&type=tcp#🇫🇮 WiFi
 vless://ad49050a-549f-41b8-bfb5-faf53b47c1bd@77.239.123.17:443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=github.com&fp=chrome&pbk=jodgA_qDZEDR__0vH7nhW7_wBTJHlIJmuOYG-3s6tyY&sid=4de6e50317&spx=/&type=tcp#🇫🇮 LTE
 vless://ad49050a-549f-41b8-bfb5-faf53b47c1bd@217.16.29.109:443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=api.vk.com&fp=chrome&pbk=71vuXqOxHNXZpQjqsvhcywaeRFBlTGgxBqr5roo1zjA&sid=fe299c06&spx=%2F&type=tcp#🇷🇺 Белые списки`;
-    // ====================================================================
+    // ==============================================================
 
-    // Список клиентов для бейджей (большой набор)
+    // Список клиентов для бейджей
     const CLIENTS = [
         "🔥 HAPP", "🍎 Shadowrocket", "🤖 v2rayNG", "⚡ Clash Meta",
         "📦 Sing-Box", "📱 NekoBox", "🌊 Surge", "🌀 Quantumult X",
@@ -192,16 +191,14 @@ vless://ad49050a-549f-41b8-bfb5-faf53b47c1bd@217.16.29.109:443?encryption=none&f
 
     // Заполняем бейджи
     const badgesContainer = document.querySelector('.badges');
-    if (badgesContainer) {
-        CLIENTS.forEach(client => {
-            const span = document.createElement('span');
-            span.className = 'badge';
-            span.textContent = client;
-            badgesContainer.appendChild(span);
-        });
-    }
+    CLIENTS.forEach(client => {
+        const span = document.createElement('span');
+        span.className = 'badge';
+        span.textContent = client;
+        badgesContainer.appendChild(span);
+    });
 
-    // Определяем, является ли запрос от прокси-клиента
+    // Определяем прокси-клиента по User-Agent
     const ua = navigator.userAgent.toLowerCase();
     const isVpnClient = (
         ua.includes('happ') ||
@@ -231,9 +228,8 @@ vless://ad49050a-549f-41b8-bfb5-faf53b47c1bd@217.16.29.109:443?encryption=none&f
         ua.includes('ssrplus')
     );
 
-    // Если это прокси-клиент — заменяем всю страницу на текст подписки
     if (isVpnClient) {
-        // Полностью очищаем body и вставляем plain text
+        // Для прокси-клиента: отдаём чистый текст подписки (идеальное форматирование)
         document.body.innerHTML = '';
         const pre = document.createElement('pre');
         pre.style.whiteSpace = 'pre-wrap';
@@ -242,11 +238,11 @@ vless://ad49050a-549f-41b8-bfb5-faf53b47c1bd@217.16.29.109:443?encryption=none&f
         pre.style.fontFamily = 'monospace';
         pre.textContent = SUBSCRIPTION_TEXT;
         document.body.appendChild(pre);
-        // Останавливаем дальнейшее выполнение скрипта
+        // Останавливаем дальнейшее выполнение
         throw new Error('Redirect to subscription text');
     }
 
-    // Иначе (браузер) — показываем красивую страницу, подставляем текущий URL для копирования
+    // Для браузера: показываем страницу и подставляем текущий URL для копирования
     const currentUrl = window.location.href;
     document.getElementById('subUrl').innerText = currentUrl;
 

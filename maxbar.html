@@ -57,7 +57,7 @@
             font-size: 14px;
             color: #FFB6C1;
         }
-        button {
+        button, .btn-download {
             background: linear-gradient(135deg, #FF4444, #8B008B);
             border: none;
             padding: 12px 28px;
@@ -68,8 +68,10 @@
             cursor: pointer;
             transition: transform 0.2s;
             margin: 8px;
+            text-decoration: none;
+            display: inline-block;
         }
-        button:hover {
+        button:hover, .btn-download:hover {
             transform: scale(1.02);
         }
         .btn-download {
@@ -147,7 +149,8 @@
         <div class="url" id="subUrl">Загрузка...</div>
     </div>
     <button onclick="copyUrl()">📋 Скопировать ссылку</button>
-    <button class="btn-download" onclick="downloadTxt()">📥 Скачать MaxBarVPN.txt (для v2rayTun и др.)</button>
+    <!-- Теперь это просто ссылка на реальный файл maxbar.txt -->
+    <a href="maxbar.txt" download="MaxBarVPN.txt" class="btn-download">📥 Скачать MaxBarVPN.txt (для v2rayTun и др.)</a>
 
     <div class="badges"></div>
 
@@ -180,7 +183,7 @@
 <div id="toast" class="toast">✅ Ссылка скопирована!</div>
 
 <script>
-    // ========= ТЕКСТ ПОДПИСКИ (единственное место, где хранятся сервера) =========
+    // ========= ТЕКСТ ПОДПИСКИ (используется для авто-подписки прокси-клиентов) =========
     const SUBSCRIPTION_TEXT = `
 #profile-title: MaxBar VPN 🌐
 #profile-web-page: https://t.me/MaxBarVPN
@@ -276,19 +279,6 @@ vless://ad49050a-549f-41b8-bfb5-faf53b47c1bd@217.16.29.109:443?encryption=none&f
                 setTimeout(() => toast.style.opacity = '0', 2000);
             }
         }).catch(() => alert('Скопируйте вручную: ' + newUrl));
-    };
-
-    // Скачивание текстового файла (исправлено для Telegram)
-    window.downloadTxt = function() {
-        // Кодируем содержимое для data: URI
-        const encodedContent = encodeURIComponent(SUBSCRIPTION_TEXT);
-        const dataUri = 'data:text/plain;charset=utf-8,' + encodedContent;
-        const link = document.createElement('a');
-        link.href = dataUri;
-        link.download = 'MaxBarVPN.txt';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
     };
 </script>
 </body>

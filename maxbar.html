@@ -117,6 +117,16 @@
             font-size: 11px;
             color: #aaa;
         }
+        .warning-box {
+            background: rgba(255, 200, 100, 0.2);
+            border-left: 4px solid #FFD700;
+            padding: 10px;
+            margin: 15px 0;
+            text-align: left;
+            font-size: 12px;
+            color: #FFE4B5;
+            border-radius: 8px;
+        }
         .toast {
             position: fixed;
             bottom: 30px;
@@ -153,6 +163,10 @@
             <li>Вставь скопированную выше ссылку в поле URL → <strong>«ОК»</strong></li>
             <li>Если клиент не поддерживает автоматический импорт, скачай <strong>MaxBarVPN.txt</strong> и добавь как файл подписки.</li>
         </ol>
+        <div class="warning-box">
+            ⚠️ <strong>Важно:</strong> При добавлении подписки <strong>через ссылку</strong> (скопированную выше) автообновление работает (сервера обновляются при изменении файла на сайте).<br>
+            При добавлении через <strong>скачанный файл .txt</strong> автообновления <strong>НЕТ</strong> — нужно будет периодически скачивать новый файл и добавлять его заново.
+        </div>
         <p>⚡ Для HAPP:</p>
         <ul><li>Открой HAPP → нажми <strong>«➕ Добавить подписку»</strong> → вставь ссылку → <strong>«ОК»</strong></li></ul>
         <p>🤖 Для v2rayNG / v2rayTun:</p>
@@ -171,10 +185,11 @@
 
 <script>
     // ========= ТЕКСТ ПОДПИСКИ (единственное место, где хранятся сервера) =========
-    const SUBSCRIPTION_TEXT = `#profile-title: "MaxBar VPN 🌐"
-#profile-web-page: "https://t.me/MaxBarVPN"
-#profile-update-interval: "1"
-#subscription-userinfo: "upload=0; download=0; total=0;"
+    // Формат без лишних кавычек — гарантирует отображение названия в HAPP
+    const SUBSCRIPTION_TEXT = `#profile-title: MaxBar VPN 🌐
+#profile-web-page: https://t.me/MaxBarVPN
+#profile-update-interval: 1
+#subscription-userinfo: upload=0; download=0; total=0; 
 vless://ad49050a-549f-41b8-bfb5-faf53b47c1bd@95.85.250.229:443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=max.ru&fp=chrome&pbk=CC2mv8NzGByvRWIu7I7bB82qvjHrvlidn4lppb0lBlM&sid=4ab683fa&spx=%2F&type=tcp#🇫🇮%20WiFi
 vless://ad49050a-549f-41b8-bfb5-faf53b47c1bd@77.239.123.17:443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=github.com&fp=chrome&pbk=jodgA_qDZEDR__0vH7nhW7_wBTJHlIJmuOYG-3s6tyY&sid=4de6e50317&spx=/&type=tcp#🇫🇮%20LTE
 vless://ad49050a-549f-41b8-bfb5-faf53b47c1bd@217.16.29.109:443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=api.vk.com&fp=chrome&pbk=71vuXqOxHNXZpQjqsvhcywaeRFBlTGgxBqr5roo1zjA&sid=fe299c06&spx=%2F&type=tcp#🇷🇺%20Белые%20списки`;

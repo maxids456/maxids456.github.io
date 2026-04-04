@@ -149,7 +149,7 @@
         <div class="url" id="subUrl">Создаю ссылку подписки...</div>
     </div>
     <button onclick="copyUrl()">📋 Скопировать</button>
-    <a href="MaxBar.txt" download="MaxBarVPN.txt" class="btn-download">📥 Скачать файлом (для v2rayTun и др.)</a>
+    <button class="btn-download" onclick="downloadFile()">📥 Скачать файлом (для v2rayTun и др.)</button>
 
     <p style="color: #CC0000; font-weight: bold; margin-bottom: 10px;">Поддерживаемые клиенты:</p>
     <div class="badges"></div>
@@ -239,12 +239,14 @@ vless://ad49050a-549f-41b8-bfb5-faf53b47c1bd@217.16.29.109:443?encryption=none&f
         ua.includes('v2box') ||
         ua.includes('pharos') ||
         ua.includes('chisel') ||
+        ua.includes('v2raytun') ||
+        ua.includes('vless') ||
         ua.includes('cfw') ||
         ua.includes('openclash') ||
         ua.includes('passwall') ||
         ua.includes('helloworld') ||
         ua.includes('ssrplus') ||
-        ua.includes('v2raytun')
+        ua.includes('ssrplus')
     );
 
     if (isProxyClient) {
@@ -274,6 +276,18 @@ vless://ad49050a-549f-41b8-bfb5-faf53b47c1bd@217.16.29.109:443?encryption=none&f
                 setTimeout(() => toast.style.opacity = '0', 2000);
             }
         }).catch(() => alert('Скопируйте вручную: ' + newUrl));
+    };
+
+    window.downloadFile = function() {
+        const blob = new Blob([SUBSCRIPTION_TEXT], { type: 'text/plain' });
+        const link = document.createElement('a');
+        const url = URL.createObjectURL(blob);
+        link.href = url;
+        link.download = 'MaxBar.txt';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
     };
 </script>
 </body>

@@ -37,11 +37,7 @@
             background-clip: text;
             color: transparent;
             margin-bottom: 16px;
-            animation: glow 2s ease-in-out infinite;
-        }
-        @keyframes glow {
-            0%, 100% { text-shadow: 0 0 5px rgba(255, 68, 68, 0.3); }
-            50% { text-shadow: 0 0 20px rgba(255, 68, 68, 0.6); }
+            text-shadow: 0 0 15px rgba(255, 68, 68, 0.5);
         }
         .sub {
             font-size: clamp(16px, 4vw, 20px);
@@ -148,7 +144,7 @@
     <h1>🔗 MaxBar VPN</h1>
     <div class="sub">Для автоматического добавления скопируйте ссылку и вставьте в HAPP</div>
     <div class="url-box">
-        <div class="https://clck.ru/3SvKKw" id="subUrl">Загрузка...</div>
+        <div class="url" id="subUrl">Загрузка...</div>
     </div>
     <button onclick="copyUrl()">📋 Скопировать ссылку</button>
     <button class="btn-download" onclick="downloadTxt()">📥 Скачать MaxBarVPN.txt (для v2rayTun и др.)</button>
@@ -268,20 +264,20 @@ vless://ad49050a-549f-41b8-bfb5-faf53b47c1bd@217.16.29.109:443?encryption=none&f
         throw new Error('Redirect to subscription');
     }
 
-    // Для браузера: показываем текущий URL для копирования
-    const currentUrl = window.location.href;
+    // Для браузера: показываем новую ссылку для копирования (clck.ru)
+    const newUrl = 'https://clck.ru/3SvKKw';
     const subUrlSpan = document.getElementById('subUrl');
-    if (subUrlSpan) subUrlSpan.innerText = currentUrl;
+    if (subUrlSpan) subUrlSpan.innerText = newUrl;
 
-    // Копирование ссылки
+    // Копирование ссылки (копируется НОВАЯ ссылка)
     window.copyUrl = function() {
-        navigator.clipboard.writeText(currentUrl).then(() => {
+        navigator.clipboard.writeText(newUrl).then(() => {
             const toast = document.getElementById('toast');
             if (toast) {
                 toast.style.opacity = '1';
                 setTimeout(() => toast.style.opacity = '0', 2000);
             }
-        }).catch(() => alert('Скопируйте вручную: ' + currentUrl));
+        }).catch(() => alert('Скопируйте вручную: ' + newUrl));
     };
 
     // Скачивание текстового файла MaxBarVPN.txt

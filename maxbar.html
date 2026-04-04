@@ -182,7 +182,7 @@
 <div id="toast" class="toast">✅ Скопировано!</div>
 
 <script>
-    // ========= ИДЕАЛЬНЫЙ ТЕКСТ ПОДПИСКИ (без лишних пробелов и пустых строк) =========
+
     const SUBSCRIPTION_TEXT = `
 #profile-title: MaxBar VPN 🌐
 #profile-update-interval: 1
@@ -206,7 +206,7 @@ vless://ad49050a-549f-41b8-bfb5-faf53b47c1bd@217.16.29.109:443?encryption=none&f
         "⚡ v2rayTun"
     ];
 
-    // Заполняем бейджи
+
     const badgesContainer = document.querySelector('.badges');
     if (badgesContainer) {
         CLIENTS.forEach(client => {
@@ -217,7 +217,7 @@ vless://ad49050a-549f-41b8-bfb5-faf53b47c1bd@217.16.29.109:443?encryption=none&f
         });
     }
 
-    // Определяем прокси-клиента по User-Agent (автоматическая подписка)
+
     const ua = navigator.userAgent.toLowerCase();
     const isProxyClient = (
         ua.includes('happ') ||
@@ -249,7 +249,7 @@ vless://ad49050a-549f-41b8-bfb5-faf53b47c1bd@217.16.29.109:443?encryption=none&f
     );
 
     if (isProxyClient) {
-        // Для прокси-клиента: отдаём чистый текст подписки (замена страницы)
+
         document.body.innerHTML = '';
         const pre = document.createElement('pre');
         pre.style.whiteSpace = 'pre-wrap';
@@ -261,12 +261,12 @@ vless://ad49050a-549f-41b8-bfb5-faf53b47c1bd@217.16.29.109:443?encryption=none&f
         throw new Error('Redirect to subscription');
     }
 
-    // Для браузера: показываем новую ссылку для копирования
+
     const newUrl = 'https://clck.ru/3SvKKw';
     const subUrlSpan = document.getElementById('subUrl');
     if (subUrlSpan) subUrlSpan.innerText = newUrl;
 
-    // Копирование ссылки
+
     window.copyUrl = function() {
         navigator.clipboard.writeText(newUrl).then(() => {
             const toast = document.getElementById('toast');

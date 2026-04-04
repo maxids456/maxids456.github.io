@@ -135,19 +135,15 @@
 <div id="toast" class="toast">✅ Ссылка скопирована!</div>
 
 <script>
-// ===== ТЕКСТ ПОДПИСКИ =====
-// Если нужно добавить/изменить сервера — редактируй только эту переменную
-const SUBSCRIPTION_TEXT = [
-    '#profile-title: MaxBar VPN 🌐',
-    '#profile-web-page: https://t.me/MaxBarVPN',
-    '#profile-update-interval: 1',
-    '#subscription-userinfo: upload=0; download=0; total=0;',
-    'vless://ad49050a-549f-41b8-bfb5-faf53b47c1bd@95.85.250.229:443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=max.ru&fp=chrome&pbk=CC2mv8NzGByvRWIu7I7bB82qvjHrvlidn4lppb0lBlM&sid=4ab683fa&spx=%2F&type=tcp#🇫🇮 WiFi',
-    'vless://ad49050a-549f-41b8-bfb5-faf53b47c1bd@77.239.123.17:443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=github.com&fp=chrome&pbk=jodgA_qDZEDR__0vH7nhW7_wBTJHlIJmuOYG-3s6tyY&sid=4de6e50317&spx=/&type=tcp#🇫🇮 LTE',
-    'vless://ad49050a-549f-41b8-bfb5-faf53b47c1bd@217.16.29.109:443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=api.vk.com&fp=chrome&pbk=71vuXqOxHNXZpQjqsvhcywaeRFBlTGgxBqr5roo1zjA&sid=fe299c06&spx=%2F&type=tcp#🇷🇺 Белые списки'
-].join('\n');
+// ===== СЕРВЕРА =====
+// Имена серверов (#...) — только ASCII или URL-encoded, иначе btoa() ломается
+const SERVERS = [
+    'vless://ad49050a-549f-41b8-bfb5-faf53b47c1bd@95.85.250.229:443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=max.ru&fp=chrome&pbk=CC2mv8NzGByvRWIu7I7bB82qvjHrvlidn4lppb0lBlM&sid=4ab683fa&spx=%2F&type=tcp#FI-WiFi',
+    'vless://ad49050a-549f-41b8-bfb5-faf53b47c1bd@77.239.123.17:443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=github.com&fp=chrome&pbk=jodgA_qDZEDR__0vH7nhW7_wBTJHlIJmuOYG-3s6tyY&sid=4de6e50317&spx=/&type=tcp#FI-LTE',
+    'vless://ad49050a-549f-41b8-bfb5-faf53b47c1bd@217.16.29.109:443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=api.vk.com&fp=chrome&pbk=71vuXqOxHNXZpQjqsvhcywaeRFBlTGgxBqr5roo1zjA&sid=fe299c06&spx=%2F&type=tcp#RU-Whitelist'
+];
 
-// ===== БЕЙДЖИ КЛИЕНТОВ =====
+// ===== БЕЙДЖИ =====
 const CLIENTS = [
     "🔥 HAPP","🍎 Shadowrocket","🤖 v2rayNG","⚡ v2rayTun","⚡ Clash Meta",
     "📦 Sing-Box","📱 NekoBox","🌊 Surge","🌀 Quantumult X","🎨 Stash",
@@ -162,21 +158,15 @@ const CLIENTS = [
 document.getElementById('badgesContainer').innerHTML =
     CLIENTS.map(c => `<span class="badge">${c}</span>`).join('');
 
-// ===== ОПРЕДЕЛЕНИЕ: БРАУЗЕР ИЛИ ПРОКСИ-КЛИЕНТ =====
-// Белый список браузеров: все настоящие браузеры имеют Mozilla/5.0
-// + идентификатор движка рендеринга (Gecko / AppleWebKit / Trident / Presto)
-// + платформу (Windows / Mac / Linux / iPhone / Android и т.д.)
-// Прокси-клиенты либо не имеют UA, либо имеют собственный простой UA
-function detectBrowser(ua) {
+// ===== ОПРЕДЕЛЕНИЕ БРАУЗЕРА (белый список) =====
+function isBrowser() {
+    const ua = navigator.userAgent;
     if (!ua) return false;
     const u = ua.toLowerCase();
-    // Обязательное условие для всех браузеров мира
     if (!u.includes('mozilla/5.0')) return false;
-    // Движок рендеринга
     const hasEngine = u.includes('gecko/') || u.includes('applewebkit/') ||
                       u.includes('trident/') || u.includes('presto/');
     if (!hasEngine) return false;
-    // Платформа (desktop + mobile браузеры)
     const hasPlatform = u.includes('windows nt') || u.includes('macintosh') ||
                         u.includes('linux') || u.includes('iphone') ||
                         u.includes('ipad') || u.includes('android') ||
@@ -184,18 +174,21 @@ function detectBrowser(ua) {
     return hasPlatform;
 }
 
-const isBrowser = detectBrowser(navigator.userAgent);
-
-if (!isBrowser) {
+if (!isBrowser()) {
     // ===== РЕЖИМ ПОДПИСКИ для прокси-клиентов =====
-    // Base64-кодируем подписку — это стандарт v2ray/clash/happ/shadowrocket
-    // Без base64 часть клиентов пишет "неизвестный тип контента"
-    const encoded = btoa(unescape(encodeURIComponent(SUBSCRIPTION_TEXT)));
-    document.open('text/plain', 'replace');
-    document.write(encoded);
-    document.close();
+    // Стандарт: строки серверов, разделённые \n, закодированные в base64
+    // btoa() работает только с ASCII — все не-ASCII символы уже убраны из имён серверов выше
+    const raw = SERVERS.join('\n');
+    const encoded = btoa(raw);
+
+    // Полностью очищаем документ, оставляем только голый base64-текст
+    document.documentElement.innerHTML =
+        '<head><meta charset="UTF-8"></head><body style="margin:0;padding:0;background:#fff;color:#000;font-family:monospace;white-space:pre;">' +
+        encoded +
+        '</body>';
+
 } else {
-    // ===== РЕЖИМ БРАУЗЕРА — показываем HTML-страницу =====
+    // ===== РЕЖИМ БРАУЗЕРА =====
     const currentUrl = window.location.href;
     document.getElementById('subUrl').innerText = currentUrl;
 

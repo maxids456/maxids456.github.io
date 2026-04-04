@@ -149,7 +149,6 @@
         <div class="url" id="subUrl">Загрузка...</div>
     </div>
     <button onclick="copyUrl()">📋 Скопировать ссылку</button>
-    <!-- Теперь это просто ссылка на реальный файл maxbar.txt -->
     <a href="maxbar.txt" download="MaxBarVPN.txt" class="btn-download">📥 Скачать MaxBarVPN.txt (для v2rayTun и др.)</a>
 
     <div class="badges"></div>
@@ -183,16 +182,15 @@
 <div id="toast" class="toast">✅ Ссылка скопирована!</div>
 
 <script>
-    // ========= ТЕКСТ ПОДПИСКИ (используется для авто-подписки прокси-клиентов) =========
-    const SUBSCRIPTION_TEXT = `
-#profile-title: MaxBar VPN 🌐
+    // ========= ИДЕАЛЬНЫЙ ТЕКСТ ПОДПИСКИ (без лишних пробелов и пустых строк) =========
+    const SUBSCRIPTION_TEXT = 
+`#profile-title: MaxBar VPN 🌐
 #profile-web-page: https://t.me/MaxBarVPN
 #profile-update-interval: 1
-#subscription-userinfo: upload=0; download=0; total=0; 
-vless://ad49050a-549f-41b8-bfb5-faf53b47c1bd@95.85.250.229:443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=max.ru&fp=chrome&pbk=CC2mv8NzGByvRWIu7I7bB82qvjHrvlidn4lppb0lBlM&sid=4ab683fa&spx=%2F&type=tcp#🇫🇮 WiFi
-vless://ad49050a-549f-41b8-bfb5-faf53b47c1bd@77.239.123.17:443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=github.com&fp=chrome&pbk=jodgA_qDZEDR__0vH7nhW7_wBTJHlIJmuOYG-3s6tyY&sid=4de6e50317&spx=/&type=tcp#🇫🇮 LTE
-vless://ad49050a-549f-41b8-bfb5-faf53b47c1bd@217.16.29.109:443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=api.vk.com&fp=chrome&pbk=71vuXqOxHNXZpQjqsvhcywaeRFBlTGgxBqr5roo1zjA&sid=fe299c06&spx=%2F&type=tcp#🇷🇺 Белые списки
-`;
+#subscription-userinfo: upload=0; download=0; total=0;
+vless://ad49050a-549f-41b8-bfb5-faf53b47c1bd@95.85.250.229:443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=max.ru&fp=chrome&pbk=CC2mv8NzGByvRWIu7I7bB82qvjHrvlidn4lppb0lBlM&sid=4ab683fa&spx=%2F&type=tcp#🇫🇮%20WiFi
+vless://ad49050a-549f-41b8-bfb5-faf53b47c1bd@77.239.123.17:443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=github.com&fp=chrome&pbk=jodgA_qDZEDR__0vH7nhW7_wBTJHlIJmuOYG-3s6tyY&sid=4de6e50317&spx=/&type=tcp#🇫🇮%20LTE
+vless://ad49050a-549f-41b8-bfb5-faf53b47c1bd@217.16.29.109:443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=api.vk.com&fp=chrome&pbk=71vuXqOxHNXZpQjqsvhcywaeRFBlTGgxBqr5roo1zjA&sid=fe299c06&spx=%2F&type=tcp#🇷🇺%20Белые%20списки`;
     // ===========================================================================
 
     // Список прокси-клиентов для бейджей

@@ -71,9 +71,14 @@
             font-size: 18px;
             cursor: pointer;
             transition: transform 0.2s;
+            margin: 8px;
         }
         button:hover {
             transform: scale(1.02);
+        }
+        .btn-download {
+            background: linear-gradient(135deg, #2e7d5e, #1e5a45);
+            margin-top: 10px;
         }
         .badges {
             display: flex;
@@ -131,54 +136,51 @@
 <body>
 <div class="container">
     <h1>🔗 MaxBar VPN</h1>
-    <div class="sub">Для подключения скопируйте ссылку и добавьте в HAPP</div>
+    <div class="sub">Для автоматического добавления скопируйте ссылку и вставьте в HAPP</div>
     <div class="url-box">
         <div class="url" id="subUrl">Загрузка...</div>
     </div>
     <button onclick="copyUrl()">📋 Скопировать ссылку</button>
+    <button class="btn-download" onclick="downloadTxt()">📥 Скачать MaxBarVPN.txt (для v2rayTun и др.)</button>
 
     <div class="badges"></div>
 
     <div class="steps">
         <p>🔧 Универсальный способ (для любого прокси-клиента):</p>
         <ol>
-            <li>Открой свой прокси-клиент (HAPP, Shadowrocket, v2rayNG, v2rayTun и др.)</li>
+            <li>Открой свой прокси-клиент (HAPP, Shadowrocket, v2rayNG, v2rayTun, Hiddify и др.)</li>
             <li>Найди кнопку <strong>«Добавить подписку»</strong> или <strong>«Import from URL»</strong></li>
-            <li>Вставь скопированную выше ссылку в поле URL</li>
-            <li>Нажми <strong>«Добавить»</strong> → сервера появятся в списке</li>
-            <li>Подключайся и наслаждайся!</li>
+            <li>Вставь скопированную выше ссылку в поле URL → <strong>«ОК»</strong></li>
+            <li>Если клиент не поддерживает автоматический импорт, скачай <strong>MaxBarVPN.txt</strong> и добавь как файл подписки.</li>
         </ol>
         <p>⚡ Для HAPP:</p>
         <ul><li>Открой HAPP → нажми <strong>«➕ Добавить подписку»</strong> → вставь ссылку → <strong>«ОК»</strong></li></ul>
-        <p>🍎 Для Shadowrocket:</p>
-        <ul><li>Нажми <strong>«+»</strong> → выбери <strong>«Subscribe»</strong> → вставь ссылку → <strong>«Save»</strong></li></ul>
         <p>🤖 Для v2rayNG / v2rayTun:</p>
-        <ul><li>Нажми <strong>«➕»</strong> → <strong>«Import Subscription»</strong> → вставь ссылку → <strong>«OK»</strong></li></ul>
+        <ul><li>Нажми <strong>«➕»</strong> → <strong>«Import Subscription»</strong> → вставь ссылку → <strong>«OK»</strong><br>Или используй скачанный файл: <strong>«➕» → «Import Config from File»</strong></li></ul>
         <p>🌀 Для Hiddify:</p>
         <ul><li>Нажми <strong>«➕»</strong> → <strong>«Новая подписка»</strong> → вставь ссылку → <strong>«Добавить»</strong></li></ul>
     </div>
 
     <div class="footer">
-        🔒 Подписка обновляется автоматически<br>
+        🔒 Подписка обновляется автоматически (сервера в одном месте)<br>
         📡 При проблемах пиши в поддержку Telegram: @MaxBarVPN<br>
         😘 VPN сервис создан компанией MaxKrashAO
     </div>
 </div>
 <div id="toast" class="toast">✅ Ссылка скопирована!</div>
 
-<!-- ========== ТЕКСТ ПОДПИСКИ (скрыт от браузера, но виден прокси-клиентам) ========== -->
-<div id="subscriptionData" style="display: none;">
-#profile-title: "MaxBar VPN 🌐"
+<script>
+    // ========= ТЕКСТ ПОДПИСКИ (единственное место, где хранятся сервера) =========
+    const SUBSCRIPTION_TEXT = `#profile-title: "MaxBar VPN 🌐"
 #profile-web-page: "https://t.me/MaxBarVPN"
 #profile-update-interval: "1"
 #subscription-userinfo: "upload=0; download=0; total=0;"
 vless://ad49050a-549f-41b8-bfb5-faf53b47c1bd@95.85.250.229:443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=max.ru&fp=chrome&pbk=CC2mv8NzGByvRWIu7I7bB82qvjHrvlidn4lppb0lBlM&sid=4ab683fa&spx=%2F&type=tcp#🇫🇮%20WiFi
 vless://ad49050a-549f-41b8-bfb5-faf53b47c1bd@77.239.123.17:443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=github.com&fp=chrome&pbk=jodgA_qDZEDR__0vH7nhW7_wBTJHlIJmuOYG-3s6tyY&sid=4de6e50317&spx=/&type=tcp#🇫🇮%20LTE
-vless://ad49050a-549f-41b8-bfb5-faf53b47c1bd@217.16.29.109:443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=api.vk.com&fp=chrome&pbk=71vuXqOxHNXZpQjqsvhcywaeRFBlTGgxBqr5roo1zjA&sid=fe299c06&spx=%2F&type=tcp#🇷🇺%20Белые%20списки
-</div>
+vless://ad49050a-549f-41b8-bfb5-faf53b47c1bd@217.16.29.109:443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=api.vk.com&fp=chrome&pbk=71vuXqOxHNXZpQjqsvhcywaeRFBlTGgxBqr5roo1zjA&sid=fe299c06&spx=%2F&type=tcp#🇷🇺%20Белые%20списки`;
+    // ===========================================================================
 
-<script>
-    // ========= СПИСОК ПРОКСИ-КЛИЕНТОВ ДЛЯ БЕЙДЖЕЙ =========
+    // Список прокси-клиентов для бейджей
     const CLIENTS = [
         "🔥 HAPP", "🍎 Shadowrocket", "🤖 v2rayNG", "⚡ Clash Meta",
         "📦 Sing-Box", "📱 NekoBox", "🌊 Surge", "🌀 Quantumult X",
@@ -204,12 +206,12 @@ vless://ad49050a-549f-41b8-bfb5-faf53b47c1bd@217.16.29.109:443?encryption=none&f
         });
     }
 
-    // Определяем прокси-клиента по User-Agent (добавлена поддержка v2rayTun)
+    // Определяем прокси-клиента по User-Agent (автоматическая подписка)
     const ua = navigator.userAgent.toLowerCase();
     const isProxyClient = (
         ua.includes('happ') ||
         ua.includes('clash') ||
-        ua.includes('v2ray') ||        // поймает v2rayNG, v2rayTun и другие
+        ua.includes('v2ray') ||      // v2rayNG, v2rayTun
         ua.includes('shadowrocket') ||
         ua.includes('surge') ||
         ua.includes('quantumult') ||
@@ -232,26 +234,20 @@ vless://ad49050a-549f-41b8-bfb5-faf53b47c1bd@217.16.29.109:443?encryption=none&f
         ua.includes('passwall') ||
         ua.includes('helloworld') ||
         ua.includes('ssrplus') ||
-        ua.includes('v2raytun')         // явное добавление v2rayTun
+        ua.includes('v2raytun')
     );
 
     if (isProxyClient) {
-        // Для прокси-клиента: берём текст подписки из скрытого div и заменяем страницу
-        const subDiv = document.getElementById('subscriptionData');
-        if (subDiv) {
-            const subscriptionText = subDiv.innerText.trim();
-            document.body.innerHTML = '';
-            const pre = document.createElement('pre');
-            pre.style.whiteSpace = 'pre-wrap';
-            pre.style.wordWrap = 'break-word';
-            pre.style.margin = '0';
-            pre.style.fontFamily = 'monospace';
-            pre.textContent = subscriptionText;
-            document.body.appendChild(pre);
-        } else {
-            document.body.innerText = '# Ошибка: не найден текст подписки';
-        }
-        // Останавливаем выполнение, чтобы не показывать HTML
+        // Для прокси-клиента: отдаём чистый текст подписки (замена страницы)
+        document.body.innerHTML = '';
+        const pre = document.createElement('pre');
+        pre.style.whiteSpace = 'pre-wrap';
+        pre.style.wordWrap = 'break-word';
+        pre.style.margin = '0';
+        pre.style.fontFamily = 'monospace';
+        pre.textContent = SUBSCRIPTION_TEXT;
+        document.body.appendChild(pre);
+        // Останавливаем выполнение, чтобы не показать HTML
         throw new Error('Redirect to subscription');
     }
 
@@ -260,6 +256,7 @@ vless://ad49050a-549f-41b8-bfb5-faf53b47c1bd@217.16.29.109:443?encryption=none&f
     const subUrlSpan = document.getElementById('subUrl');
     if (subUrlSpan) subUrlSpan.innerText = currentUrl;
 
+    // Копирование ссылки
     window.copyUrl = function() {
         navigator.clipboard.writeText(currentUrl).then(() => {
             const toast = document.getElementById('toast');
@@ -268,6 +265,19 @@ vless://ad49050a-549f-41b8-bfb5-faf53b47c1bd@217.16.29.109:443?encryption=none&f
                 setTimeout(() => toast.style.opacity = '0', 2000);
             }
         }).catch(() => alert('Скопируйте вручную: ' + currentUrl));
+    };
+
+    // Скачивание текстового файла MaxBarVPN.txt
+    window.downloadTxt = function() {
+        const blob = new Blob([SUBSCRIPTION_TEXT], { type: 'text/plain' });
+        const link = document.createElement('a');
+        const url = URL.createObjectURL(blob);
+        link.href = url;
+        link.download = 'MaxBarVPN.txt';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
     };
 </script>
 </body>

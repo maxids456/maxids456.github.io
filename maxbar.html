@@ -277,18 +277,22 @@ vless://ad49050a-549f-41b8-bfb5-faf53b47c1bd@217.16.29.109:443?encryption=none&f
         }).catch(() => alert('Скопируйте вручную: ' + newUrl));
     };
 
+    // Исправленная функция скачивания с принудительным именем MaxBar.txt
     window.downloadFile = function() {
         const content = SUBSCRIPTION_TEXT;
-        // Кодируем содержимое для передачи в URI
-        const encoded = encodeURIComponent(content);
-        // Используем data: URI с типом application/octet-stream для принудительного скачивания в Telegram
-        const dataUri = 'data:application/octet-stream;charset=utf-8,' + encoded;
+        // Создаём Blob с явным типом text/plain
+        const blob = new Blob([content], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
         const link = document.createElement('a');
-        link.href = dataUri;
-        link.download = 'MaxBar.txt';
+        link.href = url;
+        link.download = 'MaxBar.txt'; // принудительное имя файла
         document.body.appendChild(link);
         link.click();
-        document.body.removeChild(link);
+        // Задержка перед удалением, чтобы браузер успел начать скачивание
+        setTimeout(() => {
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+        }, 150);
     };
 </script>
 </body>

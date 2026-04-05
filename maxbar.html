@@ -57,7 +57,7 @@
             font-size: 14px;
             color: #FFB6C1;
         }
-        button, .btn-download {
+        button, .btn-download, .btn-copy {
             background: linear-gradient(135deg, #FF4444, #8B008B);
             border: none;
             padding: 12px 28px;
@@ -71,12 +71,14 @@
             text-decoration: none;
             display: inline-block;
         }
-        button:hover, .btn-download:hover {
+        button:hover, .btn-download:hover, .btn-copy:hover {
             transform: scale(1.02);
         }
         .btn-download {
             background: linear-gradient(135deg, #2e7d5e, #1e5a45);
-            margin-top: 10px;
+        }
+        .btn-copy {
+            background: linear-gradient(135deg, #1e5a8b, #0e3a5a);
         }
         .badges {
             display: flex;
@@ -148,8 +150,9 @@
     <div class="url-box">
         <div class="url" id="subUrl">Создаю ссылку подписки...</div>
     </div>
-    <button onclick="copyUrl()">📋 Скопировать</button>
-    <button class="btn-download" onclick="downloadFile()">📥 Скачать файлом (для v2rayTun и др.)</button>
+    <button onclick="copyUrl()">📋 Скопировать ссылку</button>
+    <a href="MaxBar.txt" download="MaxBar.txt" class="btn-download">📥 Скачать файлом (для v2rayTun и др.)</a>
+    <button class="btn-copy" onclick="copyText()">📄 Скопировать текст подписки</button>
 
     <p style="color: #CC0000; font-weight: bold; margin-bottom: 10px;">Поддерживаемые клиенты:</p>
     <div class="badges"></div>
@@ -164,13 +167,14 @@
 
         <p>🤖 Для v2rayTun и других (запасной):</p>
         <ol>
-            <li>Скачай файл <strong>MaxBar.txt</strong> (кнопка выше), затем в приложении нажми <strong>«➕» → «Import Config from File»</strong> и выбери скачанный файл.</li>
+            <li>Нажми <strong>«Скачать файлом»</strong> (или <strong>«Скопировать текст подписки»</strong> и сохрани как <strong>MaxBar.txt</strong>).</li>
+            <li>В приложении нажми <strong>«➕» → «Import Config from File»</strong> и выбери скачанный (или созданный) файл.</li>
             <li>Выбирай нужный сервер и пользуйся незаблокированным интернетом! 🥳</li>
         </ol>
 
         <div class="warning-box">
-            ⚠️ <strong>Важно:</strong> При добавлении подписки <strong>через ссылку</strong> (скопированную выше) автообновление работает (сервера сами обновляются при измении)<br>
-            При добавлении через <strong>файл</strong> автообновления <strong>НЕТ</strong> — нужно будет периодически скачивать новый файл и заменять его
+            ⚠️ <strong>Важно:</strong> При добавлении подписки <strong>через ссылку</strong> (скопированную выше) автообновление работает (сервера сами обновляются при изменении).<br>
+            При добавлении через <strong>файл</strong> автообновления <strong>НЕТ</strong> — нужно будет периодически скачивать новый файл.
         </div>
     </div>
 
@@ -182,7 +186,6 @@
 <div id="toast" class="toast">✅ Скопировано!</div>
 
 <script>
-
     const SUBSCRIPTION_TEXT = `
 #profile-title: MaxBar VPN 🌐
 #profile-update-interval: 1
@@ -205,7 +208,6 @@ vless://ad49050a-549f-41b8-bfb5-faf53b47c1bd@217.16.29.109:443?encryption=none&f
         "🛡️ V2Ray", "🔷 Xray", "📱 CFW", "⚡ v2rayTun"
     ];
 
-
     const badgesContainer = document.querySelector('.badges');
     if (badgesContainer) {
         CLIENTS.forEach(client => {
@@ -215,7 +217,6 @@ vless://ad49050a-549f-41b8-bfb5-faf53b47c1bd@217.16.29.109:443?encryption=none&f
             badgesContainer.appendChild(span);
         });
     }
-
 
     const ua = navigator.userAgent.toLowerCase();
     const isProxyClient = (
@@ -245,7 +246,6 @@ vless://ad49050a-549f-41b8-bfb5-faf53b47c1bd@217.16.29.109:443?encryption=none&f
         ua.includes('openclash') ||
         ua.includes('passwall') ||
         ua.includes('helloworld') ||
-        ua.includes('ssrplus') ||
         ua.includes('ssrplus')
     );
 
@@ -261,11 +261,9 @@ vless://ad49050a-549f-41b8-bfb5-faf53b47c1bd@217.16.29.109:443?encryption=none&f
         throw new Error('Redirect to subscription');
     }
 
-
     const newUrl = 'https://clck.ru/3SvKKw';
     const subUrlSpan = document.getElementById('subUrl');
     if (subUrlSpan) subUrlSpan.innerText = newUrl;
-
 
     window.copyUrl = function() {
         navigator.clipboard.writeText(newUrl).then(() => {
@@ -277,22 +275,14 @@ vless://ad49050a-549f-41b8-bfb5-faf53b47c1bd@217.16.29.109:443?encryption=none&f
         }).catch(() => alert('Скопируйте вручную: ' + newUrl));
     };
 
-    // Исправленная функция скачивания с принудительным именем MaxBar.txt
-    window.downloadFile = function() {
-        const content = SUBSCRIPTION_TEXT;
-        // Создаём Blob с явным типом text/plain
-        const blob = new Blob([content], { type: 'text/plain' });
-        const url = URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = 'MaxBar.txt'; // принудительное имя файла
-        document.body.appendChild(link);
-        link.click();
-        // Задержка перед удалением, чтобы браузер успел начать скачивание
-        setTimeout(() => {
-            document.body.removeChild(link);
-            URL.revokeObjectURL(url);
-        }, 150);
+    window.copyText = function() {
+        navigator.clipboard.writeText(SUBSCRIPTION_TEXT).then(() => {
+            const toast = document.getElementById('toast');
+            if (toast) {
+                toast.style.opacity = '1';
+                setTimeout(() => toast.style.opacity = '0', 2000);
+            }
+        }).catch(() => alert('Не удалось скопировать текст.'));
     };
 </script>
 </body>

@@ -164,13 +164,13 @@
 
         <p>🤖 Для v2rayTun и других (запасной):</p>
         <ol>
-            <li>Скачай файл <strong>MaxBarVPN.txt</strong> (кнопка выше), затем в приложении нажми <strong>«➕» → «Import Config from File»</strong> и выбери скачанный файл.</li>
+            <li>Скачай файл <strong>MaxBar.txt</strong> (кнопка выше), затем в приложении нажми <strong>«➕» → «Import Config from File»</strong> и выбери скачанный файл.</li>
             <li>Выбирай нужный сервер и пользуйся незаблокированным интернетом! 🥳</li>
         </ol>
 
         <div class="warning-box">
             ⚠️ <strong>Важно:</strong> При добавлении подписки <strong>через ссылку</strong> (скопированную выше) автообновление работает (сервера сами обновляются при измении)<br>
-            При добавлении через <strong>файл</strong> автообновления <strong>НЕТ</strong> — нужно будет периодически скачивать новый файл и заменять его.
+            При добавлении через <strong>файл</strong> автообновления <strong>НЕТ</strong> — нужно будет периодически скачивать новый файл и заменять его
         </div>
     </div>
 
@@ -250,7 +250,6 @@ vless://ad49050a-549f-41b8-bfb5-faf53b47c1bd@217.16.29.109:443?encryption=none&f
     );
 
     if (isProxyClient) {
-
         document.body.innerHTML = '';
         const pre = document.createElement('pre');
         pre.style.whiteSpace = 'pre-wrap';
@@ -279,15 +278,17 @@ vless://ad49050a-549f-41b8-bfb5-faf53b47c1bd@217.16.29.109:443?encryption=none&f
     };
 
     window.downloadFile = function() {
-        const blob = new Blob([SUBSCRIPTION_TEXT], { type: 'text/plain' });
+        const content = SUBSCRIPTION_TEXT;
+        // Кодируем содержимое для передачи в URI
+        const encoded = encodeURIComponent(content);
+        // Используем data: URI с типом application/octet-stream для принудительного скачивания в Telegram
+        const dataUri = 'data:application/octet-stream;charset=utf-8,' + encoded;
         const link = document.createElement('a');
-        const url = URL.createObjectURL(blob);
-        link.href = url;
+        link.href = dataUri;
         link.download = 'MaxBar.txt';
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
-        URL.revokeObjectURL(url);
     };
 </script>
 </body>

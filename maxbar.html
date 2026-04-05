@@ -57,7 +57,7 @@
             font-size: 14px;
             color: #FFB6C1;
         }
-        button, .btn-download, .btn-copy {
+        button, .btn-download {
             background: linear-gradient(135deg, #FF4444, #8B008B);
             border: none;
             padding: 12px 28px;
@@ -71,14 +71,12 @@
             text-decoration: none;
             display: inline-block;
         }
-        button:hover, .btn-download:hover, .btn-copy:hover {
+        button:hover, .btn-download:hover {
             transform: scale(1.02);
         }
         .btn-download {
             background: linear-gradient(135deg, #2e7d5e, #1e5a45);
-        }
-        .btn-copy {
-            background: linear-gradient(135deg, #1e5a8b, #0e3a5a);
+            margin-top: 10px;
         }
         .badges {
             display: flex;
@@ -152,7 +150,6 @@
     </div>
     <button onclick="copyUrl()">📋 Скопировать ссылку</button>
     <a href="MaxBar.txt" download="MaxBar.txt" class="btn-download">📥 Скачать файлом (для v2rayTun и др.)</a>
-    <button class="btn-copy" onclick="copyText()">📄 Скопировать текст подписки</button>
 
     <p style="color: #CC0000; font-weight: bold; margin-bottom: 10px;">Поддерживаемые клиенты:</p>
     <div class="badges"></div>
@@ -167,8 +164,8 @@
 
         <p>🤖 Для v2rayTun и других (запасной):</p>
         <ol>
-            <li>Нажми <strong>«Скачать файлом»</strong> (или <strong>«Скопировать текст подписки»</strong> и сохрани как <strong>MaxBar.txt</strong>).</li>
-            <li>В приложении нажми <strong>«➕» → «Import Config from File»</strong> и выбери скачанный (или созданный) файл.</li>
+            <li>Нажми <strong>«Скачать файлом»</strong> (кнопка выше), чтобы получить <strong>MaxBar.txt</strong>.</li>
+            <li>В приложении нажми <strong>«➕» → «Import Config from File»</strong> и выбери скачанный файл.</li>
             <li>Выбирай нужный сервер и пользуйся незаблокированным интернетом! 🥳</li>
         </ol>
 
@@ -273,16 +270,6 @@ vless://ad49050a-549f-41b8-bfb5-faf53b47c1bd@217.16.29.109:443?encryption=none&f
                 setTimeout(() => toast.style.opacity = '0', 2000);
             }
         }).catch(() => alert('Скопируйте вручную: ' + newUrl));
-    };
-
-    window.copyText = function() {
-        navigator.clipboard.writeText(SUBSCRIPTION_TEXT).then(() => {
-            const toast = document.getElementById('toast');
-            if (toast) {
-                toast.style.opacity = '1';
-                setTimeout(() => toast.style.opacity = '0', 2000);
-            }
-        }).catch(() => alert('Не удалось скопировать текст.'));
     };
 </script>
 </body>

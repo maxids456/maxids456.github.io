@@ -23,26 +23,33 @@
             max-width: 900px;
             width: 100%;
             background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(10px);
             border-radius: 32px;
             padding: 30px 24px;
             text-align: center;
             border: 1px solid rgba(255, 68, 68, 0.3);
         }
         h1 {
-            font-size: clamp(28px, 7vw, 56px);
+            font-size: 42px;
             font-weight: 900;
             background: linear-gradient(135deg, #FF6B6B, #FF4444, #DDA0DD, #BA55D3);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
             margin-bottom: 16px;
-            text-shadow: 0 0 15px rgba(255, 68, 68, 0.5);
+        }
+        @media (max-width: 480px) {
+            h1 { font-size: 28px; }
+        }
+        @media (min-width: 900px) {
+            h1 { font-size: 56px; }
         }
         .sub {
-            font-size: clamp(16px, 4vw, 20px);
+            font-size: 18px;
             color: #FFD700;
             margin-bottom: 30px;
+        }
+        @media (max-width: 480px) {
+            .sub { font-size: 16px; }
         }
         .url-box {
             background: #00000066;
@@ -66,12 +73,14 @@
             color: white;
             font-size: 18px;
             cursor: pointer;
+            -webkit-transition: -webkit-transform 0.2s;
             transition: transform 0.2s;
             margin: 8px;
             text-decoration: none;
             display: inline-block;
         }
         button:hover, .btn-download:hover {
+            -webkit-transform: scale(1.02);
             transform: scale(1.02);
         }
         .btn-download {
@@ -79,7 +88,9 @@
             margin-top: 10px;
         }
         .badges {
+            display: -webkit-flex;
             display: flex;
+            -webkit-flex-wrap: wrap;
             flex-wrap: wrap;
             justify-content: center;
             gap: 10px;
@@ -129,12 +140,14 @@
             position: fixed;
             bottom: 30px;
             left: 50%;
+            -webkit-transform: translateX(-50%);
             transform: translateX(-50%);
             background: #FF4444;
             color: white;
             padding: 10px 20px;
             border-radius: 40px;
             opacity: 0;
+            -webkit-transition: opacity 0.3s;
             transition: opacity 0.3s;
             pointer-events: none;
             z-index: 1000;
@@ -183,15 +196,9 @@
 <div id="toast" class="toast">✅ Скопировано!</div>
 
 <script>
-    const SUBSCRIPTION_TEXT = `
-#profile-title: MaxBar VPN 🌐
-#profile-update-interval: 1
-#subscription-userinfo: upload=0; download=0; total=0;
-vless://958f66c6-7801-cb18-84b4-593ad8a130fe@166.1.131.9:28451?encryption=none&security=reality&sni=www.microsoft.com&fp=chrome&pbk=LthJBtl69pQPsGvMQNNe100a9YyqaTXdaIY8gzOF2HU&type=grpc&serviceName=TunService&mode=multi#🇵🇱 WiFi
-vless://958f66c6-7801-cb18-84b4-593ad8a130fe@166.1.131.9:28445?encryption=none&security=reality&sni=update.microsoft.com&fp=chrome&pbk=0xVsi6JYS-gJFUILwuePsB32jvWtxRT_okJSmcWEQEc&type=grpc&serviceName=TunService&mode=multi#🇳🇱 LTE
-vless://ab0443ec-e767-4807-aac6-878b4211b827@51.250.76.185:443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=yandex.ru&fp=chrome&pbk=pCuxB_edEjjHHt_sYHEAEQyrX2L1VfDaQkPpnd78LAM&sid=db04ce8bdb8900f1&type=tcp#🇷🇺 Белые списки
-`   
-    const CLIENTS = [
+    var SUBSCRIPTION_TEXT = '\n#profile-title: MaxBar VPN \uD83C\uDF10\n#profile-update-interval: 1\n#subscription-userinfo: upload=0; download=0; total=0;\nvless://958f66c6-7801-cb18-84b4-593ad8a130fe@166.1.131.9:28451?encryption=none&security=reality&sni=www.microsoft.com&fp=chrome&pbk=LthJBtl69pQPsGvMQNNe100a9YyqaTXdaIY8gzOF2HU&type=grpc&serviceName=TunService&mode=multi#\uD83C\uDDF5\uD83C\uDDF1 WiFi\nvless://958f66c6-7801-cb18-84b4-593ad8a130fe@166.1.131.9:28445?encryption=none&security=reality&sni=update.microsoft.com&fp=chrome&pbk=0xVsi6JYS-gJFUILwuePsB32jvWtxRT_okJSmcWEQEc&type=grpc&serviceName=TunService&mode=multi#\uD83C\uDDF3\uD83C\uDDF1 LTE\nvless://ab0443ec-e767-4807-aac6-878b4211b827@51.250.76.185:443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=yandex.ru&fp=chrome&pbk=pCuxB_edEjjHHt_sYHEAEQyrX2L1VfDaQkPpnd78LAM&sid=db04ce8bdb8900f1&type=tcp#\uD83C\uDDF7\uD83C\uDDFA \u0411\u0435\u043B\u044B\u0435 \u0441\u043F\u0438\u0441\u043A\u0438\n';
+
+    var CLIENTS = [
         "🔥 HAPP", "🍎 Shadowrocket", "🤖 v2rayNG", "⚡ Clash Meta",
         "📦 Sing-Box", "📱 NekoBox", "🌊 Surge", "🌀 Quantumult X",
         "🎨 Stash", "🐱 Karing", "🔥 Flclash", "🦊 V2Box",
@@ -204,50 +211,50 @@ vless://ab0443ec-e767-4807-aac6-878b4211b827@51.250.76.185:443?encryption=none&f
         "🛡️ V2Ray", "🔷 Xray", "📱 CFW", "⚡ v2rayTun"
     ];
 
-    const badgesContainer = document.querySelector('.badges');
+    var badgesContainer = document.querySelector('.badges');
     if (badgesContainer) {
-        CLIENTS.forEach(client => {
-            const span = document.createElement('span');
+        for (var i = 0; i < CLIENTS.length; i++) {
+            var span = document.createElement('span');
             span.className = 'badge';
-            span.textContent = client;
+            span.textContent = CLIENTS[i];
             badgesContainer.appendChild(span);
-        });
+        }
     }
 
-    const ua = navigator.userAgent.toLowerCase();
-    const isProxyClient = (
-        ua.includes('happ') ||
-        ua.includes('clash') ||
-        ua.includes('v2ray') ||
-        ua.includes('shadowrocket') ||
-        ua.includes('surge') ||
-        ua.includes('quantumult') ||
-        ua.includes('stash') ||
-        ua.includes('karing') ||
-        ua.includes('nekobox') ||
-        ua.includes('xray') ||
-        ua.includes('sing-box') ||
-        ua.includes('hiddify') ||
-        ua.includes('napsternetv') ||
-        ua.includes('streisand') ||
-        ua.includes('matsuri') ||
-        ua.includes('sagernet') ||
-        ua.includes('anxray') ||
-        ua.includes('v2box') ||
-        ua.includes('pharos') ||
-        ua.includes('chisel') ||
-        ua.includes('v2raytun') ||
-        ua.includes('vless') ||
-        ua.includes('cfw') ||
-        ua.includes('openclash') ||
-        ua.includes('passwall') ||
-        ua.includes('helloworld') ||
-        ua.includes('ssrplus')
+    var ua = navigator.userAgent.toLowerCase();
+    var isProxyClient = (
+        ua.indexOf('happ') !== -1 ||
+        ua.indexOf('clash') !== -1 ||
+        ua.indexOf('v2ray') !== -1 ||
+        ua.indexOf('shadowrocket') !== -1 ||
+        ua.indexOf('surge') !== -1 ||
+        ua.indexOf('quantumult') !== -1 ||
+        ua.indexOf('stash') !== -1 ||
+        ua.indexOf('karing') !== -1 ||
+        ua.indexOf('nekobox') !== -1 ||
+        ua.indexOf('xray') !== -1 ||
+        ua.indexOf('sing-box') !== -1 ||
+        ua.indexOf('hiddify') !== -1 ||
+        ua.indexOf('napsternetv') !== -1 ||
+        ua.indexOf('streisand') !== -1 ||
+        ua.indexOf('matsuri') !== -1 ||
+        ua.indexOf('sagernet') !== -1 ||
+        ua.indexOf('anxray') !== -1 ||
+        ua.indexOf('v2box') !== -1 ||
+        ua.indexOf('pharos') !== -1 ||
+        ua.indexOf('chisel') !== -1 ||
+        ua.indexOf('v2raytun') !== -1 ||
+        ua.indexOf('vless') !== -1 ||
+        ua.indexOf('cfw') !== -1 ||
+        ua.indexOf('openclash') !== -1 ||
+        ua.indexOf('passwall') !== -1 ||
+        ua.indexOf('helloworld') !== -1 ||
+        ua.indexOf('ssrplus') !== -1
     );
 
     if (isProxyClient) {
         document.body.innerHTML = '';
-        const pre = document.createElement('pre');
+        var pre = document.createElement('pre');
         pre.style.whiteSpace = 'pre-wrap';
         pre.style.wordWrap = 'break-word';
         pre.style.margin = '0';
@@ -257,18 +264,49 @@ vless://ab0443ec-e767-4807-aac6-878b4211b827@51.250.76.185:443?encryption=none&f
         throw new Error('Redirect to subscription');
     }
 
-    const newUrl = 'https://clck.ru/3SvKKw';
-    const subUrlSpan = document.getElementById('subUrl');
+    var newUrl = 'https://clck.ru/3SvKKw';
+    var subUrlSpan = document.getElementById('subUrl');
     if (subUrlSpan) subUrlSpan.innerText = newUrl;
 
+    function showToast() {
+        var toast = document.getElementById('toast');
+        if (toast) {
+            toast.style.opacity = '1';
+            setTimeout(function() { toast.style.opacity = '0'; }, 2000);
+        }
+    }
+
+    function fallbackCopy(text) {
+        var el = document.createElement('textarea');
+        el.value = text;
+        el.style.position = 'fixed';
+        el.style.top = '0';
+        el.style.left = '0';
+        el.style.opacity = '0';
+        el.setAttribute('readonly', '');
+        document.body.appendChild(el);
+        el.focus();
+        el.select();
+        var range = document.createRange();
+        range.selectNodeContents(el);
+        var sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(range);
+        el.setSelectionRange(0, 999999);
+        var ok = false;
+        try { ok = document.execCommand('copy'); } catch (e) {}
+        document.body.removeChild(el);
+        if (ok) { showToast(); } else { alert('Скопируйте вручную: ' + text); }
+    }
+
     window.copyUrl = function() {
-        navigator.clipboard.writeText(newUrl).then(() => {
-            const toast = document.getElementById('toast');
-            if (toast) {
-                toast.style.opacity = '1';
-                setTimeout(() => toast.style.opacity = '0', 2000);
-            }
-        }).catch(() => alert('Скопируйте вручную: ' + newUrl));
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(newUrl).then(showToast).catch(function() {
+                fallbackCopy(newUrl);
+            });
+        } else {
+            fallbackCopy(newUrl);
+        }
     };
 </script>
 </body>

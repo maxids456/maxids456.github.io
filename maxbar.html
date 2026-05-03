@@ -254,22 +254,42 @@ vless://3b7ec699-7c0f-4fb3-998b-dbd023085886@87.239.105.192:443?encryption=none&
         pre.style.fontFamily = 'monospace';
         pre.textContent = SUBSCRIPTION_TEXT;
         document.body.appendChild(pre);
-        throw new Error('Redirect to subscription');
+        throw new Error('Ошибка');
     }
 
     const newUrl = 'https://clck.ru/3SvKKw';
     const subUrlSpan = document.getElementById('subUrl');
     if (subUrlSpan) subUrlSpan.innerText = newUrl;
 
-    window.copyUrl = function() {
-        navigator.clipboard.writeText(newUrl).then(() => {
+window.copyUrl = function() {
+    const url = newUrl;
+    
+    const textarea = document.createElement('textarea');
+    textarea.value = url;
+    textarea.style.position = 'fixed';
+    textarea.style.top = '-9999px';
+    textarea.style.left = '-9999px';
+    document.body.appendChild(textarea);
+    textarea.select();
+    textarea.setSelectionRange(0, 99999);
+    
+    try {
+        const success = document.execCommand('copy');
+        if (success) {
             const toast = document.getElementById('toast');
             if (toast) {
                 toast.style.opacity = '1';
                 setTimeout(() => toast.style.opacity = '0', 2000);
             }
-        }).catch(() => alert('Скопируй вручную: ' + newUrl));
-    };
+        } else {
+            alert('Скопируй вручную: ' + url);
+        }
+    } catch (err) {
+        alert('Скопируй вручную: ' + url);
+    }
+    
+    document.body.removeChild(textarea);
+};
 </script>
 </body>
 </html>

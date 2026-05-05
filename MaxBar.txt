@@ -1,5 +1,5 @@
 vless://3b7ec699-7c0f-4fb3-998b-dbd023085886@144.31.71.181:443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=max.ru&fp=chrome&pbk=kLJlaQjiQFqVb9D3UutpHs7jaGX3X4yWlatAmRdUkwM&sid=dd9f156d10&type=tcp&headerType=none#WiFi%20%F0%9F%87%AB%F0%9F%87%AE
 vless://3b7ec699-7c0f-4fb3-998b-dbd023085886@95.85.250.229:443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=max.ru&fp=chrome&pbk=CC2mv8NzGByvRWIu7I7bB82qvjHrvlidn4lppb0lBlM&sid=4ab683fa&spx=%2F&type=tcp&headerType=none#LTE%20%F0%9F%87%B5%F0%9F%87%B1
-vless://3b7ec699-7c0f-4fb3-998b-dbd023085886@87.239.105.192:443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=api.vk.com&fp=chrome&pbk=WTJPxVzaDwD9JBn36e0s-pmhyhoupaUfnRKICAEtg1A&sid=fe299c06&spx=%2F&type=tcp&headerType=none#🇷🇺%20Белые%20списки
+vless://3b7ec699-7c0f-4fb3-998b-dbd023085886@158.160.202.178:443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=5post-gate.x5.ru&fp=chrome&pbk=WTJPxVzaDwD9JBn36e0s-pmhyhoupaUfnRKICAEtg1A&sid=fe299c06&spx=%2F&type=tcp&headerType=none#🇷🇺%20Белые%20списки
 
 

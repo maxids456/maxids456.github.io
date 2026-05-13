@@ -1,5 +1,4 @@
 vless://138cdaf7-b97c-4e5c-80f0-60b958a9827c@ru5.sipipro.su:443?encryption=none&security=reality&sni=sipisn.su&fp=qq&pbk=eFxwkCmiaZKOMsKlfw_rfz8Id4jI0tFIpdvWVr7SXHg&sid=8e18af49d551a696&type=tcp#%F0%9F%87%A9%F0%9F%87%AA%20WiFi
 vless://138cdaf7-b97c-4e5c-80f0-60b958a9827c@ru6.sipipro.su:443?encryption=none&security=reality&sni=sipisn.su&fp=qq&pbk=GNuu8bkQUdbXQH1_c99u8siuoYk4NVbE8OoHKFP0Mjo&sid=eacc9f154bc36612&type=tcp&headerType=none#🇫🇮 LTE
-
-vless://8507941f-15a1-474d-9107-13d87c5d0438@31.129.42.205:443?type=grpc&serviceName=Sa043986fa862df25&authority=host&security=reality&sni=max.ru&fp=chrome&pbk=VIk-aSJTBYhbfUH7ecm-yJf42GEaCm-vY7u50AQx9hA&sid=87ed8ea3#🇷🇺%20Белые%20списки
+vless://3b7ec699-7c0f-4fb3-998b-dbd023085886@217.16.29.109:443?type=tcp&security=reality&flow=xtls-rprx-vision&sni=api.vk.com&fp=chrome&pbk=WTJPxVzaDwD9JBn36e0s-pmhyhoupaUfnRKICAEtg1A&sid=fe299c06#🇷🇺%20Белые%20списки
 

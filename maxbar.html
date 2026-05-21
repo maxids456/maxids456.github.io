@@ -189,9 +189,106 @@
 #profile-update-interval: 1
 #profile-web-page-url: https://clck.ru/3SvKKw
 #support-url: https://t.me/MaxBarVPN
-vless://7b85121c-b938-4311-b632-f163422ae71b@ru1.sipipro.su:443?type=tcp&security=reality&flow=xtls-rprx-vision&fp=qq&sni=rawi.su&pbk=eFxwkCmiaZKOMsKlfw_rfz8Id4jI0tFIpdvWVr7SXHg&sid=8e18af49d551a696#🇩🇪%20WiFi
-vless://7b85121c-b938-4311-b632-f163422ae71b@ru3.sipipro.su:443?type=tcp&security=reality&flow=xtls-rprx-vision&fp=qq&sni=rawi.su&pbk=NsPdlzraIawCLwtIUGk5demmtYJcBedeR_3qA2kvMF0&sid=eacc9f154bc36612#🇫🇮%20LTE
-vless://3b7ec699-7c0f-4fb3-998b-dbd023085886@217.16.29.109:443?type=tcp&security=reality&flow=xtls-rprx-vision&sni=api.vk.com&fp=chrome&pbk=WTJPxVzaDwD9JBn36e0s-pmhyhoupaUfnRKICAEtg1A&sid=fe299c06#🇷🇺%20Белые%20списки
+{
+  "dns": {
+    "servers": [
+      "1.1.1.1",
+      "1.0.0.1"
+    ],
+    "queryStrategy": "UseIP"
+  },
+  "routing": {
+    "rules": [
+      {
+        "type": "field",
+        "protocol": [
+          "bittorrent"
+        ],
+        "outboundTag": "direct"
+      }
+    ],
+    "domainMatcher": "hybrid",
+    "domainStrategy": "IPIfNonMatch"
+  },
+  "inbounds": [
+    {
+      "tag": "socks",
+      "port": 10808,
+      "listen": "127.0.0.1",
+      "protocol": "socks",
+      "settings": {
+        "udp": true,
+        "auth": "noauth"
+      },
+      "sniffing": {
+        "enabled": true,
+        "routeOnly": false,
+        "destOverride": [
+          "http",
+          "tls"
+        ]
+      }
+    },
+    {
+      "tag": "http",
+      "port": 10809,
+      "listen": "127.0.0.1",
+      "protocol": "http",
+      "settings": {
+        "allowTransparent": false
+      },
+      "sniffing": {
+        "enabled": true,
+        "routeOnly": false,
+        "destOverride": [
+          "http",
+          "tls"
+        ]
+      }
+    }
+  ],
+  "outbounds": [
+    {
+      "tag": "proxy",
+      "protocol": "vless",
+      "settings": {
+        "vnext": [
+          {
+            "address": "ru5.sipipro.su",
+            "port": 443,
+            "users": [
+              {
+                "id": "7b85121c-b938-4311-b632-f163422ae71b",
+                "encryption": "none",
+                "flow": "xtls-rprx-vision"
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "tcp",
+        "tcpSettings": {},
+        "security": "reality",
+        "realitySettings": {
+          "serverName": "rawi.su",
+          "publicKey": "eFxwkCmiaZKOMsKlfw_rfz8Id4jI0tFIpdvWVr7SXHg",
+          "shortId": "8e18af49d551a696",
+          "fingerprint": "qq"
+        }
+      }
+    },
+    {
+      "tag": "direct",
+      "protocol": "freedom"
+    },
+    {
+      "tag": "block",
+      "protocol": "blackhole"
+    }
+  ],
+  "remarks": "🇩🇪 WiFi"
+}
 `
     const CLIENTS = [
         "🔥 HAPP", "🍎 Shadowrocket", "🤖 v2rayNG", "⚡ Clash Meta",

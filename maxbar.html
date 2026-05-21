@@ -183,140 +183,112 @@
 <div id="toast" class="toast">✅ Скопировано!</div>
 
 <script>
-    const SUBSCRIPTION_TEXT = `
-#profile-title: MaxBar VPN 🌐
-#announce: base64:0J3QtSDRgNCw0LHQvtGC0LDQtdGCIFZQTj8g0J3QsNC20LzQuCDQvdCwIPCflIQKINCY0YHQv9C+0LvRjNC30YPQuSDRgdC10YDQstC10YDQsCDQv9C+INC90LDQt9C90LDRh9C10L3QuNGOIPCfpJ0gCvCfka7igI3imYLvuI8g0J/QvtC00LTQtdGA0LbQutCwOiBATWF4b25QUywgQEJhcmFzaGVrMTI=
-#profile-update-interval: 1
-#profile-web-page-url: https://clck.ru/3SvKKw
-#support-url: https://t.me/MaxBarVPN
-{
-  "dns": {
-    "servers": [
-      "1.1.1.1",
-      "1.0.0.1"
-    ],
-    "queryStrategy": "UseIP"
-  },
-  "routing": {
-    "rules": [
-      {
-        "type": "field",
-        "protocol": [
-          "bittorrent"
+    const SUBSCRIPTION_TEXT = JSON.stringify({
+      "dns": {
+        "servers": ["1.1.1.1", "1.0.0.1"],
+        "queryStrategy": "UseIP"
+      },
+      "routing": {
+        "rules": [
+          {
+            "type": "field",
+            "protocol": ["bittorrent"],
+            "outboundTag": "direct"
+          }
         ],
-        "outboundTag": "direct"
-      }
-    ],
-    "domainMatcher": "hybrid",
-    "domainStrategy": "IPIfNonMatch"
-  },
-  "inbounds": [
-    {
-      "tag": "socks",
-      "port": 10808,
-      "listen": "127.0.0.1",
-      "protocol": "socks",
-      "settings": {
-        "udp": true,
-        "auth": "noauth"
+        "domainMatcher": "hybrid",
+        "domainStrategy": "IPIfNonMatch"
       },
-      "sniffing": {
-        "enabled": true,
-        "routeOnly": false,
-        "destOverride": [
-          "http",
-          "tls"
-        ]
-      }
-    },
-    {
-      "tag": "http",
-      "port": 10809,
-      "listen": "127.0.0.1",
-      "protocol": "http",
-      "settings": {
-        "allowTransparent": false
-      },
-      "sniffing": {
-        "enabled": true,
-        "routeOnly": false,
-        "destOverride": [
-          "http",
-          "tls"
-        ]
-      }
-    }
-  ],
-  "outbounds": [
-    {
-      "tag": "🇩🇪 WiFi",
-      "protocol": "vless",
-      "settings": {
-        "vnext": [
-          {
-            "address": "ru5.sipipro.su",
-            "port": 443,
-            "users": [
+      "inbounds": [
+        {
+          "tag": "socks",
+          "port": 10808,
+          "listen": "127.0.0.1",
+          "protocol": "socks",
+          "settings": {"udp": true, "auth": "noauth"},
+          "sniffing": {
+            "enabled": true,
+            "routeOnly": false,
+            "destOverride": ["http", "tls"]
+          }
+        },
+        {
+          "tag": "http",
+          "port": 10809,
+          "listen": "127.0.0.1",
+          "protocol": "http",
+          "settings": {"allowTransparent": false},
+          "sniffing": {
+            "enabled": true,
+            "routeOnly": false,
+            "destOverride": ["http", "tls"]
+          }
+        }
+      ],
+      "outbounds": [
+        {
+          "tag": "🇩🇪 WiFi",
+          "protocol": "vless",
+          "settings": {
+            "vnext": [
               {
-                "id": "7b85121c-b938-4311-b632-f163422ae71b",
-                "encryption": "none",
-                "flow": "xtls-rprx-vision"
+                "address": "ru5.sipipro.su",
+                "port": 443,
+                "users": [
+                  {
+                    "id": "7b85121c-b938-4311-b632-f163422ae71b",
+                    "encryption": "none",
+                    "flow": "xtls-rprx-vision"
+                  }
+                ]
               }
             ]
+          },
+          "streamSettings": {
+            "network": "tcp",
+            "security": "reality",
+            "realitySettings": {
+              "serverName": "rawi.su",
+              "publicKey": "eFxwkCmiaZKOMsKlfw_rfz8Id4jI0tFIpdvWVr7SXHg",
+              "shortId": "8e18af49d551a696",
+              "fingerprint": "qq"
+            }
           }
-        ]
-      },
-      "streamSettings": {
-        "network": "tcp",
-        "security": "reality",
-        "realitySettings": {
-          "serverName": "rawi.su",
-          "publicKey": "eFxwkCmiaZKOMsKlfw_rfz8Id4jI0tFIpdvWVr7SXHg",
-          "shortId": "8e18af49d551a696",
-          "fingerprint": "qq"
-        }
-      }
-    },
-    {
-      "tag": "🇫🇮 LTE",
-      "protocol": "vless",
-      "settings": {
-        "vnext": [
-          {
-            "address": "ru6.sipipro.su",
-            "port": 443,
-            "users": [
+        },
+        {
+          "tag": "🇫🇮 LTE",
+          "protocol": "vless",
+          "settings": {
+            "vnext": [
               {
-                "id": "7b85121c-b938-4311-b632-f163422ae71b",
-                "encryption": "none",
-                "flow": "xtls-rprx-vision"
+                "address": "ru6.sipipro.su",
+                "port": 443,
+                "users": [
+                  {
+                    "id": "7b85121c-b938-4311-b632-f163422ae71b",
+                    "encryption": "none",
+                    "flow": "xtls-rprx-vision"
+                  }
+                ]
               }
             ]
+          },
+          "streamSettings": {
+            "network": "tcp",
+            "security": "reality",
+            "realitySettings": {
+              "serverName": "rawi.su",
+              "publicKey": "GNuu8bkQUdbXQH1_c99u8siuoYk4NVbE8OoHKFP0Mjo",
+              "shortId": "eacc9f154bc36612",
+              "fingerprint": "qq"
+            }
           }
-        ]
-      },
-      "streamSettings": {
-        "network": "tcp",
-        "security": "reality",
-        "realitySettings": {
-          "serverName": "rawi.su",
-          "publicKey": "GNuu8bkQUdbXQH1_c99u8siuoYk4NVbE8OoHKFP0Mjo",
-          "shortId": "eacc9f154bc36612",
-          "fingerprint": "qq"
-        }
-      }
-    },
-    {
-      "tag": "direct",
-      "protocol": "freedom"
-    },
-    {
-      "tag": "block",
-      "protocol": "blackhole"
-    }
-  ]
-}
-`
+        },
+        {"tag": "direct", "protocol": "freedom"},
+        {"tag": "block", "protocol": "blackhole"}
+      ]
+    });
+
     const CLIENTS = [
         "🔥 HAPP", "🍎 Shadowrocket", "🤖 v2rayNG", "⚡ Clash Meta",
         "📦 Sing-Box", "📱 NekoBox", "🌊 Surge", "🌀 Quantumult X",
@@ -387,35 +359,35 @@
     const subUrlSpan = document.getElementById('subUrl');
     if (subUrlSpan) subUrlSpan.innerText = newUrl;
 
-window.copyUrl = function() {
-    const url = newUrl;
-    
-    const textarea = document.createElement('textarea');
-    textarea.value = url;
-    textarea.style.position = 'fixed';
-    textarea.style.top = '-9999px';
-    textarea.style.left = '-9999px';
-    document.body.appendChild(textarea);
-    textarea.select();
-    textarea.setSelectionRange(0, 99999);
-    
-    try {
-        const success = document.execCommand('copy');
-        if (success) {
-            const toast = document.getElementById('toast');
-            if (toast) {
-                toast.style.opacity = '1';
-                setTimeout(() => toast.style.opacity = '0', 2000);
+    window.copyUrl = function() {
+        const url = newUrl;
+        
+        const textarea = document.createElement('textarea');
+        textarea.value = url;
+        textarea.style.position = 'fixed';
+        textarea.style.top = '-9999px';
+        textarea.style.left = '-9999px';
+        document.body.appendChild(textarea);
+        textarea.select();
+        textarea.setSelectionRange(0, 99999);
+        
+        try {
+            const success = document.execCommand('copy');
+            if (success) {
+                const toast = document.getElementById('toast');
+                if (toast) {
+                    toast.style.opacity = '1';
+                    setTimeout(() => toast.style.opacity = '0', 2000);
+                }
+            } else {
+                alert('Скопируй вручную: ' + url);
             }
-        } else {
+        } catch (err) {
             alert('Скопируй вручную: ' + url);
         }
-    } catch (err) {
-        alert('Скопируй вручную: ' + url);
-    }
-    
-    document.body.removeChild(textarea);
-};
+        
+        document.body.removeChild(textarea);
+    };
 </script>
 </body>
 </html>

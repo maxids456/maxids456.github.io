@@ -249,7 +249,7 @@
   ],
   "outbounds": [
     {
-      "tag": "proxy",
+      "tag": "🇩🇪 WiFi",
       "protocol": "vless",
       "settings": {
         "vnext": [
@@ -268,12 +268,40 @@
       },
       "streamSettings": {
         "network": "tcp",
-        "tcpSettings": {},
         "security": "reality",
         "realitySettings": {
           "serverName": "rawi.su",
           "publicKey": "eFxwkCmiaZKOMsKlfw_rfz8Id4jI0tFIpdvWVr7SXHg",
           "shortId": "8e18af49d551a696",
+          "fingerprint": "qq"
+        }
+      }
+    },
+    {
+      "tag": "🇫🇮 LTE",
+      "protocol": "vless",
+      "settings": {
+        "vnext": [
+          {
+            "address": "ru6.sipipro.su",
+            "port": 443,
+            "users": [
+              {
+                "id": "7b85121c-b938-4311-b632-f163422ae71b",
+                "encryption": "none",
+                "flow": "xtls-rprx-vision"
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "tcp",
+        "security": "reality",
+        "realitySettings": {
+          "serverName": "rawi.su",
+          "publicKey": "GNuu8bkQUdbXQH1_c99u8siuoYk4NVbE8OoHKFP0Mjo",
+          "shortId": "eacc9f154bc36612",
           "fingerprint": "qq"
         }
       }
@@ -286,8 +314,7 @@
       "tag": "block",
       "protocol": "blackhole"
     }
-  ],
-  "remarks": "🇩🇪 WiFi"
+  ]
 }
 `
     const CLIENTS = [

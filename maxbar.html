@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -183,8 +184,7 @@
 <div id="toast" class="toast">✅ Скопировано!</div>
 
 <script>
-    const SUBSCRIPTION_TEXT = `
-#profile-title: MaxBar VPN 🌐
+    const SUBSCRIPTION_TEXT = `#profile-title: MaxBar VPN 🌐
 #announce: base64:0J3QtSDRgNCw0LHQvtGC0LDQtdGCIFZQTj8g0J3QsNC20LzQuCDQvdCwIPCflIQKINCY0YHQv9C+0LvRjNC30YPQuSDRgdC10YDQstC10YDQsCDQv9C+INC90LDQt9C90LDRh9C10L3QuNGOIPCfpJ0gCvCfka7igI3imYLvuI8g0J/QvtC00LTQtdGA0LbQutCwOiBATWF4b25QUywgQEJhcmFzaGVrMTI=
 #profile-update-interval: 1
 #profile-web-page-url: https://clck.ru/3SvKKw
@@ -192,7 +192,16 @@
 vless://61119046-7b76-4666-a456-3f63a1268e19@ru5.sipipro.su:443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=rawi.su&fp=qq&pbk=eFxwkCmiaZKOMsKlfw_rfz8Id4jI0tFIpdvWVr7SXHg&sid=8e18af49d551a696&type=tcp#%F0%9F%87%A9%F0%9F%87%AA%20WiFi
 vless://61119046-7b76-4666-a456-3f63a1268e19@ru6.sipipro.su:443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=rawi.su&fp=qq&pbk=GNuu8bkQUdbXQH1_c99u8siuoYk4NVbE8OoHKFP0Mjo&sid=eacc9f154bc36612&type=tcp#%F0%9F%87%AB%F0%9F%87%AE%20LTE
 vless://08dc0a3d-83d4-467b-b325-a96de3878fd1@217.16.29.109:443?type=tcp&security=reality&flow=xtls-rprx-vision&sni=api.vk.com&fp=chrome&pbk=WTJPxVzaDwD9JBn36e0s-pmhyhoupaUfnRKICAEtg1A&sid=fe299c06#🇷🇺%20Белые%20списки
-`
+`;
+
+    const HIDDIFY_TEXT = `vless://08dc0a3d-83d4-467b-b325-a96de3878fd1@217.16.29.109:443?type=tcp&security=reality&flow=xtls-rprx-vision&sni=api.vk.com&fp=chrome&pbk=WTJPxVzaDwD9JBn36e0s-pmhyhoupaUfnRKICAEtg1A&sid=fe299c06#🇷🇺%20Белые%20списки
+`;
+
+    const V2RAYTUN_TEXT = `vless://61119046-7b76-4666-a456-3f63a1268e19@ru5.sipipro.su:443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=rawi.su&fp=qq&pbk=eFxwkCmiaZKOMsKlfw_rfz8Id4jI0tFIpdvWVr7SXHg&sid=8e18af49d551a696&type=tcp#%F0%9F%87%A9%F0%9F%87%AA%20WiFi
+vless://61119046-7b76-4666-a456-3f63a1268e19@ru6.sipipro.su:443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=rawi.su&fp=qq&pbk=GNuu8bkQUdbXQH1_c99u8siuoYk4NVbE8OoHKFP0Mjo&sid=eacc9f154bc36612&type=tcp#%F0%9F%87%AB%F0%9F%87%AE%20LTE
+vless://08dc0a3d-83d4-467b-b325-a96de3878fd1@217.16.29.109:443?type=tcp&security=reality&flow=xtls-rprx-vision&sni=api.vk.com&fp=chrome&pbk=WTJPxVzaDwD9JBn36e0s-pmhyhoupaUfnRKICAEtg1A&sid=fe299c06#🇷🇺%20Белые%20списки
+`;
+
     const CLIENTS = [
         "🔥 HAPP", "🍎 Shadowrocket", "🤖 v2rayNG", "⚡ Clash Meta",
         "📦 Sing-Box", "📱 NekoBox", "🌊 Surge", "🌀 Quantumult X",
@@ -217,7 +226,16 @@ vless://08dc0a3d-83d4-467b-b325-a96de3878fd1@217.16.29.109:443?type=tcp&security
     }
 
     const ua = navigator.userAgent.toLowerCase();
-    const isProxyClient = (
+
+    const isHiddify = ua.includes('hiddify');
+
+    const isV2rayTun = (
+        ua.includes('v2raytun') ||
+        ua.includes('v2ray-tun') ||
+        ua.includes('v2ray tun')
+    );
+
+    const isOtherProxyClient = (
         ua.includes('happ') ||
         ua.includes('clash') ||
         ua.includes('v2ray') ||
@@ -229,7 +247,6 @@ vless://08dc0a3d-83d4-467b-b325-a96de3878fd1@217.16.29.109:443?type=tcp&security
         ua.includes('nekobox') ||
         ua.includes('xray') ||
         ua.includes('sing-box') ||
-        ua.includes('hiddify') ||
         ua.includes('napsternetv') ||
         ua.includes('streisand') ||
         ua.includes('matsuri') ||
@@ -238,7 +255,6 @@ vless://08dc0a3d-83d4-467b-b325-a96de3878fd1@217.16.29.109:443?type=tcp&security
         ua.includes('v2box') ||
         ua.includes('pharos') ||
         ua.includes('chisel') ||
-        ua.includes('v2raytun') ||
         ua.includes('vless') ||
         ua.includes('cfw') ||
         ua.includes('openclash') ||
@@ -247,51 +263,63 @@ vless://08dc0a3d-83d4-467b-b325-a96de3878fd1@217.16.29.109:443?type=tcp&security
         ua.includes('ssrplus')
     );
 
-    if (isProxyClient) {
+    function showRaw(text) {
         document.body.innerHTML = '';
         const pre = document.createElement('pre');
         pre.style.whiteSpace = 'pre-wrap';
         pre.style.wordWrap = 'break-word';
         pre.style.margin = '0';
         pre.style.fontFamily = 'monospace';
-        pre.textContent = SUBSCRIPTION_TEXT;
+        pre.textContent = text;
         document.body.appendChild(pre);
         throw new Error('Ошибка');
+    }
+
+    if (isHiddify) {
+        showRaw(HIDDIFY_TEXT);
+    }
+
+    if (isV2rayTun) {
+        showRaw(V2RAYTUN_TEXT);
+    }
+
+    if (isOtherProxyClient) {
+        showRaw(SUBSCRIPTION_TEXT);
     }
 
     const newUrl = 'https://clck.ru/3SvKKw';
     const subUrlSpan = document.getElementById('subUrl');
     if (subUrlSpan) subUrlSpan.innerText = newUrl;
 
-window.copyUrl = function() {
-    const url = newUrl;
-    
-    const textarea = document.createElement('textarea');
-    textarea.value = url;
-    textarea.style.position = 'fixed';
-    textarea.style.top = '-9999px';
-    textarea.style.left = '-9999px';
-    document.body.appendChild(textarea);
-    textarea.select();
-    textarea.setSelectionRange(0, 99999);
-    
-    try {
-        const success = document.execCommand('copy');
-        if (success) {
-            const toast = document.getElementById('toast');
-            if (toast) {
-                toast.style.opacity = '1';
-                setTimeout(() => toast.style.opacity = '0', 2000);
+    window.copyUrl = function() {
+        const url = newUrl;
+
+        const textarea = document.createElement('textarea');
+        textarea.value = url;
+        textarea.style.position = 'fixed';
+        textarea.style.top = '-9999px';
+        textarea.style.left = '-9999px';
+        document.body.appendChild(textarea);
+        textarea.select();
+        textarea.setSelectionRange(0, 99999);
+
+        try {
+            const success = document.execCommand('copy');
+            if (success) {
+                const toast = document.getElementById('toast');
+                if (toast) {
+                    toast.style.opacity = '1';
+                    setTimeout(() => toast.style.opacity = '0', 2000);
+                }
+            } else {
+                alert('Скопируй вручную: ' + url);
             }
-        } else {
+        } catch (err) {
             alert('Скопируй вручную: ' + url);
         }
-    } catch (err) {
-        alert('Скопируй вручную: ' + url);
-    }
-    
-    document.body.removeChild(textarea);
-};
+
+        document.body.removeChild(textarea);
+    };
 </script>
 </body>
 </html>

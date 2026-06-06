@@ -149,7 +149,7 @@
         <div class="url" id="subUrl">Создаю ссылку подписки...</div>
     </div>
     <button onclick="copyUrl()">📋 Скопировать ссылку</button>
-    <a href="#" id="downloadLink" class="btn-download">📥 Скачать файлом (для v2rayTun и др.)</a>
+    <a href="MaxBar.txt" download="MaxBar.txt" class="btn-download">📥 Скачать файлом (для v2rayTun и др.)</a>
 
     <p style="color: #CC0000; font-weight: bold; margin-bottom: 10px;">Поддерживаемые клиенты:</p>
     <div class="badges"></div>
@@ -183,141 +183,20 @@
 <div id="toast" class="toast">✅ Скопировано!</div>
 
 <script>
-    // Серверные конфигурации (хранятся в коде, но не видны в подписке)
-    const SERVER_CONFIGS = {
-        version: 1,
-        servers: [
-            {
-                id: "de1",
-                name: "🇩🇪 WiFi #1",
-                protocol: "vless",
-                address: "ru5.sipipro.su",
-                port: 443,
-                uuid: "91a8c63b-3107-46a4-9526-bb31d1eb1e78",
-                encryption: "none",
-                security: "reality",
-                sni: "ya.ru",
-                pbk: "eFxwkCmiaZKOMsKlfw_rfz8Id4jI0tFIpdvWVr7SXHg",
-                sid: "8e18af49d551a696",
-                fp: "qq",
-                type: "tcp"
-            },
-            {
-                id: "pl1",
-                name: "🇵🇱 WiFi #2",
-                protocol: "hysteria2",
-                address: "94.125.102.96",
-                port: 443,
-                auth: "17362111-4309-4fe2-8b77-8187699248bf",
-                insecure: 0,
-                sni: "brbrpatapim.bratan.fun",
-                alpn: "h3",
-                obfs: "none"
-            },
-            {
-                id: "fi1",
-                name: "🇫🇮 LTE #1",
-                protocol: "vless",
-                address: "ru6.sipipro.su",
-                port: 443,
-                uuid: "91a8c63b-3107-46a4-9526-bb31d1eb1e78",
-                encryption: "none",
-                security: "reality",
-                sni: "ya.ru",
-                pbk: "NsPdlzraIawCLwtIUGk5demmtYJcBedeR_3qA2kvMF0",
-                sid: "eacc9f154bc36612",
-                fp: "qq",
-                type: "tcp"
-            },
-            {
-                id: "nl1",
-                name: "🇳🇱 LTE #2",
-                protocol: "vless",
-                address: "64.188.79.65",
-                port: 443,
-                uuid: "e1a57d59-12da-423e-8dce-437e95389ef0",
-                encryption: "none",
-                security: "reality",
-                flow: "xtls-rprx-vision",
-                sni: "ign.com",
-                pbk: "H2W1qvM0nUovlPadYco7_EWiZ_psfcLxOPJwOs3BDXU",
-                sid: "fe2e437f64f2da7a",
-                spx: "/",
-                fp: "randomized",
-                type: "tcp"
-            },
-            {
-                id: "ru1",
-                name: "🇷🇺 Россия (ЮТ, ДС, ТГ)",
-                protocol: "vless",
-                address: "87.251.16.115",
-                port: 443,
-                uuid: "e1a57d59-12da-423e-8dce-437e95389ef0",
-                encryption: "none",
-                security: "reality",
-                flow: "xtls-rprx-vision",
-                sni: "ign.com",
-                pbk: "H2W1qvM0nUovlPadYco7_EWiZ_psfcLxOPJwOs3BDXU",
-                sid: "fe2e437f64f2da7a",
-                spx: "/",
-                fp: "randomized",
-                type: "tcp"
-            },
-            {
-                id: "ru2",
-                name: "🇷🇺 LTE | БС",
-                protocol: "hysteria2",
-                address: "94.131.121.29",
-                port: 443,
-                auth: "d7edec56-daf7-4bb9-abe1-27c4737bad82",
-                insecure: 0,
-                sni: "u.net-ai.uk",
-                alpn: "h3",
-                obfs: "none",
-                congestion: "brutal"
-            }
-        ]
-    };
-
-    // Функция шифрования (XOR + Base64)
-    function encryptConfig(config) {
-        const jsonStr = JSON.stringify(config);
-        const key = "MaxBarVPN2024SecretKey!@#$%^&*()";
-        let encrypted = '';
-        for (let i = 0; i < jsonStr.length; i++) {
-            encrypted += String.fromCharCode(jsonStr.charCodeAt(i) ^ key.charCodeAt(i % key.length));
-        }
-        return btoa(encrypted);
-    }
-
-    // Функция дешифрования
-    function decryptConfig(encryptedData) {
-        const key = "MaxBarVPN2024SecretKey!@#$%^&*()";
-        const decoded = atob(encryptedData);
-        let decrypted = '';
-        for (let i = 0; i < decoded.length; i++) {
-            decrypted += String.fromCharCode(decoded.charCodeAt(i) ^ key.charCodeAt(i % key.length));
-        }
-        return JSON.parse(decrypted);
-    }
-
-    // Генерация зашифрованной подписки
-    function generateEncryptedSubscription() {
-        const encryptedData = encryptConfig(SERVER_CONFIGS);
-        const subscription = `#profile-title: MaxBar VPN 🌐 (тест)
+    const SUBSCRIPTION_TEXT = `
+#profile-title: MaxBar VPN 🌐
 #announce: base64:0J3QtSDRgNCw0LHQvtGC0LDQtdGCIFZQTj8g0J3QsNC20LzQuCDQvdCwIPCflIQKINCY0YHQv9C+0LvRjNC30YPQuSDRgdC10YDQstC10YDQsCDQv9C+INC90LDQt9C90LDRh9C10L3QuNGOIPCfpJ0gCvCfka7igI3imYLvuI8g0J/QvtC00LTQtdGA0LbQutCwOiBATWF4b25QUywgQEJhcmFzaGVrMTI=
 #profile-update-interval: 1
 #profile-web-page-url: https://clck.ru/3SvKKw
 #support-url: https://t.me/MaxBarVPN
-#encrypted-config: ${encryptedData}`;
-        return subscription;
-    }
-
-    // Функция для проверки, может ли клиент расшифровать
-    function canDecrypt() {
-        return typeof SubtleCrypto !== 'undefined' || typeof crypto !== 'undefined';
-    }
-
+vless://91a8c63b-3107-46a4-9526-bb31d1eb1e78@ru5.sipipro.su:443?encryption=none&security=reality&sni=ya.ru&pbk=eFxwkCmiaZKOMsKlfw_rfz8Id4jI0tFIpdvWVr7SXHg&sid=8e18af49d551a696&fp=qq&type=tcp#🇩🇪%20WiFi%20%231
+hysteria2://17362111-4309-4fe2-8b77-8187699248bf@94.125.102.96:443?insecure=0&sni=brbrpatapim.bratan.fun&alpn=h3&obfs=none#🇵🇱%20WiFi%20%232
+vless://91a8c63b-3107-46a4-9526-bb31d1eb1e78@ru6.sipipro.su:443?encryption=none&security=reality&sni=ya.ru&pbk=NsPdlzraIawCLwtIUGk5demmtYJcBedeR_3qA2kvMF0&sid=eacc9f154bc36612&fp=qq&type=tcp#🇫🇮%20LTE%20%231
+vless://e1a57d59-12da-423e-8dce-437e95389ef0@64.188.79.65:443?encryption=none&security=reality&flow=xtls-rprx-vision&sni=ign.com&pbk=H2W1qvM0nUovlPadYco7_EWiZ_psfcLxOPJwOs3BDXU&sid=fe2e437f64f2da7a&spx=%2F&fp=randomized&type=tcp#🇳🇱%20LTE%20%232
+vless://e1a57d59-12da-423e-8dce-437e95389ef0@87.251.16.115:443?encryption=none&security=reality&flow=xtls-rprx-vision&sni=ign.com&pbk=H2W1qvM0nUovlPadYco7_EWiZ_psfcLxOPJwOs3BDXU&sid=fe2e437f64f2da7a&spx=%2F&fp=randomized&type=tcp#🇷🇺%20Россия%20(ЮТ%2C%20ДС%2C%20ТГ)
+hysteria2://d7edec56-daf7-4bb9-abe1-27c4737bad82@94.131.121.29:443?insecure=0&sni=u.net-ai.uk&alpn=h3&obfs=none&congestion=brutal#🇷🇺%20LTE%20|%20БС
+`
+    
     const CLIENTS = [
         "🔥 HAPP", "🍎 Shadowrocket", "🤖 v2rayNG", "⚡ Clash Meta",
         "📦 Sing-Box", "📱 NekoBox", "🌊 Surge", "🌀 Quantumult X",
@@ -341,57 +220,82 @@
         });
     }
 
-    // Создаем Blob с зашифрованной подпиской
-    const subscriptionText = generateEncryptedSubscription();
-    const blob = new Blob([subscriptionText], { type: 'text/plain' });
-    const downloadUrl = URL.createObjectURL(blob);
-    
-    // Обновляем ссылку для скачивания
-    const downloadLink = document.getElementById('downloadLink');
-    if (downloadLink) {
-        downloadLink.href = downloadUrl;
-        downloadLink.download = 'MaxBar_encrypted.txt';
+    const ua = navigator.userAgent.toLowerCase();
+    const isProxyClient = (
+        ua.includes('happ') ||
+        ua.includes('clash') ||
+        ua.includes('v2ray') ||
+        ua.includes('shadowrocket') ||
+        ua.includes('surge') ||
+        ua.includes('quantumult') ||
+        ua.includes('stash') ||
+        ua.includes('karing') ||
+        ua.includes('nekobox') ||
+        ua.includes('xray') ||
+        ua.includes('sing-box') ||
+        ua.includes('hiddify') ||
+        ua.includes('napsternetv') ||
+        ua.includes('streisand') ||
+        ua.includes('matsuri') ||
+        ua.includes('sagernet') ||
+        ua.includes('anxray') ||
+        ua.includes('v2box') ||
+        ua.includes('pharos') ||
+        ua.includes('chisel') ||
+        ua.includes('v2raytun') ||
+        ua.includes('vless') ||
+        ua.includes('cfw') ||
+        ua.includes('openclash') ||
+        ua.includes('passwall') ||
+        ua.includes('helloworld') ||
+        ua.includes('ssrplus')
+    );
+
+    if (isProxyClient) {
+        document.body.innerHTML = '';
+        const pre = document.createElement('pre');
+        pre.style.whiteSpace = 'pre-wrap';
+        pre.style.wordWrap = 'break-word';
+        pre.style.margin = '0';
+        pre.style.fontFamily = 'monospace';
+        pre.textContent = SUBSCRIPTION_TEXT;
+        document.body.appendChild(pre);
+        throw new Error('Ошибка');
     }
 
-    // Показываем замаскированную ссылку
     const newUrl = 'https://clck.ru/3SvKKw';
     const subUrlSpan = document.getElementById('subUrl');
     if (subUrlSpan) subUrlSpan.innerText = newUrl;
 
-    window.copyUrl = function() {
-        const url = newUrl;
-        
-        const textarea = document.createElement('textarea');
-        textarea.value = url;
-        textarea.style.position = 'fixed';
-        textarea.style.top = '-9999px';
-        textarea.style.left = '-9999px';
-        document.body.appendChild(textarea);
-        textarea.select();
-        textarea.setSelectionRange(0, 99999);
-        
-        try {
-            const success = document.execCommand('copy');
-            if (success) {
-                const toast = document.getElementById('toast');
-                if (toast) {
-                    toast.style.opacity = '1';
-                    setTimeout(() => toast.style.opacity = '0', 2000);
-                }
-            } else {
-                alert('Скопируй вручную: ' + url);
+window.copyUrl = function() {
+    const url = newUrl;
+    
+    const textarea = document.createElement('textarea');
+    textarea.value = url;
+    textarea.style.position = 'fixed';
+    textarea.style.top = '-9999px';
+    textarea.style.left = '-9999px';
+    document.body.appendChild(textarea);
+    textarea.select();
+    textarea.setSelectionRange(0, 99999);
+    
+    try {
+        const success = document.execCommand('copy');
+        if (success) {
+            const toast = document.getElementById('toast');
+            if (toast) {
+                toast.style.opacity = '1';
+                setTimeout(() => toast.style.opacity = '0', 2000);
             }
-        } catch (err) {
+        } else {
             alert('Скопируй вручную: ' + url);
         }
-        
-        document.body.removeChild(textarea);
-    };
-
-    // Очищаем URL при уходе со страницы
-    window.addEventListener('beforeunload', () => {
-        URL.revokeObjectURL(downloadUrl);
-    });
+    } catch (err) {
+        alert('Скопируй вручную: ' + url);
+    }
+    
+    document.body.removeChild(textarea);
+};
 </script>
 </body>
 </html>

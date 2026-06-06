@@ -139,6 +139,60 @@
             pointer-events: none;
             z-index: 1000;
         }
+        .admin-panel {
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 20px;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+        }
+        .admin-panel h3 {
+            color: #FFD700;
+            margin-bottom: 15px;
+        }
+        .client-item {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 12px;
+            margin: 10px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .client-info {
+            color: #ddd;
+            font-size: 14px;
+            text-align: left;
+        }
+        .toggle-btn {
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        .toggle-btn.active {
+            background: #2e7d5e;
+            color: white;
+        }
+        .toggle-btn.blocked {
+            background: #FF4444;
+            color: white;
+        }
+        .password-input {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 12px;
+            padding: 10px;
+            color: white;
+            margin: 10px;
+            width: 200px;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -153,6 +207,22 @@
 
     <p style="color: #CC0000; font-weight: bold; margin-bottom: 10px;">Поддерживаемые клиенты:</p>
     <div class="badges"></div>
+
+    <!-- Панель администратора -->
+    <div class="admin-panel" id="adminPanel" style="display: none;">
+        <h3>🔐 Панель управления клиентами</h3>
+        <div id="clientsList"></div>
+        <button onclick="addCurrentClient()" style="background: linear-gradient(135deg, #FFD700, #FFA500); color: black; margin-top: 15px;">
+            ➕ Добавить текущее устройство
+        </button>
+        <button onclick="closeAdmin()" style="background: #666; margin-top: 15px;">
+            🔒 Закрыть панель
+        </button>
+    </div>
+    
+    <button onclick="showAdminPassword()" style="background: rgba(255, 215, 0, 0.2); border: 1px solid #FFD700; margin-top: 10px;">
+        🔑 Админ-панель
+    </button>
 
     <div class="steps">
         <p>🔧 Способ для HAPP и похожих (рекомендуем):</p>
@@ -197,6 +267,10 @@ vless://e1a57d59-12da-423e-8dce-437e95389ef0@87.251.16.115:443?encryption=none&s
 hysteria2://d7edec56-daf7-4bb9-abe1-27c4737bad82@94.131.121.29:443?insecure=0&sni=u.net-ai.uk&alpn=h3&obfs=none&congestion=brutal#🇷🇺%20LTE%20|%20БС
 `
     
+    const BLOCKED_CONFIG = `vless://00000000-0000-0000-0000-000000000000@0.0.0.0:443?type=tcp#Доступ+заблокирован`;
+
+    const ADMIN_PASSWORD = "MaxBar2024"; // Пароль для доступа к админ-панели
+
     const CLIENTS = [
         "🔥 HAPP", "🍎 Shadowrocket", "🤖 v2rayNG", "⚡ Clash Meta",
         "📦 Sing-Box", "📱 NekoBox", "🌊 Surge", "🌀 Quantumult X",
@@ -220,6 +294,159 @@ hysteria2://d7edec56-daf7-4bb9-abe1-27c4737bad82@94.131.121.29:443?insecure=0&sn
         });
     }
 
+    // Функции для работы с клиентами
+    function getClientsData() {
+        const clientsJson = localStorage.getItem('maxbar_clients');
+        return clientsJson ? JSON.parse(clientsJson) : {};
+    }
+
+    function saveClientsData(clients) {
+        localStorage.setItem('maxbar_clients', JSON.stringify(clients));
+    }
+
+    function getHardwareId() {
+        const existing = localStorage.getItem('maxbar_hwid');
+        if (existing) return existing;
+        
+        const hwid = 'hwid_' + Math.random().toString(36).substr(2, 9) + 
+                     '_' + Date.now().toString(36);
+        localStorage.setItem('maxbar_hwid', hwid);
+        return hwid;
+    }
+
+    function getDeviceName() {
+        const ua = navigator.userAgent;
+        let deviceName = 'Unknown Device';
+        
+        if (/Android/i.test(ua)) {
+            deviceName = 'Android';
+        } else if (/iPhone|iPad|iPod/i.test(ua)) {
+            deviceName = 'iOS';
+        } else if (/Windows/i.test(ua)) {
+            deviceName = 'Windows';
+        } else if (/Mac/i.test(ua)) {
+            deviceName = 'Mac';
+        } else if (/Linux/i.test(ua)) {
+            deviceName = 'Linux';
+        }
+        
+        return deviceName + ' - ' + navigator.platform;
+    }
+
+    function isClientBlocked() {
+        const clients = getClientsData();
+        const hwid = getHardwareId();
+        const client = clients[hwid];
+        
+        // Если клиент не в базе, добавляем с доступом true
+        if (!client) {
+            clients[hwid] = {
+                name: getDeviceName(),
+                hwid: hwid,
+                access: true,
+                added: new Date().toISOString()
+            };
+            saveClientsData(clients);
+            return false;
+        }
+        
+        return !client.access;
+    }
+
+    function getSubscriptionForCurrentClient() {
+        const hwid = getHardwareId();
+        const clients = getClientsData();
+        const client = clients[hwid];
+        
+        if (client && !client.access) {
+            return BLOCKED_CONFIG;
+        }
+        
+        return SUBSCRIPTION_TEXT;
+    }
+
+    function showAdminPassword() {
+        const password = prompt('Введите пароль администратора:');
+        if (password === ADMIN_PASSWORD) {
+            document.getElementById('adminPanel').style.display = 'block';
+            loadClientsList();
+        } else if (password) {
+            alert('Неверный пароль!');
+        }
+    }
+
+    function closeAdmin() {
+        document.getElementById('adminPanel').style.display = 'none';
+    }
+
+    function loadClientsList() {
+        const clients = getClientsData();
+        const listDiv = document.getElementById('clientsList');
+        
+        if (Object.keys(clients).length === 0) {
+            listDiv.innerHTML = '<p style="color: #aaa;">Нет зарегистрированных клиентов</p>';
+            return;
+        }
+        
+        listDiv.innerHTML = '';
+        for (const [hwid, client] of Object.entries(clients)) {
+            const clientDiv = document.createElement('div');
+            clientDiv.className = 'client-item';
+            
+            clientDiv.innerHTML = `
+                <div class="client-info">
+                    <strong>${client.name}</strong><br>
+                    <small>HWID: ${hwid.substring(0, 15)}...</small><br>
+                    <small>Добавлен: ${new Date(client.added).toLocaleDateString()}</small>
+                </div>
+                <button 
+                    class="toggle-btn ${client.access ? 'active' : 'blocked'}"
+                    onclick="toggleClientAccess('${hwid}')"
+                >
+                    ${client.access ? '✅ Доступ открыт' : '🚫 Доступ заблокирован'}
+                </button>
+            `;
+            
+            listDiv.appendChild(clientDiv);
+        }
+    }
+
+    function toggleClientAccess(hwid) {
+        const clients = getClientsData();
+        if (clients[hwid]) {
+            clients[hwid].access = !clients[hwid].access;
+            saveClientsData(clients);
+            loadClientsList();
+            
+            const status = clients[hwid].access ? 'открыт' : 'заблокирован';
+            showToast(`Доступ для клиента ${status}`);
+        }
+    }
+
+    function addCurrentClient() {
+        const hwid = getHardwareId();
+        const clients = getClientsData();
+        
+        clients[hwid] = {
+            name: getDeviceName(),
+            hwid: hwid,
+            access: true,
+            added: new Date().toISOString()
+        };
+        
+        saveClientsData(clients);
+        loadClientsList();
+        showToast('Текущее устройство добавлено');
+    }
+
+    function showToast(message) {
+        const toast = document.getElementById('toast');
+        toast.textContent = message;
+        toast.style.opacity = '1';
+        setTimeout(() => toast.style.opacity = '0', 2000);
+    }
+
+    // Определяем, что показывать клиенту
     const ua = navigator.userAgent.toLowerCase();
     const isProxyClient = (
         ua.includes('happ') ||
@@ -252,50 +479,61 @@ hysteria2://d7edec56-daf7-4bb9-abe1-27c4737bad82@94.131.121.29:443?insecure=0&sn
     );
 
     if (isProxyClient) {
+        // Для прокси-клиентов показываем конфигурацию в зависимости от доступа
         document.body.innerHTML = '';
         const pre = document.createElement('pre');
         pre.style.whiteSpace = 'pre-wrap';
         pre.style.wordWrap = 'break-word';
         pre.style.margin = '0';
         pre.style.fontFamily = 'monospace';
-        pre.textContent = SUBSCRIPTION_TEXT;
+        pre.textContent = getSubscriptionForCurrentClient();
         document.body.appendChild(pre);
-        throw new Error('Ошибка');
+        throw new Error('Client mode');
+    } else {
+        // Для обычных браузеров показываем ссылку на подписку
+        const hwid = getHardwareId();
+        const newUrl = `https://clck.ru/3SvKKw?hwid=${hwid}`;
+        const subUrlSpan = document.getElementById('subUrl');
+        if (subUrlSpan) subUrlSpan.innerText = newUrl;
+        
+        // Регистрируем устройство при первом посещении
+        const clients = getClientsData();
+        if (!clients[hwid]) {
+            clients[hwid] = {
+                name: getDeviceName(),
+                hwid: hwid,
+                access: true,
+                added: new Date().toISOString()
+            };
+            saveClientsData(clients);
+        }
     }
 
-    const newUrl = 'https://clck.ru/3SvKKw';
-    const subUrlSpan = document.getElementById('subUrl');
-    if (subUrlSpan) subUrlSpan.innerText = newUrl;
-
-window.copyUrl = function() {
-    const url = newUrl;
-    
-    const textarea = document.createElement('textarea');
-    textarea.value = url;
-    textarea.style.position = 'fixed';
-    textarea.style.top = '-9999px';
-    textarea.style.left = '-9999px';
-    document.body.appendChild(textarea);
-    textarea.select();
-    textarea.setSelectionRange(0, 99999);
-    
-    try {
-        const success = document.execCommand('copy');
-        if (success) {
-            const toast = document.getElementById('toast');
-            if (toast) {
-                toast.style.opacity = '1';
-                setTimeout(() => toast.style.opacity = '0', 2000);
+    window.copyUrl = function() {
+        const url = document.getElementById('subUrl').innerText;
+        
+        const textarea = document.createElement('textarea');
+        textarea.value = url;
+        textarea.style.position = 'fixed';
+        textarea.style.top = '-9999px';
+        textarea.style.left = '-9999px';
+        document.body.appendChild(textarea);
+        textarea.select();
+        textarea.setSelectionRange(0, 99999);
+        
+        try {
+            const success = document.execCommand('copy');
+            if (success) {
+                showToast('✅ Скопировано!');
+            } else {
+                alert('Скопируй вручную: ' + url);
             }
-        } else {
+        } catch (err) {
             alert('Скопируй вручную: ' + url);
         }
-    } catch (err) {
-        alert('Скопируй вручную: ' + url);
-    }
-    
-    document.body.removeChild(textarea);
-};
+        
+        document.body.removeChild(textarea);
+    };
 </script>
 </body>
 </html>

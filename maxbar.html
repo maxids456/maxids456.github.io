@@ -204,9 +204,12 @@
 <div id="toast" class="toast">✅ Скопировано!</div>
 
 <script>
-    // ССЫЛКА НА ФАЙЛ CLIENTS.TXT В ВАШЕМ GITHUB РЕПОЗИТОРИИ
-    // ЗАМЕНИТЕ НА ВАШУ РЕАЛЬНУЮ ССЫЛКУ
-    const GITHUB_CLIENTS_URL = 'https://raw.githubusercontent.com/ВАШ_ЮЗЕРНЕЙМ/ВАШ_РЕПОЗИТОРИЙ/main/clients.txt';
+    // МОЖНО ИСПОЛЬЗОВАТЬ ОБЫЧНУЮ ССЫЛКУ НА GITHUB (не raw)
+    // GitHub сам автоматически покажет содержимое файла
+    const GITHUB_CLIENTS_URL = 'https://github.com/maxids456/maxids456.github.io/blob/main/clients.txt';
+    
+    // ИЛИ МОЖНО ИСПОЛЬЗОВАТЬ ЛЮБОЙ ПРЯМОЙ ХОСТИНГ ФАЙЛА:
+    // const GITHUB_CLIENTS_URL = 'https://yourserver.com/clients.txt';
     
     const SUBSCRIPTION_TEXT = `
 #profile-title: MaxBar VPN 🌐
@@ -250,58 +253,65 @@ hysteria2://d7edec56-daf7-4bb9-abe1-27c4737bad82@94.131.121.29:443?insecure=0&sn
     // Получение имени устройства
     function getDeviceName() {
         const ua = navigator.userAgent;
-        let os = 'Unknown';
-        let browser = 'Unknown';
+        let deviceName = 'Unknown Device';
         
         if (/Android/i.test(ua)) {
-            os = 'Android';
-            // Попытка определить модель
+            // Пробуем определить модель Android
             const match = ua.match(/Android\s[\d.]+;\s([^;)]+)/);
-            if (match) os = match[1].trim();
+            if (match) {
+                deviceName = match[1].trim();
+            } else {
+                deviceName = 'Android';
+            }
         } else if (/iPhone|iPad|iPod/i.test(ua)) {
-            os = 'iOS';
-            if (/iPad/i.test(ua)) os = 'iPad';
-            else if (/iPhone/i.test(ua)) os = 'iPhone';
+            if (/iPad/i.test(ua)) deviceName = 'iPad';
+            else if (/iPhone/i.test(ua)) deviceName = 'iPhone';
+            else deviceName = 'iOS';
         } else if (/Windows/i.test(ua)) {
-            os = 'Windows';
+            deviceName = 'Windows';
         } else if (/Mac/i.test(ua)) {
-            os = 'Mac';
+            deviceName = 'Mac';
         } else if (/Linux/i.test(ua)) {
-            os = 'Linux';
+            deviceName = 'Linux';
         }
         
-        // Определение браузера
-        if (/Chrome/i.test(ua) && !/Edg/i.test(ua)) browser = 'Chrome';
-        else if (/Firefox/i.test(ua)) browser = 'Firefox';
-        else if (/Safari/i.test(ua) && !/Chrome/i.test(ua)) browser = 'Safari';
-        else if (/Edg/i.test(ua)) browser = 'Edge';
-        else if (/Opera|OPR/i.test(ua)) browser = 'Opera';
-        
-        return `${os} - ${browser}`;
+        return deviceName;
     }
 
-    // Парсинг файла clients.txt
+    // Парсинг файла clients.txt (поддерживает разные форматы)
     function parseClientsFile(text) {
         const clients = {};
         const lines = text.split('\n');
         
         for (const line of lines) {
-            // Пропускаем комментарии и пустые строки
             const trimmedLine = line.trim();
-            if (!trimmedLine || trimmedLine.startsWith('#')) continue;
             
-            // Ищем строки формата "Имя устройства = true/false"
-            const match = trimmedLine.match(/^(.+?)\s*=\s*(true|false)\s*$/i);
+            // Пропускаем комментарии и пустые строки
+            if (!trimmedLine || trimmedLine.startsWith('#') || trimmedLine.startsWith('//')) {
+                continue;
+            }
+            
+            // Поддерживаем разные форматы:
+            // "Samsung A32 = true"
+            // "Samsung A32: true"
+            // "Samsung A32 true"
+            let match = trimmedLine.match(/^(.+?)\s*[=:]\s*(true|false)\s*$/i);
+            
+            if (!match) {
+                // Пробуем формат с пробелом
+                match = trimmedLine.match(/^(.+?)\s+(true|false)\s*$/i);
+            }
+            
             if (match) {
                 const deviceName = match[1].trim();
                 const access = match[2].toLowerCase() === 'true';
                 
-                // Если устройство с таким именем уже есть, добавляем счетчик
+                // Обработка дубликатов
                 let finalName = deviceName;
                 let counter = 1;
-                while (clients[finalName]) {
+                while (clients[finalName] !== undefined) {
                     counter++;
-                    finalName = `${deviceName} #${counter}`;
+                    finalName = `${deviceName} (${counter})`;
                 }
                 
                 clients[finalName] = access;
@@ -311,14 +321,34 @@ hysteria2://d7edec56-daf7-4bb9-abe1-27c4737bad82@94.131.121.29:443?insecure=0&sn
         return clients;
     }
 
+    // Конвертация GitHub URL в RAW URL
+    function convertToRawUrl(githubUrl) {
+        // Если это уже raw URL
+        if (githubUrl.includes('raw.githubusercontent.com')) {
+            return githubUrl;
+        }
+        
+        // Конвертируем github.com/blob/ в raw.githubusercontent.com/
+        return githubUrl
+            .replace('github.com', 'raw.githubusercontent.com')
+            .replace('/blob/', '/');
+    }
+
     // Проверка доступа для устройства
     async function checkAccess() {
         try {
             const deviceName = getDeviceName();
-            const response = await fetch(GITHUB_CLIENTS_URL);
+            
+            // Конвертируем URL в RAW для скачивания
+            const rawUrl = convertToRawUrl(GITHUB_CLIENTS_URL);
+            
+            console.log('Проверка доступа для:', deviceName);
+            console.log('URL файла клиентов:', rawUrl);
+            
+            const response = await fetch(rawUrl);
             
             if (!response.ok) {
-                console.log('Файл clients.txt не найден, доступ открыт по умолчанию');
+                console.log('Файл clients.txt не найден (статус:', response.status, '), доступ открыт по умолчанию');
                 return { isBlocked: false, deviceName: deviceName };
             }
             
@@ -328,7 +358,7 @@ hysteria2://d7edec56-daf7-4bb9-abe1-27c4737bad82@94.131.121.29:443?insecure=0&sn
             console.log('Загруженные клиенты:', clients);
             console.log('Текущее устройство:', deviceName);
             
-            // Ищем точное совпадение имени устройства
+            // Проверяем точное совпадение
             if (clients.hasOwnProperty(deviceName)) {
                 return { 
                     isBlocked: !clients[deviceName], 
@@ -337,7 +367,20 @@ hysteria2://d7edec56-daf7-4bb9-abe1-27c4737bad82@94.131.121.29:443?insecure=0&sn
                 };
             }
             
-            // Если устройство не найдено в списке - доступ открыт
+            // Проверяем частичное совпадение (на случай разных форматов имени)
+            for (const [clientName, access] of Object.entries(clients)) {
+                if (deviceName.includes(clientName) || clientName.includes(deviceName)) {
+                    console.log('Найдено частичное совпадение:', clientName);
+                    return { 
+                        isBlocked: !access, 
+                        deviceName: deviceName,
+                        matchedName: clientName,
+                        access: access
+                    };
+                }
+            }
+            
+            // Устройство не найдено - доступ открыт
             return { isBlocked: false, deviceName: deviceName };
             
         } catch (error) {
@@ -353,13 +396,19 @@ hysteria2://d7edec56-daf7-4bb9-abe1-27c4737bad82@94.131.121.29:443?insecure=0&sn
         const subUrlSpan = document.getElementById('subUrl');
         const statusMessage = document.getElementById('statusMessage');
         
-        // Обновляем ссылку на подписку
+        // Обновляем ссылку на подписку (можно заменить на вашу)
         const newUrl = 'https://clck.ru/3SvKKw';
         if (subUrlSpan) subUrlSpan.innerText = newUrl;
         
         // Показываем статус
         if (accessInfo.isBlocked) {
-            if (statusMessage) statusMessage.style.display = 'block';
+            if (statusMessage) {
+                statusMessage.style.display = 'block';
+                statusMessage.innerHTML = `
+                    <span class="status-indicator status-blocked"></span>
+                    <strong style="color: #FFD700;">⚠️ Доступ заблокирован для устройства: ${accessInfo.deviceName}</strong>
+                `;
+            }
             console.log('Доступ заблокирован для:', accessInfo.deviceName);
         } else {
             if (statusMessage) statusMessage.style.display = 'none';

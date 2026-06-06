@@ -3,5 +3,4 @@ hysteria2://17362111-4309-4fe2-8b77-8187699248bf@94.125.102.96:443?insecure=0&sn
 vless://91a8c63b-3107-46a4-9526-bb31d1eb1e78@ru6.sipipro.su:443?encryption=none&security=reality&sni=ya.ru&pbk=NsPdlzraIawCLwtIUGk5demmtYJcBedeR_3qA2kvMF0&sid=eacc9f154bc36612&fp=qq&type=tcp#🇫🇮%20LTE%20%231
 vless://e1a57d59-12da-423e-8dce-437e95389ef0@64.188.79.65:443?encryption=none&security=reality&flow=xtls-rprx-vision&sni=ign.com&pbk=H2W1qvM0nUovlPadYco7_EWiZ_psfcLxOPJwOs3BDXU&sid=fe2e437f64f2da7a&spx=%2F&fp=randomized&type=tcp#🇳🇱%20LTE%20%232
 vless://e1a57d59-12da-423e-8dce-437e95389ef0@87.251.16.115:443?encryption=none&security=reality&flow=xtls-rprx-vision&sni=ign.com&pbk=H2W1qvM0nUovlPadYco7_EWiZ_psfcLxOPJwOs3BDXU&sid=fe2e437f64f2da7a&spx=%2F&fp=randomized&type=tcp#🇷🇺%20Россия%20(ЮТ%2C%20ДС%2C%20ТГ)
-hysteria2://d7edec56-daf7-4bb9-abe1-27c4737bad82@94.131.121.29:443?insecure=0&sni=u.net-ai.uk&alpn=h3&obfs=none&congestion=brutal#🇷🇺%20LTE%20|%20БС
-
+vless://17362111-4309-4fe2-8b77-8187699248bf@217.16.29.109:443?encryption=none&security=reality&flow=xtls-rprx-vision&sni=api.vk.com&pbk=WTJPxVzaDwD9JBn36e0s-pmhyhoupaUfnRKICAEtg1A&sid=fe299c06&spx=%2F&fp=chrome&type=tcp#🇷🇺%20Белые%20списки

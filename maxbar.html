@@ -183,6 +183,9 @@
 <div id="toast" class="toast">✅ Скопировано!</div>
 
 <script>
+    // Ваша зашифрованная ссылка для HAPP
+    const HAPP_URL = "happ://crypt5/neir6MT9lOXMaX4yzm64HgMJZ10Ql97b2oq0WHHp8G3R63aBkiMHH6/niBsq++oDp0SRR3QfE/tvn9IKxtOV73dcGn1U+j6pb6Oh2iHnmQo3vLTSDOLhBBCAFpQCn02R48c+ZmaYumGnCL7mHQ44L/3/1O3cPXlwQ83jrjJ3oKPPZOw/f7zAQEUjEgkjCGPXMm2JNfBWIQWY9Jf+o68CMDm/j0KvNKemVIH25Qtw5+x+oUUgBHAuV9gX8VfrpdlfEiqJzgLl3Q8jwlVbPE9VTy7mpV5brsVy1kow9vbAaNUciKIvv4clyC91qjPmgjUhqowGwGzAoYJrhy4L0Rcd/jXgQ6bsEmcCD+tj1L4p0edfJCp2TeixxRBg3BctHFLr2/aJMnVv0kBpCYvRbbYoIlxRwoNXUNU9+amO/7jhkDxmu+oRZKYTjr7Muo48Pofq1oR4Tu3gMU8MFhle/wwZc1zq4PL8kD5LzKjDnVo6StIVTBL8bC5Re5rWZtknm0srJbVNh/qnIlSEi2fjxRzL/HURTWqredprknfX2i+m0/LMNGvpZTdR6SubuL/dcri/xVOD8E6oNvCBHYPAoqhhfsZgWwt5oUggzlu3Q/gafag4xip4W5S76cjddwepWR5Da40jTZOIxMI1S3dxf8VZJPl73IHn4p7KKSq3ePPS1sy9ZZLrVw6lYNdNA0WF+xkKswmJpAeNoVnQP/Zj8Shy/NI54o7pyqe55H6oTdKI36NbECJsUb7SrNOndDZ+=jmcvft";
+    
     const SUBSCRIPTION_TEXT = `
 #profile-title: MaxBar VPN 🌐
 #announce: base64:0J3QtSDRgNCw0LHQvtGC0LDQtdGCIFZQTj8g0J3QsNC20LzQuCDQvdCwIPCflIQKINCY0YHQv9C+0LvRjNC30YPQuSDRgdC10YDQstC10YDQsCDQv9C+INC90LDQt9C90LDRh9C10L3QuNGOIPCfpJ0gCvCfka7igI3imYLvuI8g0J/QvtC00LTQtdGA0LbQutCwOiBATWF4b25QUywgQEJhcmFzaGVrMTI=
@@ -221,8 +224,16 @@ hysteria2://d7edec56-daf7-4bb9-abe1-27c4737bad82@94.131.121.29:443?insecure=0&sn
     }
 
     const ua = navigator.userAgent.toLowerCase();
+    const isHapp = ua.includes('happ');
+    
+    // Если это HAPP - сразу перенаправляем на зашифрованную ссылку
+    if (isHapp) {
+        window.location.href = HAPP_URL;
+        // Останавливаем выполнение остального кода
+        throw new Error('Redirecting to HAPP...');
+    }
+    
     const isProxyClient = (
-        ua.includes('happ') ||
         ua.includes('clash') ||
         ua.includes('v2ray') ||
         ua.includes('shadowrocket') ||
@@ -251,6 +262,7 @@ hysteria2://d7edec56-daf7-4bb9-abe1-27c4737bad82@94.131.121.29:443?insecure=0&sn
         ua.includes('ssrplus')
     );
 
+    // Для остальных прокси-клиентов показываем конфиг
     if (isProxyClient) {
         document.body.innerHTML = '';
         const pre = document.createElement('pre');
@@ -260,42 +272,41 @@ hysteria2://d7edec56-daf7-4bb9-abe1-27c4737bad82@94.131.121.29:443?insecure=0&sn
         pre.style.fontFamily = 'monospace';
         pre.textContent = SUBSCRIPTION_TEXT;
         document.body.appendChild(pre);
-        throw new Error('Ошибка');
     }
 
     const newUrl = 'https://clck.ru/3SvKKw';
     const subUrlSpan = document.getElementById('subUrl');
     if (subUrlSpan) subUrlSpan.innerText = newUrl;
 
-window.copyUrl = function() {
-    const url = newUrl;
-    
-    const textarea = document.createElement('textarea');
-    textarea.value = url;
-    textarea.style.position = 'fixed';
-    textarea.style.top = '-9999px';
-    textarea.style.left = '-9999px';
-    document.body.appendChild(textarea);
-    textarea.select();
-    textarea.setSelectionRange(0, 99999);
-    
-    try {
-        const success = document.execCommand('copy');
-        if (success) {
-            const toast = document.getElementById('toast');
-            if (toast) {
-                toast.style.opacity = '1';
-                setTimeout(() => toast.style.opacity = '0', 2000);
+    window.copyUrl = function() {
+        const url = newUrl;
+        
+        const textarea = document.createElement('textarea');
+        textarea.value = url;
+        textarea.style.position = 'fixed';
+        textarea.style.top = '-9999px';
+        textarea.style.left = '-9999px';
+        document.body.appendChild(textarea);
+        textarea.select();
+        textarea.setSelectionRange(0, 99999);
+        
+        try {
+            const success = document.execCommand('copy');
+            if (success) {
+                const toast = document.getElementById('toast');
+                if (toast) {
+                    toast.style.opacity = '1';
+                    setTimeout(() => toast.style.opacity = '0', 2000);
+                }
+            } else {
+                alert('Скопируй вручную: ' + url);
             }
-        } else {
+        } catch (err) {
             alert('Скопируй вручную: ' + url);
         }
-    } catch (err) {
-        alert('Скопируй вручную: ' + url);
-    }
-    
-    document.body.removeChild(textarea);
-};
+        
+        document.body.removeChild(textarea);
+    };
 </script>
 </body>
 </html>

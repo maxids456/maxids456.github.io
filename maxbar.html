@@ -139,35 +139,14 @@
             pointer-events: none;
             z-index: 1000;
         }
-        .status-indicator {
-            display: inline-block;
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            margin-right: 5px;
-        }
-        .status-active {
-            background: #00ff00;
-            box-shadow: 0 0 10px #00ff00;
-        }
-        .status-blocked {
-            background: #ff0000;
-            box-shadow: 0 0 10px #ff0000;
-        }
     </style>
 </head>
 <body>
 <div class="container">
     <h1>🔗 MaxBar VPN</h1>
     <div class="sub"><strong>Для клиентов подобных HAPP скопируй ссылку и добавь в приложение по способу ниже</strong></div>
-    
-    <div id="statusMessage" style="display: none; margin: 10px 0; padding: 10px; border-radius: 12px; background: rgba(255, 0, 0, 0.3);">
-        <span class="status-indicator status-blocked"></span>
-        <strong style="color: #FFD700;">⚠️ Ваш доступ заблокирован администратором</strong>
-    </div>
-    
     <div class="url-box">
-        <div class="url" id="subUrl">Загрузка...</div>
+        <div class="url" id="subUrl">Создаю ссылку подписки...</div>
     </div>
     <button onclick="copyUrl()">📋 Скопировать ссылку</button>
     <a href="MaxBar.txt" download="MaxBar.txt" class="btn-download">📥 Скачать файлом (для v2rayTun и др.)</a>
@@ -204,13 +183,6 @@
 <div id="toast" class="toast">✅ Скопировано!</div>
 
 <script>
-    // МОЖНО ИСПОЛЬЗОВАТЬ ОБЫЧНУЮ ССЫЛКУ НА GITHUB (не raw)
-    // GitHub сам автоматически покажет содержимое файла
-    const GITHUB_CLIENTS_URL = 'https://github.com/maxids456/maxids456.github.io/blob/main/clients.txt';
-    
-    // ИЛИ МОЖНО ИСПОЛЬЗОВАТЬ ЛЮБОЙ ПРЯМОЙ ХОСТИНГ ФАЙЛА:
-    // const GITHUB_CLIENTS_URL = 'https://yourserver.com/clients.txt';
-    
     const SUBSCRIPTION_TEXT = `
 #profile-title: MaxBar VPN 🌐
 #announce: base64:0J3QtSDRgNCw0LHQvtGC0LDQtdGCIFZQTj8g0J3QsNC20LzQuCDQvdCwIPCflIQKINCY0YHQv9C+0LvRjNC30YPQuSDRgdC10YDQstC10YDQsCDQv9C+INC90LDQt9C90LDRh9C10L3QuNGOIPCfpJ0gCvCfka7igI3imYLvuI8g0J/QvtC00LTQtdGA0LbQutCwOiBATWF4b25QUywgQEJhcmFzaGVrMTI=
@@ -225,8 +197,6 @@ vless://e1a57d59-12da-423e-8dce-437e95389ef0@87.251.16.115:443?encryption=none&s
 hysteria2://d7edec56-daf7-4bb9-abe1-27c4737bad82@94.131.121.29:443?insecure=0&sni=u.net-ai.uk&alpn=h3&obfs=none&congestion=brutal#🇷🇺%20LTE%20|%20БС
 `
     
-    const BLOCKED_CONFIG = `vless://00000000-0000-0000-0000-000000000000@0.0.0.0:443?type=tcp#Доступ+заблокирован`;
-
     const CLIENTS = [
         "🔥 HAPP", "🍎 Shadowrocket", "🤖 v2rayNG", "⚡ Clash Meta",
         "📦 Sing-Box", "📱 NekoBox", "🌊 Surge", "🌀 Quantumult X",
@@ -250,173 +220,6 @@ hysteria2://d7edec56-daf7-4bb9-abe1-27c4737bad82@94.131.121.29:443?insecure=0&sn
         });
     }
 
-    // Получение имени устройства
-    function getDeviceName() {
-        const ua = navigator.userAgent;
-        let deviceName = 'Unknown Device';
-        
-        if (/Android/i.test(ua)) {
-            // Пробуем определить модель Android
-            const match = ua.match(/Android\s[\d.]+;\s([^;)]+)/);
-            if (match) {
-                deviceName = match[1].trim();
-            } else {
-                deviceName = 'Android';
-            }
-        } else if (/iPhone|iPad|iPod/i.test(ua)) {
-            if (/iPad/i.test(ua)) deviceName = 'iPad';
-            else if (/iPhone/i.test(ua)) deviceName = 'iPhone';
-            else deviceName = 'iOS';
-        } else if (/Windows/i.test(ua)) {
-            deviceName = 'Windows';
-        } else if (/Mac/i.test(ua)) {
-            deviceName = 'Mac';
-        } else if (/Linux/i.test(ua)) {
-            deviceName = 'Linux';
-        }
-        
-        return deviceName;
-    }
-
-    // Парсинг файла clients.txt (поддерживает разные форматы)
-    function parseClientsFile(text) {
-        const clients = {};
-        const lines = text.split('\n');
-        
-        for (const line of lines) {
-            const trimmedLine = line.trim();
-            
-            // Пропускаем комментарии и пустые строки
-            if (!trimmedLine || trimmedLine.startsWith('#') || trimmedLine.startsWith('//')) {
-                continue;
-            }
-            
-            // Поддерживаем разные форматы:
-            // "Samsung A32 = true"
-            // "Samsung A32: true"
-            // "Samsung A32 true"
-            let match = trimmedLine.match(/^(.+?)\s*[=:]\s*(true|false)\s*$/i);
-            
-            if (!match) {
-                // Пробуем формат с пробелом
-                match = trimmedLine.match(/^(.+?)\s+(true|false)\s*$/i);
-            }
-            
-            if (match) {
-                const deviceName = match[1].trim();
-                const access = match[2].toLowerCase() === 'true';
-                
-                // Обработка дубликатов
-                let finalName = deviceName;
-                let counter = 1;
-                while (clients[finalName] !== undefined) {
-                    counter++;
-                    finalName = `${deviceName} (${counter})`;
-                }
-                
-                clients[finalName] = access;
-            }
-        }
-        
-        return clients;
-    }
-
-    // Конвертация GitHub URL в RAW URL
-    function convertToRawUrl(githubUrl) {
-        // Если это уже raw URL
-        if (githubUrl.includes('raw.githubusercontent.com')) {
-            return githubUrl;
-        }
-        
-        // Конвертируем github.com/blob/ в raw.githubusercontent.com/
-        return githubUrl
-            .replace('github.com', 'raw.githubusercontent.com')
-            .replace('/blob/', '/');
-    }
-
-    // Проверка доступа для устройства
-    async function checkAccess() {
-        try {
-            const deviceName = getDeviceName();
-            
-            // Конвертируем URL в RAW для скачивания
-            const rawUrl = convertToRawUrl(GITHUB_CLIENTS_URL);
-            
-            console.log('Проверка доступа для:', deviceName);
-            console.log('URL файла клиентов:', rawUrl);
-            
-            const response = await fetch(rawUrl);
-            
-            if (!response.ok) {
-                console.log('Файл clients.txt не найден (статус:', response.status, '), доступ открыт по умолчанию');
-                return { isBlocked: false, deviceName: deviceName };
-            }
-            
-            const text = await response.text();
-            const clients = parseClientsFile(text);
-            
-            console.log('Загруженные клиенты:', clients);
-            console.log('Текущее устройство:', deviceName);
-            
-            // Проверяем точное совпадение
-            if (clients.hasOwnProperty(deviceName)) {
-                return { 
-                    isBlocked: !clients[deviceName], 
-                    deviceName: deviceName,
-                    access: clients[deviceName]
-                };
-            }
-            
-            // Проверяем частичное совпадение (на случай разных форматов имени)
-            for (const [clientName, access] of Object.entries(clients)) {
-                if (deviceName.includes(clientName) || clientName.includes(deviceName)) {
-                    console.log('Найдено частичное совпадение:', clientName);
-                    return { 
-                        isBlocked: !access, 
-                        deviceName: deviceName,
-                        matchedName: clientName,
-                        access: access
-                    };
-                }
-            }
-            
-            // Устройство не найдено - доступ открыт
-            return { isBlocked: false, deviceName: deviceName };
-            
-        } catch (error) {
-            console.error('Ошибка при проверке доступа:', error);
-            // При ошибке открываем доступ
-            return { isBlocked: false, deviceName: getDeviceName() };
-        }
-    }
-
-    // Обновление страницы и подписки
-    async function updatePage() {
-        const accessInfo = await checkAccess();
-        const subUrlSpan = document.getElementById('subUrl');
-        const statusMessage = document.getElementById('statusMessage');
-        
-        // Обновляем ссылку на подписку (можно заменить на вашу)
-        const newUrl = 'https://clck.ru/3SvKKw';
-        if (subUrlSpan) subUrlSpan.innerText = newUrl;
-        
-        // Показываем статус
-        if (accessInfo.isBlocked) {
-            if (statusMessage) {
-                statusMessage.style.display = 'block';
-                statusMessage.innerHTML = `
-                    <span class="status-indicator status-blocked"></span>
-                    <strong style="color: #FFD700;">⚠️ Доступ заблокирован для устройства: ${accessInfo.deviceName}</strong>
-                `;
-            }
-            console.log('Доступ заблокирован для:', accessInfo.deviceName);
-        } else {
-            if (statusMessage) statusMessage.style.display = 'none';
-            console.log('Доступ открыт для:', accessInfo.deviceName);
-        }
-    }
-
-    // Определение прокси-клиента
     const ua = navigator.userAgent.toLowerCase();
     const isProxyClient = (
         ua.includes('happ') ||
@@ -448,59 +251,51 @@ hysteria2://d7edec56-daf7-4bb9-abe1-27c4737bad82@94.131.121.29:443?insecure=0&sn
         ua.includes('ssrplus')
     );
 
-    // Основная логика
     if (isProxyClient) {
-        // Для прокси-клиентов сразу показываем конфигурацию
-        checkAccess().then(accessInfo => {
-            document.body.innerHTML = '';
-            const pre = document.createElement('pre');
-            pre.style.whiteSpace = 'pre-wrap';
-            pre.style.wordWrap = 'break-word';
-            pre.style.margin = '0';
-            pre.style.fontFamily = 'monospace';
-            
-            if (accessInfo.isBlocked) {
-                pre.textContent = BLOCKED_CONFIG;
-            } else {
-                pre.textContent = SUBSCRIPTION_TEXT;
-            }
-            
-            document.body.appendChild(pre);
-        });
-    } else {
-        // Для обычных браузеров обновляем страницу
-        updatePage();
+        document.body.innerHTML = '';
+        const pre = document.createElement('pre');
+        pre.style.whiteSpace = 'pre-wrap';
+        pre.style.wordWrap = 'break-word';
+        pre.style.margin = '0';
+        pre.style.fontFamily = 'monospace';
+        pre.textContent = SUBSCRIPTION_TEXT;
+        document.body.appendChild(pre);
+        throw new Error('Ошибка');
     }
 
-    window.copyUrl = function() {
-        const url = document.getElementById('subUrl').innerText;
-        
-        const textarea = document.createElement('textarea');
-        textarea.value = url;
-        textarea.style.position = 'fixed';
-        textarea.style.top = '-9999px';
-        textarea.style.left = '-9999px';
-        document.body.appendChild(textarea);
-        textarea.select();
-        textarea.setSelectionRange(0, 99999);
-        
-        try {
-            const success = document.execCommand('copy');
-            if (success) {
-                const toast = document.getElementById('toast');
-                if (toast) {
-                    toast.style.opacity = '1';
-                    setTimeout(() => toast.style.opacity = '0', 2000);
-                }
-            } else {
-                alert('Скопируй вручную: ' + url);
+    const newUrl = 'https://clck.ru/3SvKKw';
+    const subUrlSpan = document.getElementById('subUrl');
+    if (subUrlSpan) subUrlSpan.innerText = newUrl;
+
+window.copyUrl = function() {
+    const url = newUrl;
+    
+    const textarea = document.createElement('textarea');
+    textarea.value = url;
+    textarea.style.position = 'fixed';
+    textarea.style.top = '-9999px';
+    textarea.style.left = '-9999px';
+    document.body.appendChild(textarea);
+    textarea.select();
+    textarea.setSelectionRange(0, 99999);
+    
+    try {
+        const success = document.execCommand('copy');
+        if (success) {
+            const toast = document.getElementById('toast');
+            if (toast) {
+                toast.style.opacity = '1';
+                setTimeout(() => toast.style.opacity = '0', 2000);
             }
-        } catch (err) {
+        } else {
             alert('Скопируй вручную: ' + url);
         }
-        
-        document.body.removeChild(textarea);
-    };
+    } catch (err) {
+        alert('Скопируй вручную: ' + url);
+    }
+    
+    document.body.removeChild(textarea);
+};
 </script>
 </body>
 </html>

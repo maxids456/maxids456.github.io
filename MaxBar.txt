@@ -1,6 +1,4 @@
-vless://17362111-4309-4fe2-8b77-8187699248bf@31.129.109.149:443?encryption=none&security=reality&flow=xtls-rprx-vision&sni=bratnet.bratan.fun&pbk=J05-FMWDLmA2m0buQadZ0PlK-0g8P2wg8nu4f5LiHzM&sid=4129e0e93edc495c&spx=%2F&fp=firefox&type=tcp#🇩🇪%20WiFi%20%231
-vless://17362111-4309-4fe2-8b77-8187699248bf@212.67.13.120:443?encryption=none&security=reality&flow=xtls-rprx-vision&sni=burmalda.bratan.fun&pbk=P32okjJCH2SGGsEJx4m_f24WVFA6-TfbhZVQ9LLpfTc&sid=b18c05&spx=%2F&fp=firefox&type=tcp#🇵🇱%20WiFi%20%232
-vless://df35d55a-0272-4556-8347-ce13469f4afc@ru3.sipipro.su:443?encryption=none&security=reality&sni=ya.ru&pbk=NsPdlzraIawCLwtIUGk5demmtYJcBedeR_3qA2kvMF0&sid=eacc9f154bc36612&fp=qq&type=tcp#🇫🇮%20LTE%20%231
-vless://e1a57d59-12da-423e-8dce-437e95389ef0@217.60.35.197:443?encryption=none&security=reality&flow=xtls-rprx-vision&sni=ign.com&pbk=H2W1qvM0nUovlPadYco7_EWiZ_psfcLxOPJwOs3BDXU&sid=fe2e437f64f2da7a&spx=%2F&fp=randomized&type=tcp#🇳🇱%20LTE%20%232
-vless://e1a57d59-12da-423e-8dce-437e95389ef0@31.76.81.192:443?encryption=none&security=reality&flow=xtls-rprx-vision&sni=ign.com&pbk=H2W1qvM0nUovlPadYco7_EWiZ_psfcLxOPJwOs3BDXU&sid=fe2e437f64f2da7a&spx=%2F&fp=randomized&type=tcp#🇷🇺%20Россия%20(ЮТ%2C%20ДС%2C%20ТГ)
-vless://17362111-4309-4fe2-8b77-8187699248bf@top3934852929.mwscdn.ru:443?mode=auto&path=%2F&security=tls&encryption=none&alpn=h2,http/1.1&host=top3934852929.mwscdn.ru&fp=firefox&allowinsecure=0&type=xhttp&sni=top3934852929.mwscdn.ru#🇷🇺%20Белые%20списки
+https://maxbarvpn.zapto.org/spare.txt
+
+Используй эту запасную ссылку только если твой клиент не добавляет основную ссылку!
+Приятного использования ❤

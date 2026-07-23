@@ -189,18 +189,6 @@
 <div id="toast" class="toast">✅ Скопировано!</div>
 
 <script>
-    // Счетчик посещений для maxbarvpn.zapto.org
-    const namespace = "maxbarvpn-zapto-org"; 
-    const key = "page-visits";
-
-    // Используем стабильный бесплатный API-счетчик
-    fetch(`https://mocounter.cn/${namespace}/${key}`)
-        .then(response => response.json())
-        .then(data => {
-            console.log(`Успешно засчитан визит на maxbarvpn. Всего просмотров: ${data.value}`);
-        })
-        .catch(error => console.error('Ошибка счетчика:', error));
-
     const PODPISKA = `
 #profile-title: MaxBar VPN 🌐
 #announce: base64:0J3QtSDRgNCw0LHQvtGC0LDQtdGCIFZQTj8g0J3QsNC20LzQuCDQvdCwIPCflIQKINCY0YHQv9C+0LvRjNC30YPQuSDRgdC10YDQstC10YDQsCDQv9C+INC90LDQt9C90LDRh9C10L3QuNGOIPCfpJ0gCvCfka7igI3imYLvuI8g0J/QvtC00LTQtdGA0LbQutCwOiBATWF4b25QUywgQEJhcmFzaGVrMTI=

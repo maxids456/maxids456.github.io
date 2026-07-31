@@ -3,10 +3,10 @@
 #profile-update-interval: 1
 #profile-web-page-url: https://maxbarvpn.zapto.org/sub.html
 #support-url: https://t.me/MaxBarVPN
-vless://5202f618-7fb3-4d5f-8896-55f89637180a@95.85.224.14:443?encryption=none&security=reality&flow=xtls-rprx-vision&sni=ign.com&pbk=OECEXjkKytnmX6qxzAvC9tE9QAQqNuWRBblAmbRnYWY&sid=fe2e437f64f2da7a&spx=%2F&fp=firefox&type=tcp#🇩🇪%20Wi-Fi%20%231
-vless://5202f618-7fb3-4d5f-8896-55f89637180a@31.76.7.121:443?encryption=none&security=reality&flow=xtls-rprx-vision&sni=ign.com&pbk=OECEXjkKytnmX6qxzAvC9tE9QAQqNuWRBblAmbRnYWY&sid=fe2e437f64f2da7a&spx=%2F&fp=firefox&type=tcp#🇵🇱%20Wi-Fi%20%232
+vless://672102fb-92c4-92ad-f581-540dce87829a@89.47.55.4:443?encryption=none&security=reality&sni=cdn.steamstatic.com&fp=chrome&pbk=sRTNjrosfFSiuQX7Yt7Ub5DJvFznfHSC3nlzFQ3H2WU&type=xhttp&mode=auto&path=%2F#%F0%9F%87%A9%F0%9F%87%AA%20Wi-Fi%20%231
+vless://672102fb-92c4-92ad-f581-540dce87829a@89.47.55.4:443?encryption=none&security=reality&sni=download.nvidia.com&fp=chrome&pbk=WtLZK1KyhSpI3K-R4M3sLAHWPOgGPMgkL6RneL0OfCY&type=xhttp&mode=auto&path=%2F#%F0%9F%87%B5%F0%9F%87%B1%20Wi-Fi%20%232
 vless://17362111-4309-4fe2-8b77-8187699248bf@95.85.241.20:443?flow=xtls-rprx-vision&encryption=none&security=reality&sni=cabinet.bratan.fun&fp=firefox&pbk=WTJPxVzaDwD9JBn36e0s-pmhyhoupaUfnRKICAEtg1A&sid=fe299c06&type=tcp&headerType=none#🇫🇮%20LTE%20%231
-vless://5202f618-7fb3-4d5f-8896-55f89637180a@217.60.35.197:443?encryption=none&security=reality&flow=xtls-rprx-vision&sni=ign.com&pbk=H2W1qvM0nUovlPadYco7_EWiZ_psfcLxOPJwOs3BDXU&sid=fe2e437f64f2da7a&spx=%2F&fp=firefox&type=tcp#🇳🇱%20LTE%20%232
-vless://5202f618-7fb3-4d5f-8896-55f89637180a@217.60.35.197:443?encryption=none&security=reality&flow=xtls-rprx-vision&sni=ign.com&pbk=H2W1qvM0nUovlPadYco7_EWiZ_psfcLxOPJwOs3BDXU&sid=fe2e437f64f2da7a&spx=%2F&fp=randomized&type=tcp#🇷🇺%20Россия%20(ЮТ%2C%20ДС%2C%20ТГ)
+vless://672102fb-92c4-92ad-f581-540dce87829a@170.168.99.4:443?encryption=none&security=reality&sni=cdn.steamstatic.com&fp=chrome&pbk=R8Mogel1wypEIpcUXnGmG1cuzT9POghNhqJcw4-CLx0&type=xhttp&mode=auto&path=%2F#%F0%9F%87%B3%F0%9F%87%B1%20LTE%20%232
+vless://672102fb-92c4-92ad-f581-540dce87829a@170.168.99.4:993?flow=xtls-rprx-vision&encryption=none&security=reality&sni=dl.google.com&fp=chrome&pbk=-GbQJg3bnEGEVFjVaRRu01cgF1f0K_maI4d5MWtMb28&type=tcp&headerType=none#%F0%9F%87%B7%F0%9F%87%BA%20%D0%A0%D0%BE%D1%81%D1%81%D0%B8%D1%8F%20(%D0%AE%D0%A2%2C%20%D0%94%D0%A1%2C%20%D0%A2%D0%93)
 vless://491aea55-b0d2-40fd-964f-107177fbd92f@81.163.23.185:8443?encryption=none&security=reality&sni=id.pervye.ru&pbk=K9vJ2zLFxi3VTmrguyLC1KrC920axeFSeA8x_xY4Xhw&fp=firefox&type=grpc&serviceName=ns&mode=gun#🇪🇺%20Белые%20списки%20№1
 vless://491aea55-b0d2-40fd-964f-107177fbd92f@185.229.9.176:8443?encryption=none&security=reality&sni=id.pervye.ru&pbk=K9vJ2zLFxi3VTmrguyLC1KrC920axeFSeA8x_xY4Xhw&fp=firefox&type=grpc&serviceName=ns&mode=gun#🇪🇺%20Белые%20списки%20%232

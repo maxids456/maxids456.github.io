@@ -3,7 +3,7 @@
 #profile-update-interval: 1
 #profile-web-page-url: https://maxbarvpn.zapto.org/sub.html
 #support-url: https://t.me/MaxBarVPN
-vless://1ed540ec-8121-4453-8a06-8c3fe7c37e69@93.152.224.159:443?flow=xtls-rprx-vision&encryption=none&security=reality&sni=google.com&fp=firefox&pbk=vZ22ThhkpXUd5-tY-v5TTrouLHjgYYmeQgqeLt7HRz0&type=tcp&headerType=none#%F0%9F%87%A9%F0%9F%87%AA%20Wi-Fi%20%231
+vless://1ed540ec-8121-4453-8a06-8c3fe7c37e69@45.145.56.103:443?encryption=none&security=reality&sni=dl.google.com&pbk=HFTFARa1OS53m4HWnjwtZ0J3lu7aoKkE7OujIyM62QI&sid=2a236a7fcbe0ce61&fp=firefox&type=grpc&serviceName=grpc-tunnel&authority=dl.google.com&mode=multi#🇩🇪%20Wi-Fi%20%231
 vless://1ed540ec-8121-4453-8a06-8c3fe7c37e69@95.85.246.79:443?encryption=none&security=reality&sni=dl.google.com&pbk=HFTFARa1OS53m4HWnjwtZ0J3lu7aoKkE7OujIyM62QI&sid=2a236a7fcbe0ce61&fp=firefox&type=grpc&serviceName=grpc-tunnel&mode=multi#🇵🇱%20Wi-Fi%20%232
 vless://1ed540ec-8121-4453-8a06-8c3fe7c37e69@31.77.140.240:443?encryption=none&security=reality&sni=dl.google.com&pbk=HFTFARa1OS53m4HWnjwtZ0J3lu7aoKkE7OujIyM62QI&sid=2a236a7fcbe0ce61&fp=firefox&type=grpc&serviceName=grpc-tunnel&mode=multi#🇫🇮%20LTE%20%231
 vless://1ed540ec-8121-4453-8a06-8c3fe7c37e69@91.92.43.108:443?encryption=none&security=reality&sni=dl.google.com&pbk=HFTFARa1OS53m4HWnjwtZ0J3lu7aoKkE7OujIyM62QI&sid=2a236a7fcbe0ce61&fp=firefox&type=grpc&serviceName=grpc-tunnel&authority=dl.google.com&mode=multi#🇳🇱%20LTE%20%232

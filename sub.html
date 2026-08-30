@@ -154,7 +154,7 @@
         <div class="url" id="subUrl">Создаю ссылку подписки...</div>
     </div>
     <button onclick="copyUrl()">📋 Скопировать ссылку</button>
-    <a href="MaxBar.txt" download="MaxBar.txt" class="btn-download">📥 Скачать файл (для v2rayTun и др.)</a>
+    <button onclick="copyBackupUrl()" class="btn-download">📋 Копировать резервную ссылку</button>
 
     <p style="color: #CC0000; font-weight: bold; margin-bottom: 10px;">Поддерживаемые клиенты:</p>
     <div class="badges"></div>
@@ -169,8 +169,7 @@
 
         <p>🤖 Добавление серверов файлом (запасной):</p>
         <ol>
-            <li>Нажми <strong>«Скачать файл»</strong> (кнопка выше), чтобы получить <strong>MaxBar.txt</strong></li>
-            <li>Открой полученный документ и скопируй резервную ссылку с него</li>
+            <li>Нажми <strong>«Копировать резервную ссылку»</strong> (кнопка выше)</li>
             <li>Зайди в свой клиент и добавь подписку нажав ➕ а затем <strong>«Импортировать из буфера обмена»</strong></li>
             <li>Выбирай нужный сервер и пользуйся незаблокированным интернетом! 🥳</li>
         </ol>
@@ -187,6 +186,7 @@
     </div>
 </div>
 <div id="toast" class="toast">✅ Скопировано!</div>
+<div id="toastBackup" class="toast">✅ Резервная ссылка скопирована!</div>
 
 <script>
     const PODPISKA = `
@@ -301,6 +301,36 @@ vless://42bce2e8-f5bf-4284-9b6e-8f773acf2499@185.22.234.209:443?encryption=none&
             }
         } catch (err) {
             alert('Скопируй вручную: ' + url);
+        }
+        
+        document.body.removeChild(textarea);
+    };
+
+    window.copyBackupUrl = function() {
+        const backupUrl = 'https://test';
+        
+        const textarea = document.createElement('textarea');
+        textarea.value = backupUrl;
+        textarea.style.position = 'fixed';
+        textarea.style.top = '-9999px';
+        textarea.style.left = '-9999px';
+        document.body.appendChild(textarea);
+        textarea.select();
+        textarea.setSelectionRange(0, 99999);
+        
+        try {
+            const success = document.execCommand('copy');
+            if (success) {
+                const toast = document.getElementById('toastBackup');
+                if (toast) {
+                    toast.style.opacity = '1';
+                    setTimeout(() => toast.style.opacity = '0', 2000);
+                }
+            } else {
+                alert('Скопируй вручную: ' + backupUrl);
+            }
+        } catch (err) {
+            alert('Скопируй вручную: ' + backupUrl);
         }
         
         document.body.removeChild(textarea);

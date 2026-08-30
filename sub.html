@@ -154,7 +154,7 @@
         <div class="url" id="subUrl">Создаю ссылку подписки...</div>
     </div>
     <button onclick="copyUrl()">📋 Скопировать ссылку</button>
-    <button onclick="copyBackupUrl()" class="btn-download">📋 Копировать резервную ссылку</button>
+    <button onclick="copyBackupUrl()" class="btn-download">📋 Резервная ссылка (для v2raytun и др.)</button>
 
     <p style="color: #CC0000; font-weight: bold; margin-bottom: 10px;">Поддерживаемые клиенты:</p>
     <div class="badges"></div>
@@ -307,7 +307,7 @@ vless://42bce2e8-f5bf-4284-9b6e-8f773acf2499@185.22.234.209:443?encryption=none&
     };
 
     window.copyBackupUrl = function() {
-        const backupUrl = 'https://test';
+        const backupUrl = 'https://maxbarvpn.zapto.org/spare.txt';
         
         const textarea = document.createElement('textarea');
         textarea.value = backupUrl;

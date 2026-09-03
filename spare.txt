@@ -1,7 +1,7 @@
 #profile-title: MaxBar VPN 🌐
 #announce: base64:0J3QtSDRgNCw0LHQvtGC0LDQtdGCIFZQTj8g0J3QsNC20LzQuCDQvdCwIPCflIQKINCY0YHQv9C+0LvRjNC30YPQuSDRgdC10YDQstC10YDQsCDQv9C+INC90LDQt9C90LDRh9C10L3QuNGOIPCfpJ0gCvCfka7igI3imYLvuI8g0J/QvtC00LTQtdGA0LbQutCwOiBATWF4b25QUywgQEJhcmFzaGVrMTI=
 #profile-update-interval: 1
-#profile-web-page-url: https://maxbarvpn.zapto.org/sub.html
+#profile-web-page-url: https://maxbarvpn.zapto.org/sub
 #support-url: https://t.me/MaxBarVPN
 vless://bdee8ed0-19f0-471c-b4c6-c800c939c283@45.144.52.3:8443?encryption=none&security=reality&sni=www.tradingview.com&pbk=EGxJpl6UtxBovvg0-E9utvD3VvEIVYwBtRN8yy8enUs&sid=f1a84d63b20e7c95&fp=safari&type=xhttp&host=&path=/api/v2/sync&mode=auto#🇩🇪%20Wi-Fi%20%231
 vless://bdee8ed0-19f0-471c-b4c6-c800c939c283@188.214.129.163:8443?encryption=none&security=reality&sni=www.tradingview.com&pbk=NnDloDdLzhLM1CVF36kbOkc0JFzsqVaT3k1fYX_vXRY&sid=58ae8cd85cc31074&fp=edge&type=xhttp&host=&path=/api/v2/sync&mode=auto#🇵🇱%20Wi-Fi%20%232

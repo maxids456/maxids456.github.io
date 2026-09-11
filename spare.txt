@@ -3,7 +3,7 @@
 #profile-update-interval: 1
 #profile-web-page-url: https://maxbarvpn.zapto.org/sub
 #support-url: https://t.me/MaxBarVPN
-hysteria2://a2aa84ec-c5e1-47c1-8b4d-8033d31cfa54@2.26.148.18:443?insecure=0&sni=pl.topswap.pro&alpn=h3&obfs=none&fingerprint=chrome&congestion=bbr#🇩🇪%20Wi-Fi%20%231%20•%20Игровой
+hysteria2://a2aa84ec-c5e1-47c1-8b4d-8033d31cfa54@2.26.148.18:443?insecure=0&sni=pl.topswap.pro&alpn=h3&obfs=none&fingerprint=chrome&congestion=bbr#🇩🇪%20Wi-Fi%20%231⚡️
 vless://bdee8ed0-19f0-471c-b4c6-c800c939c283@188.214.129.163:8443?encryption=none&security=reality&sni=www.tradingview.com&pbk=NnDloDdLzhLM1CVF36kbOkc0JFzsqVaT3k1fYX_vXRY&sid=58ae8cd85cc31074&fp=edge&type=xhttp&host=&path=/api/v2/sync&mode=auto#🇵🇱%20Wi-Fi%20%232
 vless://a2aa84ec-c5e1-47c1-8b4d-8033d31cfa54@176.108.240.212:443?encryption=none&security=reality&flow=xtls-rprx-vision&sni=kas.bratan.fun&pbk=71vuXqOxHNXZpQjqsvhcywaeRFBlTGgxBqr5roo1zjA&sid=fe299c06&fp=firefox&type=tcp#🇫🇮%20LTE%20%231
 vless://a2aa84ec-c5e1-47c1-8b4d-8033d31cfa54@176.108.243.144:443?encryption=none&security=reality&flow=xtls-rprx-vision&sni=cas.bratan.fun&pbk=EfteFMggPNT626LVuGWN-tlN_WhPN7HaB8G2D2X0rEs&sid=c43f6ed1fe576fda&fp=firefox&type=tcp#🇳🇱%20LTE%20%232%20•%20AI

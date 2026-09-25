@@ -3,7 +3,7 @@
 #profile-update-interval: 1
 #profile-web-page-url: https://maxbarvpn.zapto.org/sub
 #support-url: https://t.me/MaxBarVPN
-vless://1638df2e-a248-471a-a4f0-9e44f87e50f7@152.89.244.43:8443?encryption=none&security=reality&sni=www.tradingview.com&fp=qq&pbk=9YODtx3Flz7_r4Q8v6t5YaP5lD7Ed7ebZYt4FVjsGVY&sid=427501beb89ffaec&type=xhttp&mode=auto&host=www.tradingview.com&path=%2Fapi%2Fv2%2Fsync#%F0%9F%87%A9%F0%9F%87%AA%20Wi-Fi%20%231
+vless://0b63fc7c-e51c-49bd-9934-53b1350bff12@de12-direct.maxleshax.icu:443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=de12-direct.maxleshax.icu&fp=firefox&pbk=cHYintRjtGVHkeur0sSzpZKza9H5nQkgRkK0Evoish4&sid=433ebb8e6bcfbd79&type=tcp&headerType=none#🇩🇪%20Wi-Fi%20#1
 vless://0b63fc7c-e51c-49bd-9934-53b1350bff12@se-1c.maxleshax.icu:443?flow=xtls-rprx-vision&encryption=none&security=reality&sni=se-1c.maxleshax.icu&fp=firefox&pbk=HanKvj2z_AI63e7zY4FqtRiSpnZO0HGCn5IDMHFusng&sid=62eb5d61f3277ce7&type=tcp&headerType=none#%F0%9F%87%B5%F0%9F%87%B1%20Wi-Fi%20%232
 vless://1638df2e-a248-471a-a4f0-9e44f87e50f7@89.149.240.50:8443?encryption=none&security=reality&sni=www.tradingview.com&fp=qq&pbk=zzDqxAIZztWziNBD7XfTouE9bqaKsQb2_iYVtnzr0j0&sid=bde1ea0363dba0e8&type=xhttp&host=www.tradingview.com&path=%2Fapi%2Fv2%2Fsync&mode=auto#🇫🇮%20LTE%20#1
 vless://1638df2e-a248-471a-a4f0-9e44f87e50f7@37.49.229.94:8443?encryption=none&security=reality&sni=www.philips.com&fp=qq&pbk=rhvTcrJkW1TxzOqzmoy7c1CDIvuQO7sVXJJljUSn_jU&sid=d42040f1d42dde98&type=xhttp&host=www.philips.com&path=%2Fapi%2Fv2%2Fsync&mode=auto#🇳🇱%20LTE%20#2%20•%20AI

@@ -44,17 +44,6 @@
             margin-bottom: 16px;
             text-shadow: 0 0 15px rgba(255, 68, 68, 0.5);
         }
-        .user-code {
-            font-size: clamp(14px, 3.5vw, 18px);
-            color: #FFD700;
-            margin-bottom: 16px;
-        }
-        .user-code strong {
-            color: #FF6B6B;
-            font-family: monospace;
-            letter-spacing: 3px;
-            font-size: clamp(18px, 4.5vw, 24px);
-        }
         .sub {
             font-size: clamp(16px, 4vw, 20px);
             color: #FFD700;
@@ -155,26 +144,11 @@
             pointer-events: none;
             z-index: 1000;
         }
-        .error403 {
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background: #0d0000;
-            color: #FF4444;
-            font-family: system-ui, sans-serif;
-            font-size: clamp(40px, 12vw, 120px);
-            font-weight: 900;
-            letter-spacing: 4px;
-            text-shadow: 0 0 30px rgba(255, 68, 68, 0.7);
-        }
     </style>
 </head>
 <body>
 <div class="container">
     <h1>🔗 MaxBar VPN</h1>
-    <div class="user-code">Ваш код: <strong id="userCode"></strong></div>
     <div class="sub"><strong>Для клиентов подобных HAPP скопируй ссылку и добавь в приложение по способу ниже</strong></div>
     <div class="url-box">
         <div class="url" id="subUrl">Создаю ссылку подписки...</div>
@@ -215,11 +189,6 @@
 <div id="toastBackup" class="toast">✅ Резервная ссылка скопирована!</div>
 
 <script>
-(function () {
-    const search = window.location.search || '';
-    const candidate = search.startsWith('?') ? search.slice(1) : '';
-    const codeValid = /^[A-Z]{6}$/.test(candidate);
-
     const PODPISKA = `
 #profile-title: MaxBar VPN 🌐
 #announce: base64:0J3QtSDRgNCw0LHQvtGC0LDQtdGCIFZQTj8g0J3QsNC20LzQuCDQvdCwIPCflIQKINCY0YHQv9C+0LvRjNC30YPQuSDRgdC10YDQstC10YDQsCDQv9C+INC90LDQt9C90LDRh9C10L3QuNGOIPCfpJ0gCvCfka7igI3imYLvuI8g0J/QvtC00LTQtdGA0LbQutCwOiBATWF4b25QUywgQEJhcmFzaGVrMTI=
@@ -233,7 +202,7 @@ vless://faccd58f-5291-4e1c-b50d-4f7fc2615d17@r-7c4bc7.vless.monster:443?flow=xtl
 vless://165ef424-36f8-496f-84c4-fe90f4cf4874@nl.sipisn.su:443?encryption=none&security=reality&sni=nl.sipisn.su&fp=qq&pbk=DndPwvgM6jrrrt2Sllk-tVeLgWoqn3kezcTS3D4tGws&sid=ca06a42e233010af&spx=%2F&type=tcp&headerType=none#🇷🇺%20Россия%20(ЮТ,%20ДС,%20ТГ)
 vless://0b63fc7c-e51c-49bd-9934-53b1350bff12@87.242.94.66:9443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=passport.yandex.ru&fp=firefox&pbk=vZ22ThhkpXUd5-tY-v5TTrouLHjgYYmeQgqeLt7HRz0&type=tcp&headerType=none#🇪🇺%20Белые%20списки%20№1
 vless://31a7f1f1-6e30-4f94-8849-eb8bd2cd8bc3@87.242.95.164:8445?flow=xtls-rprx-vision&encryption=none&security=reality&sni=passport.yandex.ru&fp=firefox&pbk=l06r0clkHjHk7HRGpkDBJwZ1JJscSqfwHUQOrV3v3hQ&type=tcp&headerType=none#%F0%9F%87%AA%F0%9F%87%BA%20%D0%91%D0%B5%D0%BB%D1%8B%D0%B5%20%D1%81%D0%BF%D0%B8%D1%81%D0%BA%D0%B8%20%E2%84%962
-`;
+`
     const CLIENTS = [
         "🔥 HAPP", "🍎 Shadowrocket", "🤖 v2rayNG", "⚡ Clash Meta",
         "📦 Sing-Box", "📱 NekoBox", "🌊 Surge", "🌀 Quantumult X",
@@ -247,6 +216,16 @@ vless://31a7f1f1-6e30-4f94-8849-eb8bd2cd8bc3@87.242.95.164:8445?flow=xtls-rprx-v
         "🛡️ V2Ray", "🔷 Xray", "📱 CFW"
     ];
 
+    const badgesContainer = document.querySelector('.badges');
+    if (badgesContainer) {
+        CLIENTS.forEach(client => {
+            const span = document.createElement('span');
+            span.className = 'badge';
+            span.textContent = client;
+            badgesContainer.appendChild(span);
+        });
+    }
+    
     const ua = navigator.userAgent.toLowerCase();
     const isProxyClient = (
         ua.includes('happ') ||
@@ -271,6 +250,7 @@ vless://31a7f1f1-6e30-4f94-8849-eb8bd2cd8bc3@87.242.95.164:8445?flow=xtls-rprx-v
         ua.includes('chisel') ||
         ua.includes('v2raytun') ||
         ua.includes('v2tun') ||
+        ua.includes('V2RayTun') ||
         ua.includes('okhttp') ||
         ua.includes('vless') ||
         ua.includes('cfw') ||
@@ -282,53 +262,23 @@ vless://31a7f1f1-6e30-4f94-8849-eb8bd2cd8bc3@87.242.95.164:8445?flow=xtls-rprx-v
 
     if (isProxyClient) {
         document.body.innerHTML = '';
-        document.body.style.margin = '0';
-        document.body.style.padding = '0';
-        if (!codeValid) {
-            return;
-        }
         const pre = document.createElement('pre');
         pre.style.whiteSpace = 'pre-wrap';
         pre.style.wordWrap = 'break-word';
         pre.style.margin = '0';
         pre.style.fontFamily = 'monospace';
-        pre.textContent = PODPISKA.replace(
-            '#profile-web-page-url: https://maxbarvpn.zapto.org/sub',
-            '#profile-web-page-url: https://maxbarvpn.zapto.org/sub?' + candidate
-        );
+        pre.textContent = PODPISKA;
         document.body.appendChild(pre);
-        return;
+        throw new Error('Ошибка');
     }
 
-    if (!codeValid) {
-        document.documentElement.innerHTML = '<head><title>403 Forbidden</title></head><body class="error403">403</body>';
-        const errStyle = document.createElement('style');
-        errStyle.textContent = '.error403{margin:0;display:flex;justify-content:center;align-items:center;height:100vh;background:#0d0000;color:#FF4444;font-family:system-ui,sans-serif;font-size:clamp(40px,12vw,120px);font-weight:900;letter-spacing:4px;text-shadow:0 0 30px rgba(255,68,68,0.7);}';
-        document.head.appendChild(errStyle);
-        return;
-    }
-
-    const USER_CODE = candidate;
-    const codeEl = document.getElementById('userCode');
-    if (codeEl) codeEl.textContent = USER_CODE;
-
-    const badgesContainer = document.querySelector('.badges');
-    if (badgesContainer) {
-        CLIENTS.forEach(client => {
-            const span = document.createElement('span');
-            span.className = 'badge';
-            span.textContent = client;
-            badgesContainer.appendChild(span);
-        });
-    }
-
-    const newUrl = 'https://maxbarvpn.zapto.org/sub?' + USER_CODE;
+    const newUrl = 'https://maxbarvpn.zapto.org/sub';
     const subUrlSpan = document.getElementById('subUrl');
     if (subUrlSpan) subUrlSpan.innerText = newUrl;
 
-    window.copyUrl = function () {
+    window.copyUrl = function() {
         const url = newUrl;
-
+        
         const textarea = document.createElement('textarea');
         textarea.value = url;
         textarea.style.position = 'fixed';
@@ -337,7 +287,7 @@ vless://31a7f1f1-6e30-4f94-8849-eb8bd2cd8bc3@87.242.95.164:8445?flow=xtls-rprx-v
         document.body.appendChild(textarea);
         textarea.select();
         textarea.setSelectionRange(0, 99999);
-
+        
         try {
             const success = document.execCommand('copy');
             if (success) {
@@ -352,13 +302,13 @@ vless://31a7f1f1-6e30-4f94-8849-eb8bd2cd8bc3@87.242.95.164:8445?flow=xtls-rprx-v
         } catch (err) {
             alert('Скопируй вручную: ' + url);
         }
-
+        
         document.body.removeChild(textarea);
     };
 
-    window.copyBackupUrl = function () {
-        const backupUrl = 'https://maxbarvpn.zapto.org/spare.txt?' + USER_CODE;
-
+    window.copyBackupUrl = function() {
+        const backupUrl = 'https://maxbarvpn.zapto.org/spare.txt';
+        
         const textarea = document.createElement('textarea');
         textarea.value = backupUrl;
         textarea.style.position = 'fixed';
@@ -367,7 +317,7 @@ vless://31a7f1f1-6e30-4f94-8849-eb8bd2cd8bc3@87.242.95.164:8445?flow=xtls-rprx-v
         document.body.appendChild(textarea);
         textarea.select();
         textarea.setSelectionRange(0, 99999);
-
+        
         try {
             const success = document.execCommand('copy');
             if (success) {
@@ -382,10 +332,9 @@ vless://31a7f1f1-6e30-4f94-8849-eb8bd2cd8bc3@87.242.95.164:8445?flow=xtls-rprx-v
         } catch (err) {
             alert('Скопируй вручную: ' + backupUrl);
         }
-
+        
         document.body.removeChild(textarea);
     };
-})();
 </script>
 </body>
 </html>

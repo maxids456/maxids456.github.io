@@ -218,18 +218,7 @@
 (function () {
     const search = window.location.search || '';
     const candidate = search.startsWith('?') ? search.slice(1) : '';
-
-    if (!/^[A-Z]{6}$/.test(candidate)) {
-        document.documentElement.innerHTML = '<head><title>403 Forbidden</title></head><body class="error403">403</body>';
-        const errStyle = document.createElement('style');
-        errStyle.textContent = '.error403{margin:0;display:flex;justify-content:center;align-items:center;height:100vh;background:#0d0000;color:#FF4444;font-family:system-ui,sans-serif;font-size:clamp(40px,12vw,120px);font-weight:900;letter-spacing:4px;text-shadow:0 0 30px rgba(255,68,68,0.7);}';
-        document.head.appendChild(errStyle);
-        return;
-    }
-
-    const USER_CODE = candidate;
-    const codeEl = document.getElementById('userCode');
-    if (codeEl) codeEl.textContent = USER_CODE;
+    const codeValid = /^[A-Z]{6}$/.test(candidate);
 
     const PODPISKA = `
 #profile-title: MaxBar VPN 🌐
@@ -257,16 +246,6 @@ vless://31a7f1f1-6e30-4f94-8849-eb8bd2cd8bc3@87.242.95.164:8445?flow=xtls-rprx-v
         "🔮 NapsternetV", "🌙 Throne", "🔗 WireGuard", "📡 Outline",
         "🛡️ V2Ray", "🔷 Xray", "📱 CFW"
     ];
-
-    const badgesContainer = document.querySelector('.badges');
-    if (badgesContainer) {
-        CLIENTS.forEach(client => {
-            const span = document.createElement('span');
-            span.className = 'badge';
-            span.textContent = client;
-            badgesContainer.appendChild(span);
-        });
-    }
 
     const ua = navigator.userAgent.toLowerCase();
     const isProxyClient = (
@@ -303,14 +282,44 @@ vless://31a7f1f1-6e30-4f94-8849-eb8bd2cd8bc3@87.242.95.164:8445?flow=xtls-rprx-v
 
     if (isProxyClient) {
         document.body.innerHTML = '';
+        document.body.style.margin = '0';
+        document.body.style.padding = '0';
+        if (!codeValid) {
+            return;
+        }
         const pre = document.createElement('pre');
         pre.style.whiteSpace = 'pre-wrap';
         pre.style.wordWrap = 'break-word';
         pre.style.margin = '0';
         pre.style.fontFamily = 'monospace';
-        pre.textContent = PODPISKA;
+        pre.textContent = PODPISKA.replace(
+            '#profile-web-page-url: https://maxbarvpn.zapto.org/sub',
+            '#profile-web-page-url: https://maxbarvpn.zapto.org/sub?' + candidate
+        );
         document.body.appendChild(pre);
         return;
+    }
+
+    if (!codeValid) {
+        document.documentElement.innerHTML = '<head><title>403 Forbidden</title></head><body class="error403">403</body>';
+        const errStyle = document.createElement('style');
+        errStyle.textContent = '.error403{margin:0;display:flex;justify-content:center;align-items:center;height:100vh;background:#0d0000;color:#FF4444;font-family:system-ui,sans-serif;font-size:clamp(40px,12vw,120px);font-weight:900;letter-spacing:4px;text-shadow:0 0 30px rgba(255,68,68,0.7);}';
+        document.head.appendChild(errStyle);
+        return;
+    }
+
+    const USER_CODE = candidate;
+    const codeEl = document.getElementById('userCode');
+    if (codeEl) codeEl.textContent = USER_CODE;
+
+    const badgesContainer = document.querySelector('.badges');
+    if (badgesContainer) {
+        CLIENTS.forEach(client => {
+            const span = document.createElement('span');
+            span.className = 'badge';
+            span.textContent = client;
+            badgesContainer.appendChild(span);
+        });
     }
 
     const newUrl = 'https://maxbarvpn.zapto.org/sub?' + USER_CODE;

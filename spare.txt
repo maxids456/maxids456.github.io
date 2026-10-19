@@ -3,7 +3,7 @@
 #profile-update-interval: 1
 #profile-web-page-url: https://maxbarvpn.zapto.org/sub
 #support-url: https://t.me/MaxBarVPN
-vless://355b39ba-7bbb-479d-ac86-3bc30fe8d4b1@1est48.raha.su:443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=1est48.raha.su&fp=firefox&pbk=4GFUHi-Uot111XegE43BzQDyVAYZjOcahXdKMRM9pT0&sid=847b38758e03102a&type=tcp&headerType=none#🇩🇪%20Wi-Fi%20#1
+vless://9b56c607-7c67-4215-a53e-532165621094@194.87.121.219:443?flow=xtls-rprx-vision&encryption=none&security=reality&sni=spqa7b7e74e6317.vmware.com&fp=firefox&pbk=CMkW1axrhEXoiJ6anMz9XEjlfqlAtEZya7L0b5ZPMyw&sid=7de40c5c4663409d&spx=%2F&type=tcp&headerType=none#%F0%9F%87%A9%F0%9F%87%AA%20Wi-Fi%20%231
 vless://0baf2196-f6dd-4a42-b5b2-f9f154e977c2@se-1c.maxleshax.icu:443?flow=xtls-rprx-vision&encryption=none&security=reality&sni=se-1c.maxleshax.icu&fp=firefox&pbk=HanKvj2z_AI63e7zY4FqtRiSpnZO0HGCn5IDMHFusng&sid=62eb5d61f3277ce7&type=tcp&headerType=none#%F0%9F%87%B5%F0%9F%87%B1%20Wi-Fi%20%232
 vless://0baf2196-f6dd-4a42-b5b2-f9f154e977c2@82.97.248.39:443?encryption=none&flow=xtls-rprx-vision&security=reality&sni=pl-serv.maxleshax.icu&fp=firefox&pbk=pk26pM_LnkB8lv3ysFZZunj_5kzPDvyAJ92wDP0-hBg&sid=d7584d2bc6bc868a&type=tcp&headerType=none#🇫🇮%20LTE%20#1
 vless://165ef424-36f8-496f-84c4-fe90f4cf4874@ru02.sipipro.su:443?encryption=none&security=reality&sni=ru02.sipipro.su&fp=qq&pbk=Dfo_fEse8gPfhOtknqJEwk73wNrBrgf3OiFr6DlWJHM&sid=efb01d9f2737757d&spx=%2F&type=tcp&headerType=none#🇳🇱%20LTE%20#2%20•%20AI

@@ -3,7 +3,7 @@
 #profile-update-interval: 1
 #profile-web-page-url: https://maxbarvpn.zapto.org/sub
 #support-url: https://t.me/MaxBarVPN
-vless://b4aed69d-47ef-48b5-a0fc-536a96a781c9@node22.sizehub.ru:443?flow=xtls-rprx-vision&encryption=none&security=reality&sni=node22.sizehub.ru&fp=firefox&pbk=F37MAkFIeOdDIsPZVp9zSkaNlPSRhAbf_ozXseMmy0U&type=tcp&headerType=none#%F0%9F%87%A9%F0%9F%87%AA%20Wi-Fi%20%231
+vless://355b39ba-7bbb-479d-ac86-3bc30fe8d4b1@179.254.191.9:443?flow=xtls-rprx-vision&encryption=none&security=reality&sni=ign.com&fp=firefox&pbk=OECEXjkKytnmX6qxzAvC9tE9QAQqNuWRBblAmbRnYWY&sid=fe2e437f64f2da7a&spx=%2F&type=tcp&headerType=none#%F0%9F%87%A9%F0%9F%87%AA%20Wi-Fi%20%231
 vless://32744357-fea8-58b9-a6c1-2cc51d443460@germany.claudpath.com:8443?encryption=none&security=reality&sni=cdn7-68.cachemesh.top&fp=chrome&pbk=qSorBe-O5kFhzbU7tBVyegJJSz8j275BT0-HNlCHdVE&sid=39ac51fb&type=xhttp&mode=stream-one&path=%2Fxhttp#%F0%9F%87%B5%F0%9F%87%B1%20Wi-Fi%20%232
 vless://bddf44e4-4f09-4c3d-92ac-93ace45ad473@185.155.222.95:8443?encryption=none&security=reality&sni=media-fa90.strixedge.cc&fp=qq&pbk=IuxhDywepux6hAQAk3OGeJ_U7nCv-kEWBX7W2g2lOjo&sid=b951cee0ce76597f&type=xhttp&mode=packet-up&host=media-fa90.strixedge.cc&path=%2Fedge%2Ff75aae7574ad%2F#%F0%9F%87%AB%F0%9F%87%AE%20LTE%20%231
 vless://73221b30-afb9-51e0-66ad-7d430920930a@130.49.77.8:443?encryption=none&security=reality&sni=download.nvidia.com&fp=chrome&pbk=hwwiWVqYq5b7S0JaXNSxjWSEv_1OUFMaWJGHzeAGyRM&type=xhttp&mode=auto&path=%2F#%F0%9F%87%B3%F0%9F%87%B1%20LTE%20%232%20%E2%80%A2%20AI

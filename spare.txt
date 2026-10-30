@@ -3,7 +3,7 @@
 #profile-update-interval: 1
 #profile-web-page-url: https://t.me/MaxBarVPN
 #support-url: https://t.me/MaxonPS
-vless://8866e21a-5f06-42df-81bd-3efc940a467a@sinfl48.raha.su:443?flow=xtls-rprx-vision&encryption=none&security=reality&sni=sinfl48.raha.su&fp=firefox&pbk=fwKm5T1Puv9N_Ho8t2XP_wJKyizXB_3OJb-mhespZwo&sid=2feec6657a20a944&type=tcp&headerType=none#%F0%9F%87%A9%F0%9F%87%AA%20Wi-Fi%20%231
+hysteria2://d9ed460d-c900-47b1-a855-ad399eca09ed@stream6.volkswagenman.ru:2098?security=tls&fm=%7B%7D&sni=stream6.volkswagenman.ru#%F0%9F%87%A9%F0%9F%87%AA%20Wi-Fi%20%231
 vless://33c8f774-0640-467e-97e5-97f3eeb5c1aa@94.183.167.248:443?flow=xtls-rprx-vision&encryption=none&security=reality&sni=one.5ka.app&fp=firefox&pbk=OajAroKGcWfdbTgDh0OT6irh0vNw9Qc1gBz5AlUmd34&sid=a1b2c3d4e5f6a7b8&type=tcp&headerType=none#%F0%9F%87%B5%F0%9F%87%B1%20Wi-Fi%20%232
 vless://33c8f774-0640-467e-97e5-97f3eeb5c1aa@94.183.167.247:443?flow=xtls-rprx-vision&encryption=none&security=reality&sni=two.5ka.app&fp=firefox&pbk=OajAroKGcWfdbTgDh0OT6irh0vNw9Qc1gBz5AlUmd34&sid=a1b2c3d4e5f6a7b8&type=tcp&headerType=none#%F0%9F%87%AB%F0%9F%87%AE%20LTE%20%231
 vless://d1dee6e9-fafd-7f48-7174-e37316b857f4@130.49.77.9:443?encryption=none&security=reality&sni=download.nvidia.com&fp=chrome&pbk=hwwiWVqYq5b7S0JaXNSxjWSEv_1OUFMaWJGHzeAGyRM&type=xhttp&mode=auto&path=%2F#%F0%9F%87%B3%F0%9F%87%B1%20LTE%20%232%20%E2%80%A2%20AI

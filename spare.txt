@@ -1,8 +1,8 @@
 #profile-title: MaxBar VPN 🌐
 #announce: base64:0J3QtSDRgNCw0LHQvtGC0LDQtdGCIFZQTj8g0J3QsNC20LzQuCDQvdCwIPCflIQKINCY0YHQv9C+0LvRjNC30YPQuSDRgdC10YDQstC10YDQsCDQv9C+INC90LDQt9C90LDRh9C10L3QuNGOIPCfpJ0gCvCfka7igI3imYLvuI8g0J/QvtC00LTQtdGA0LbQutCwOiBATWF4b25QUywgQEJhcmFzaGVrMTI=
 #profile-update-interval: 1
-#profile-web-page-url: https://maxbarvpn.zapto.org/sub.html
-#support-url: https://t.me/MaxBarVPN
+#profile-web-page-url: https://t.me/MaxBarVPN
+#support-url: https://t.me/MaxonPS
 vless://8866e21a-5f06-42df-81bd-3efc940a467a@sinfl48.raha.su:443?flow=xtls-rprx-vision&encryption=none&security=reality&sni=sinfl48.raha.su&fp=firefox&pbk=fwKm5T1Puv9N_Ho8t2XP_wJKyizXB_3OJb-mhespZwo&sid=2feec6657a20a944&type=tcp&headerType=none#%F0%9F%87%A9%F0%9F%87%AA%20Wi-Fi%20%231
 vless://33c8f774-0640-467e-97e5-97f3eeb5c1aa@94.183.167.248:443?flow=xtls-rprx-vision&encryption=none&security=reality&sni=one.5ka.app&fp=firefox&pbk=OajAroKGcWfdbTgDh0OT6irh0vNw9Qc1gBz5AlUmd34&sid=a1b2c3d4e5f6a7b8&type=tcp&headerType=none#%F0%9F%87%B5%F0%9F%87%B1%20Wi-Fi%20%232
 vless://33c8f774-0640-467e-97e5-97f3eeb5c1aa@94.183.167.247:443?flow=xtls-rprx-vision&encryption=none&security=reality&sni=two.5ka.app&fp=firefox&pbk=OajAroKGcWfdbTgDh0OT6irh0vNw9Qc1gBz5AlUmd34&sid=a1b2c3d4e5f6a7b8&type=tcp&headerType=none#%F0%9F%87%AB%F0%9F%87%AE%20LTE%20%231

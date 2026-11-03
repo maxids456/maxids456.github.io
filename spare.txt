@@ -3,7 +3,7 @@
 #profile-update-interval: 1
 #profile-web-page-url: https://t.me/MaxBarVPN
 #support-url: https://t.me/MaxonPS
-vless://63966b7b-e72a-4a19-874a-856c9c50b22d@m2.mincreaft.com:443?flow=xtls-rprx-vision&encryption=none&security=reality&sni=m2.mincreaft.com&fp=firefox&pbk=7hMCv52_3UzeutzPSRL87KLJExaGc68sGbLfDc1nyUg&type=tcp&headerType=none#%F0%9F%87%A9%F0%9F%87%AA%20Wi-Fi%20%231
+vless://a01b60a5-fb0d-4613-b035-5763678ae9b9@osaka.rigged.asia:443?flow=xtls-rprx-vision&encryption=none&security=reality&sni=osaka.rigged.asia&fp=firefox&pbk=dtkbo8kbPcJ5gwnze_S8ntHL3FK7k_pgzt-2znFGnhs&type=tcp&headerType=none#%F0%9F%87%A9%F0%9F%87%AA%20Wi-Fi%20%231
 vless://a01b60a5-fb0d-4613-b035-5763678ae9b9@elbrus.kavkazsvyaz.best:443?flow=xtls-rprx-vision&encryption=none&security=reality&sni=elbrus.kavkazsvyaz.best&fp=firefox&pbk=IDEqV3X9YmtJL5tcKbKROOFl28yTV0eQAtiQfqtAnQU&type=tcp&headerType=none#%F0%9F%87%B5%F0%9F%87%B1%20Wi-Fi%20%232
 vless://a01b60a5-fb0d-4613-b035-5763678ae9b9@phuket.rigged.asia:443?flow=xtls-rprx-vision&encryption=none&security=reality&sni=phuket.rigged.asia&fp=firefox&pbk=wAk9ETidQUqP0ESP_zRO9MolZILipPnz7ZJolV4aQlg&type=tcp&headerType=none#%F0%9F%87%AB%F0%9F%87%AE%20LTE%20%231
 vless://18d7082e-4957-4fc5-9f4e-854938993a99@82.25.63.237:8443?flow=xtls-rprx-vision&encryption=none&security=reality&sni=edge-a6b485.dobry.monster&fp=firefox&pbk=oeJvqAjr3cJoHbyM5KddlPw7q-czzZA-dlJdCYL8hEk&sid=97dc95ead5f75d50&type=tcp&headerType=none#%F0%9F%87%B3%F0%9F%87%B1%20LTE%20%232%20%E2%80%A2%20AI
